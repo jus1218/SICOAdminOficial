@@ -1,0 +1,367 @@
+﻿
+@model SICOAdmin1._0.Models.Consecutivo.Consecutivo
+
+
+@using SICOAdmin1._0.Models.Consecutivo
+
+@{
+    ViewBag.Title = "Index";
+
+    List<Consecutivo> lstConsecutivo = (List<Consecutivo>)ViewBag.Consecutivos;
+    var objConsecutivo = new Consecutivo();
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+
+
+
+
+<div class="container margin-container p-4 glass">
+    <div class="row fila">
+        <!--TEXTO-->
+        <div class="col-xl-2 col-md-3 d-flex justify-content-center">
+            <h3 class="mt-0">Consecutivos</h3>
+        </div>
+        <!--BOTON-->
+        <div class="col-xl-2 col-md-2 mb-3 ">
+            <button id="Editar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+
+                Agregar
+            </button>
+        </div>
+        <!--Barra busqueda-->
+        <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
+            <div class="input-group mb-2">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Buscar..."
+                       aria-label="Buscar..."
+                       aria-describedby="button-search"
+                       id="buscar" />
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        disabled="disabled"
+                        id="button-search">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--FILA TABLE-->
+    <div class="row fila scrol-tablex">
+        <table id="tbConsecutivo" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Alias</th>
+                    <th scope="col">Mascara</th>
+                    <th scope="col">Proximo Valor</th>
+                    <th scope="col">Activo</th>
+                    <th scope="col">Usuario Creacion</th>
+                    <th scope="col">Usuario Modificacion</th>
+                    <th scope="col">Fecha Creacion</th>
+                    <th scope="col">Fecha Modificacion</th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align:center;">
+                @foreach (var e in lstConsecutivo)
+                {
+                    <tr>
+                        <td>@e.IdConsecutivo</td>
+                        <td>@e.Alias</td>
+                        <td>@e.Mascara</td>
+                        <td>@e.ProximoValor</td>
+                        <td>@e.Activo</td>
+                        <td>@e.UsuarioCreacion</td>
+                        <td>@e.UsuarioModificacion</td>
+                        <td>@e.FechaCreacion</td>
+                        <td>@e.FechaModificacion</td>
+                        <td>
+                            <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar" class="btn btn-warning"
+                                    onclick="jsmostrarDatos(@e.IdConsecutivo);">
+                                Editar
+
+                            </button>
+                            <button id="Bitacora" data-toggle="modal" data-target="#ModalBitacora" type="button" value="Bitacora" class="btn btn-warning"
+                                    onclick="jsmostrarBitacora(@e.IdConsecutivo);">
+                                Bitacora
+
+                            </button>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="text-align:center" class="modal-title" id="ModalTitle"> Agregar Consecutivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                @using (Html.BeginForm("Add", "Consecutivo", FormMethod.Post, new { role = "form", @class = "row-12" }))
+                {
+                    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+
+                        @Html.HiddenFor(c => c.IdConsecutivo, new { @class = "", id = "txtId" })
+
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+
+                        @Html.LabelFor(c => c.Alias, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.Alias, new { @class = "form-control", required = "required", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Alias", null, new { @class = "text-danger" })
+
+
+                        @Html.LabelFor(c => c.Mascara, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", placeHolder = "NNNN9999", required = "required", pattern = @"(?=[N]+[9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
+
+                        <input style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" />
+
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+                        @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
+                        @Html.CheckBoxFor(c => c.Activo, new { @class = "form-control", })
+                        @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
+
+                        @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(?=[+A-Z]+[+0-9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
+
+                        <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Update-->
+<div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="text-align:center" class="modal-title" id="ModalTitle"> Editar Consecutivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                @using (Html.BeginForm("Update", "Consecutivo", FormMethod.Post, new { role = "form", @class = "row-12", name = "FormActualizar" }))
+                {
+
+                    <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+
+                        @Html.HiddenFor(c => c.IdConsecutivo, new { @class = "", id = "txtId" })
+
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+                        @Html.LabelFor(c => c.Alias, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.Alias, new { @class = "form-control", id = "txtAlias", required = "required", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Alias", null, new { @class = "text-danger" })
+
+                        @Html.LabelFor(c => c.Mascara, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", id = "txtMascara", placeHolder = "NNNN9999", required = "required", pattern = @"(?=[N]+[9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
+
+                        <input style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" style="text-align:center" />
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+
+                        @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
+                        @Html.CheckBoxFor(c => c.Activo, new { @class = "form-control", id = "txtActivo" })
+                        @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
+
+                        @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
+                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(?=[+A-Z]+[+0-9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
+                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Bitacora-->
+<div class="modal fade" id="ModalBitacora" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="text-align:center" class="modal-title" id="ModalTitle">Bitacora Consecutivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+
+
+                <!--FILA TABLE-->
+                <div class="row fila scrol-tablex">
+                    <table id="tbBitacora" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Usuario Creacion</th>
+                                <th scope="col">Usuario Modificacion</th>
+                                <th scope="col">Fecha Creacion</th>
+                                <th scope="col">Fecha Modificacion</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align:center;">
+
+                            <tr id="tablaBitacora">
+                                <td id="tbIdConsecutivo"> </td>
+                                <td id="tbUsuarioCreacion"> </td>
+                                <td id="tbFechaCreacion"> </td>
+                                <td id="tbUsuarioModificacion"> </td>
+                                <td id="tbFechaModificacion"> </td>                                                             
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+
+
+
+
+                <!-- -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+        const idCons = document.getElementById("txtId");
+        const lbAlias = document.getElementById("txtAlias");
+        const lbMascara = document.getElementById("txtMascara");
+        const lbActivo = document.getElementById("txtActivo");
+        const lbProxValor = document.getElementById("txtProximoValor");
+
+        const tbId = document.getElementById("tbIdConsecutivo");
+        const tbUsuarioCreacion = document.getElementById("tbUsuarioCreacion");
+        const tbUsuarioModificacion = document.getElementById("tbUsuarioCreacion")
+        const tbFechaCreacion = document.getElementById("tbUsuarioModificacion");
+        const tbFechaModificacion = document.getElementById("tbUsuarioModificacion ");
+
+
+
+        
+        function jsmostrarBitacora(pId) {
+            console.log("Bitacora");
+            console.log(pId);
+            fetch("@Url.Content("~/Consecutivo/pintarDatos")" + "?idCons=" + pId)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+
+                    console.log(res);
+
+                    tbId.textContent = res.UsuarioCreacion;
+                    tbId.value = res.UsuarioCreacion;
+
+                    tbUsuarioCreacion.textContent = res.FechaCreacion;
+                    tbUsuarioCreacion.value = res.FechaCreacion;
+
+                    tbUsuarioModificacion.textContent = res.UsuarioModificacion;
+                    tbUsuarioModificacion.value = res.UsuarioModificacion;
+
+                    //tbFechaCreacion.textContent = res.FechaCreacion;
+                    //tbFechaCreacion.value = res.FechaCreacion;
+
+                    //tbFechaModificacion.textContent = res.FechaModificacion;
+                    //tbFechaModificacion.value = res.FechaModificacion;
+
+                })
+        }
+
+
+
+
+        
+
+        function jsmostrarDatos(pId) {
+            console.log(pId);
+            fetch("@Url.Content("~/Consecutivo/pintarDatos")" + "?idCons=" + pId)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+
+                    console.log(res);
+
+                    idCons.textContent = res.IdConsecutivo;
+                    idCons.value = res.IdConsecutivo;
+
+                    lbAlias.textContent = res.Alias;
+                    lbAlias.value = res.Alias;
+
+                    lbMascara.textContent = res.Mascara;
+                    lbMascara.value = res.Mascara;
+
+                    if (res.Activo == true) {
+                        lbActivo.setAttribute("checked","true")
+                    } else {
+                        lbActivo.removeAttribute("checked");
+                    }
+                    lbProxValor.textContent = res.ProximoValor;
+                    lbProxValor.value = res.ProximoValor;
+                })
+        }
+
+
+
+        $(document).ready(function () {
+            $("#buscar").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tbConsecutivo tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

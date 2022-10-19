@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<head>
+    <link href="~/Content/css/login.css" rel="stylesheet" />
+</head>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- Include the above in your HEAD tag -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<div class="main">
+
+
+    <div class="container">
+        <center>
+            <div class="middle">
+                <div id="login">
+
+                    <form action="@Url.Action("Login", "Access")" method="post" id="frm">
+
+                        <fieldset class="clearfix">
+
+                            <p><span class="fa fa-user"></span><input type="text" name="userName" Placeholder="Nombre de usuario" required></p>
+                            <p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Contraseña" required></p>
+
+                            <div>
+                                <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Iniciar sesión"></span>
+                            </div>
+
+
+                        </fieldset>
+                        <div class="clearfix"></div>
+                    </form>
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end login -->
+                <div style="position:relative; border-radius:50%; background-color:white; padding:5px; border-color: black; border: 10px solid;">
+                    <img id="imagenD" src="~/Content/Images/logo  1.png"
+                         style="width: 8cm; height:1.5cm; position:inherit; top:50%; transform: translate(0, -50%); padding-left:8px;" />
+
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </center>
+    </div>
+
+</div>
+
+@if (ViewBag.Alert != null)
+{
+    <div class="alert alert-dismissable alert-info">
+        <button type="submit" class="close" data-dismiss="alert">
+            &times;
+        </button>
+        <strong>Providus informa...</strong> @ViewBag.Alert
+    </div>
+}
+
+@section scripts{
+}
+
+<script>
+    $(document).ready(function () {
+
+        $("#frm").submit(function (e) {
+            e.preventDefault();
+
+
+            url = "@Url.Content("~/Access/Login")"
+            parametros = $(this).serialize();
+
+            $.post(url, parametros, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/")";
+                } else {
+                    alert(data)
+                }
+
+            })
+
+        })
+    })
+</script>
+
+@*<center>
+        <p class="mensaje">@ViewData["Mensaje"]</p>
+    </center>*@

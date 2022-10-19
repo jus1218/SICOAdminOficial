@@ -1,0 +1,1317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SICOAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACCION">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+    </Key>
+    <Property Name="IdAccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Alias" Type="varchar" MaxLength="10" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ACCION_PERFIL">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdAccion" Type="int" Nullable="false" />
+    <Property Name="IdPerfil" Type="int" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AUXILIAR_CXC">
+    <Key>
+      <PropertyRef Name="DocumentoCredito" />
+      <PropertyRef Name="TipoDocumentoCredito" />
+      <PropertyRef Name="DocumentoDebito" />
+      <PropertyRef Name="TipoDocumentoDebito" />
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="DocumentoCredito" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TipoDocumentoCredito" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="DocumentoDebito" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TipoDocumentoDebito" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="IdCliente" Type="int" Nullable="false" />
+    <Property Name="IdPartida" Type="int" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="AUXILIAR_CXP">
+    <Key>
+      <PropertyRef Name="DocumentoCredito" />
+      <PropertyRef Name="TipoDocumentoCredito" />
+      <PropertyRef Name="DocumentoDebito" />
+      <PropertyRef Name="TipoDocumentoDebito" />
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="DocumentoCredito" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TipoDocumentoCredito" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="DocumentoDebito" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TipoDocumentoDebito" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="IdProveedor" Type="int" Nullable="false" />
+    <Property Name="IdPartida" Type="int" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="int" Nullable="false" />
+    <Property Name="IdFilial" Type="tinyint" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Identificacion" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Contacto" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="15" />
+    <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CondicionPago" Type="int" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FecahaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COLABORADOR">
+    <Key>
+      <PropertyRef Name="IdColaborador" />
+    </Key>
+    <Property Name="IdColaborador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Genero" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Direccion" Type="text" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="15" />
+    <Property Name="Identificacion" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nacionalidad" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+    <Property Name="FechaIngreso" Type="date" Nullable="false" />
+    <Property Name="FechaSalida" Type="date" Nullable="false" />
+    <Property Name="IdNomina" Type="int" Nullable="false" />
+    <Property Name="EstadoCivil" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="SaldoVacaciones" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UltCalculoVacaciones" Type="datetime" Nullable="false" />
+    <Property Name="IdPuesto" Type="int" Nullable="false" />
+    <Property Name="FormaPago" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="CuentaBancaria" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Banco" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ContactoEmergencia" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TelefonoContacto" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="SalarioReferencia" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COLABORADOR_ACCION_PERSONAL">
+    <Key>
+      <PropertyRef Name="Id_Accion" />
+    </Key>
+    <Property Name="Id_Accion" Type="int" Nullable="false" />
+    <Property Name="IdColaborador" Type="int" Nullable="false" />
+    <Property Name="IdTipoAccionPers" Type="int" Nullable="false" />
+    <Property Name="FechaAccion" Type="date" Nullable="false" />
+    <Property Name="FechaRige" Type="date" Nullable="false" />
+    <Property Name="FechaVence" Type="date" Nullable="false" />
+    <Property Name="DiasAccion" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioReferencia" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="EstadoEmpleado" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="EstadoAccion" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Aprovador" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaAprobacion" Type="datetime" Nullable="false" />
+    <Property Name="Aplicador" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
+    <Property Name="Anulador" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaAnulacion" Type="datetime" Nullable="false" />
+    <Property Name="Notas" Type="text" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONCEPTO">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+    </Key>
+    <Property Name="IdConcepto" Type="int" Nullable="false" />
+    <Property Name="Alias" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Unidad" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Salarial" Type="bit" Nullable="false" />
+    <Property Name="Fijo" Type="bit" Nullable="false" />
+    <Property Name="Liquidable" Type="bit" Nullable="false" />
+    <Property Name="CantEditable" Type="bit" Nullable="false" />
+    <Property Name="MontoEditable" Type="bit" Nullable="false" />
+    <Property Name="Periodicidad" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Activo" Type="bit" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONCEPTO_COLABORADOR">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+      <PropertyRef Name="IdColaborador" />
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="IdConcepto" Type="int" Nullable="false" />
+    <Property Name="IdColaborador" Type="int" Nullable="false" />
+    <Property Name="IdNomina" Type="int" Nullable="false" />
+    <Property Name="SaldoAcomulado" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaUltAplicacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONCEPTO_FORMULA">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+      <PropertyRef Name="IdFormula" />
+    </Key>
+    <Property Name="IdConcepto" Type="int" Nullable="false" />
+    <Property Name="IdFormula" Type="int" Nullable="false" />
+    <Property Name="ValorInicial" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ValorFinal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Cantidad" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Formula" Type="text" Nullable="false" />
+    <Property Name="UsaCantidad" Type="bit" Nullable="false" />
+    <Property Name="UsaMonto" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModicacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONSECUTIVO">
+    <Key>
+      <PropertyRef Name="IdConsecutivo" />
+    </Key>
+    <Property Name="IdConsecutivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Alias" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Mascara" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProximoValor" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTROL_ASISTENCIA">
+    <Key>
+      <PropertyRef Name="IdAsistencia" />
+    </Key>
+    <Property Name="IdAsistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdColaborador" Type="int" Nullable="false" />
+    <Property Name="FechaHoraIngreso" Type="datetime" Nullable="false" />
+    <Property Name="FechaHoraSalida" Type="datetime" Nullable="false" />
+    <Property Name="TipoJornada" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="HorasRegulares" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HorasExtras" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HoraDobles" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HorasExtrasDobles" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DOCUMENTO_CXC">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdCliente" />
+      <PropertyRef Name="TipoDocumento" />
+    </Key>
+    <Property Name="Documento" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdCliente" Type="int" Nullable="false" />
+    <Property Name="TipoDocumento" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Saldo" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="CondicionPago" Type="int" Nullable="false" />
+    <Property Name="FechaDocumento" Type="date" Nullable="false" />
+    <Property Name="Notas" Type="text" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DOCUMENTO_CXP">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdProveedor" />
+      <PropertyRef Name="TipoDocumento" />
+    </Key>
+    <Property Name="Documento" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdProveedor" Type="int" Nullable="false" />
+    <Property Name="TipoDocumento" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Saldo" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="CondicionPago" Type="int" Nullable="false" />
+    <Property Name="FechaDocumento" Type="date" Nullable="false" />
+    <Property Name="Notas" Type="text" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="datetime" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FILIAL">
+    <Key>
+      <PropertyRef Name="IdFilial" />
+    </Key>
+    <Property Name="IdFilial" Type="tinyint" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FILIAL_PERSONA">
+    <Key>
+      <PropertyRef Name="IdFilial" />
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="IdFilial" Type="tinyint" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Indentification" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Responsable" Type="bit" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Trato" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="15" />
+    <Property Name="WhatsApp" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NOMINA">
+    <Key>
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="IdNomina" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Frecuencia" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="IdConsecutivo" Type="int" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PARAMETRO">
+    <Key>
+      <PropertyRef Name="IdParametro" />
+    </Key>
+    <Property Name="IdParametro" Type="int" Nullable="false" />
+    <Property Name="Mensualidad" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="IdConsecRecibo" Type="int" Nullable="false" />
+    <Property Name="InteresMora" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+    <Property Name="TipoDocumentoCobro" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="CondicionPago" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PARENTESCO">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+    </Key>
+    <Property Name="IdAccion" Type="int" Nullable="false" />
+    <Property Name="Padre" Type="int" Nullable="false" />
+    <Property Name="NumeroHermano" Type="int" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PARTIDA">
+    <Key>
+      <PropertyRef Name="IdPartida" />
+    </Key>
+    <Property Name="IdPartida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Alias" Type="varchar" MaxLength="25" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PERFIL">
+    <Key>
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PLANILLA">
+    <Key>
+      <PropertyRef Name="Consecutivo" />
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="Consecutivo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="IdNomina" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="1" />
+    <Property Name="FechaInicial" Type="datetime" Nullable="false" />
+    <Property Name="FechaFinal" Type="datetime" Nullable="false" />
+    <Property Name="Periodo" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Anio" Type="int" Nullable="false" />
+    <Property Name="MontoTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="BeneficioTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="DeduccionTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ProyeccionTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PLANILLA_COLABORADOR">
+    <Key>
+      <PropertyRef Name="Liquidacion" />
+    </Key>
+    <Property Name="Liquidacion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Consecutivo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="IdNomina" Type="int" Nullable="false" />
+    <Property Name="IdColaborador" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="MontoTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="BeneficioTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="DeduccionTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ProyeccionTotal" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="datetime" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="datetime" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PLANILLA_DETALLE">
+    <Key>
+      <PropertyRef Name="Consecutivo" />
+      <PropertyRef Name="IdNomina" />
+      <PropertyRef Name="IdColaborador" />
+    </Key>
+    <Property Name="Consecutivo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="IdNomina" Type="int" Nullable="false" />
+    <Property Name="IdColaborador" Type="int" Nullable="false" />
+    <Property Name="IdConcepto" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PROVEEDOR">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Identificacion" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Contacto" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="15" />
+    <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CondicionPago" Type="int" Nullable="false" />
+    <Property Name="CuentaBancaria" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Banco" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Activo" Type="bit" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="datetime" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PUESTO">
+    <Key>
+      <PropertyRef Name="IdPuesto" />
+    </Key>
+    <Property Name="IdPuesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="SalarioMinimo" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioPromedio" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioMaximo" Type="decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="CodigoCCSS" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CodigoINS" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TIPO_ACCION_PERS">
+    <Key>
+      <PropertyRef Name="IdTipoAccionPers" />
+    </Key>
+    <Property Name="IdTipoAccionPers" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="EstadoEmpleado" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="RestableceEstado" Type="bit" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="Usuario" />
+    </Key>
+    <Property Name="Usuario" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Bloqueado" Type="bit" Nullable="false" />
+    <Property Name="Contrasena" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DiasCambioContrasena" Type="int" Nullable="false" />
+    <Property Name="IntentosFallidos" Type="tinyint" Nullable="false" />
+    <Property Name="UltCambioContrasena" Type="datetime" />
+    <Property Name="UltIngreso" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="USUARIO_PERFIL">
+    <Key>
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="Usuario" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="IdPerfil" Type="int" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AUXILIARCXC_PARTIDA">
+    <End Role="PARTIDA" Type="Self.PARTIDA" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARTIDA">
+        <PropertyRef Name="IdPartida" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="IdPartida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXCBEB_DOCUMENTOCXC">
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXC">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="TipoDocumento" />
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="DocumentoDebito" />
+        <PropertyRef Name="TipoDocumentoDebito" />
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXCCRED_DOCUMENTOCXC">
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXC">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="TipoDocumento" />
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="DocumentoCredito" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXP_PARTIDA">
+    <End Role="PARTIDA" Type="Self.PARTIDA" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARTIDA">
+        <PropertyRef Name="IdPartida" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="IdPartida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXPCREDITO_DOCUMENTOCXP">
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumento" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="DocumentoCredito" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXPDEBITO_DOCUMENTOCXP">
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumento" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="DocumentoDebito" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CLIENTE_FILIAL">
+    <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FILIAL">
+        <PropertyRef Name="IdFilial" />
+      </Principal>
+      <Dependent Role="CLIENTE">
+        <PropertyRef Name="IdFilial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_PUESTO">
+    <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUESTO">
+        <PropertyRef Name="IdPuesto" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="IdPuesto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADORACCIONPERSONAL_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="COLABORADOR_ACCION_PERSONAL" Type="Self.COLABORADOR_ACCION_PERSONAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="COLABORADOR_ACCION_PERSONAL">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS">
+    <End Role="TIPO_ACCION_PERS" Type="Self.TIPO_ACCION_PERS" Multiplicity="1" />
+    <End Role="COLABORADOR_ACCION_PERSONAL" Type="Self.COLABORADOR_ACCION_PERSONAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_ACCION_PERS">
+        <PropertyRef Name="IdTipoAccionPers" />
+      </Principal>
+      <Dependent Role="COLABORADOR_ACCION_PERSONAL">
+        <PropertyRef Name="IdTipoAccionPers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_CONCEPTO">
+    <End Role="CONCEPTO" Type="Self.CONCEPTO" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO">
+        <PropertyRef Name="IdConcepto" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOFORMULA_CONCEPTO">
+    <End Role="CONCEPTO" Type="Self.CONCEPTO" Multiplicity="1" />
+    <End Role="CONCEPTO_FORMULA" Type="Self.CONCEPTO_FORMULA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO">
+        <PropertyRef Name="IdConcepto" />
+      </Principal>
+      <Dependent Role="CONCEPTO_FORMULA">
+        <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTROLASIST_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="CONTROL_ASISTENCIA" Type="Self.CONTROL_ASISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="CONTROL_ASISTENCIA">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXC_CLIENTE">
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXC">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXP_PLANILLA_COLABORADOR">
+    <End Role="PLANILLA_COLABORADOR" Type="Self.PLANILLA_COLABORADOR" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA_COLABORADOR">
+        <PropertyRef Name="Liquidacion" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXP_PROVEEDOR">
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROVEEDOR">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXP">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FILIALPERSON_FILIAL">
+    <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+    <End Role="FILIAL_PERSONA" Type="Self.FILIAL_PERSONA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FILIAL">
+        <PropertyRef Name="IdFilial" />
+      </Principal>
+      <Dependent Role="FILIAL_PERSONA">
+        <PropertyRef Name="IdFilial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOMINA_CONSECUTIVO">
+    <End Role="CONSECUTIVO" Type="Self.CONSECUTIVO" Multiplicity="1" />
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSECUTIVO">
+        <PropertyRef Name="IdConsecutivo" />
+      </Principal>
+      <Dependent Role="NOMINA">
+        <PropertyRef Name="IdConsecutivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PARENTESCO_ACCION">
+    <End Role="ACCION" Type="Self.ACCION" Multiplicity="1" />
+    <End Role="PARENTESCO" Type="Self.PARENTESCO" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION">
+        <PropertyRef Name="IdAccion" />
+      </Principal>
+      <Dependent Role="PARENTESCO">
+        <PropertyRef Name="IdAccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLA_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="PLANILLA" Type="Self.PLANILLA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLACOLAB_PLANILLADET">
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="1" />
+    <End Role="PLANILLA_COLABORADOR" Type="Self.PLANILLA_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA_DETALLE">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="PLANILLA_COLABORADOR">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLADET_CONCEPTCOLABORADOR">
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="1" />
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdConcepto" />
+        <PropertyRef Name="IdColaborador" />
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA_DETALLE">
+        <PropertyRef Name="IdConcepto" />
+        <PropertyRef Name="IdColaborador" />
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLADET_PLANILLA">
+    <End Role="PLANILLA" Type="Self.PLANILLA" Multiplicity="1" />
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA_DETALLE">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROVEEDOR_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="PROVEEDOR">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="USUARIO_PERFIL" Type="Self.USUARIO_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="USUARIO_PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="USUARIO_PERFIL" Type="Self.USUARIO_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="Usuario" />
+      </Principal>
+      <Dependent Role="USUARIO_PERFIL">
+        <PropertyRef Name="Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER1_ACCION">
+    <End Role="ACCION" Type="Self.ACCION" Multiplicity="1" />
+    <End Role="ACCION_PERFIL" Type="Self.ACCION_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION">
+        <PropertyRef Name="IdAccion" />
+      </Principal>
+      <Dependent Role="ACCION_PERFIL">
+        <PropertyRef Name="IdAccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER1_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="ACCION_PERFIL" Type="Self.ACCION_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="ACCION_PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="f_check" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="idPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="F_Decryptpass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="F_Encrypt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="f_hermanoSiguiente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="padre" Type="int" Mode="In" />
+  </Function>
+  <Function Name="F_LoginFMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="F_LoginTMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="f_opcionesPerfilesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuario" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="IdPerfil" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="f_opcionesUsuariosPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Usuario" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="F_VerificaMascara" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="smallint">
+    <Parameter Name="mascara" Type="varchar" Mode="In" />
+    <Parameter Name="proximoValor" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="SP_C_BuscarConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_C_BuscarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_C_BuscarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_C_MostrarAcciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarConsecutivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="usuario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_Get_Next_Consecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="psValorConsecutivo" Type="varchar" Mode="In" />
+    <Parameter Name="psMascara" Type="varchar" Mode="In" />
+    <Parameter Name="psNuevoConsecutivo" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_ActualizarConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+    <Parameter Name="alias" Type="varchar" Mode="In" />
+    <Parameter Name="mascara" Type="varchar" Mode="In" />
+    <Parameter Name="proximoValor" Type="varchar" Mode="In" />
+    <Parameter Name="activo" Type="bit" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ActualizarProximoValorConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Tipo" Type="varchar" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="Bloqueado" Type="bit" Mode="In" />
+    <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+    <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
+    <Parameter Name="DiasCambioContrasena" Type="int" Mode="In" />
+    <Parameter Name="IntentosFallidos" Type="tinyint" Mode="In" />
+    <Parameter Name="UsuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_BloquearUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_CambioContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="ContrasenaActual" Type="varchar" Mode="In" />
+    <Parameter Name="ContrasenaNueva" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_CrearAccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="alias" Type="varchar" Mode="In" />
+    <Parameter Name="descipcion" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="usuarioCreacionModificacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_CrearConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="alias" Type="varchar" Mode="In" />
+    <Parameter Name="mascara" Type="varchar" Mode="In" />
+    <Parameter Name="proximoValor" Type="varchar" Mode="In" />
+    <Parameter Name="activo" Type="bit" Mode="In" />
+    <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="UsuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_CrearUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+    <Parameter Name="UsuarioCreacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_DibujarArbol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_EliminarAccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_EliminarAll_AccionPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_EliminarUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="idPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_GuardarCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="idPerfil" Type="int" Mode="In" />
+    <Parameter Name="usuCreacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_Logeo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ModificarAccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="alias" Type="varchar" Mode="In" />
+    <Parameter Name="descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_ModificarEstadoConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ModificarEstadoPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_ModificarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_ModificarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Tipo" Type="varchar" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="Bloqueado" Type="bit" Mode="In" />
+    <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+    <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
+    <Parameter Name="DiasCambioContrasena" Type="int" Mode="In" />
+    <Parameter Name="INTentosFallidos" Type="tinyint" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="FechaModificacion" Type="datetime" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_PerfilesDelUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="NPag" Type="int" Mode="In" />
+    <Parameter Name="CantReg" Type="int" Mode="In" />
+    <Parameter Name="palabraBusc" Type="varchar" Mode="In" />
+    <Parameter Name="TotalPag" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_UsuariosDelPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="SICOAdminModelStoreContainer">
+    <EntitySet Name="ACCION" EntityType="Self.ACCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ACCION_PERFIL" EntityType="Self.ACCION_PERFIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AUXILIAR_CXC" EntityType="Self.AUXILIAR_CXC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AUXILIAR_CXP" EntityType="Self.AUXILIAR_CXP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COLABORADOR" EntityType="Self.COLABORADOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COLABORADOR_ACCION_PERSONAL" EntityType="Self.COLABORADOR_ACCION_PERSONAL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONCEPTO" EntityType="Self.CONCEPTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONCEPTO_COLABORADOR" EntityType="Self.CONCEPTO_COLABORADOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONCEPTO_FORMULA" EntityType="Self.CONCEPTO_FORMULA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONSECUTIVO" EntityType="Self.CONSECUTIVO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTROL_ASISTENCIA" EntityType="Self.CONTROL_ASISTENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCUMENTO_CXC" EntityType="Self.DOCUMENTO_CXC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCUMENTO_CXP" EntityType="Self.DOCUMENTO_CXP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FILIAL" EntityType="Self.FILIAL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FILIAL_PERSONA" EntityType="Self.FILIAL_PERSONA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOMINA" EntityType="Self.NOMINA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARAMETRO" EntityType="Self.PARAMETRO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARENTESCO" EntityType="Self.PARENTESCO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARTIDA" EntityType="Self.PARTIDA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERFIL" EntityType="Self.PERFIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PLANILLA" EntityType="Self.PLANILLA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PLANILLA_COLABORADOR" EntityType="Self.PLANILLA_COLABORADOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PLANILLA_DETALLE" EntityType="Self.PLANILLA_DETALLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROVEEDOR" EntityType="Self.PROVEEDOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PUESTO" EntityType="Self.PUESTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_ACCION_PERS" EntityType="Self.TIPO_ACCION_PERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO_PERFIL" EntityType="Self.USUARIO_PERFIL" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AUXILIARCXC_PARTIDA" Association="Self.FK_AUXILIARCXC_PARTIDA">
+      <End Role="PARTIDA" EntitySet="PARTIDA" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXCBEB_DOCUMENTOCXC" Association="Self.FK_AUXILIARCXCBEB_DOCUMENTOCXC">
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXCCRED_DOCUMENTOCXC" Association="Self.FK_AUXILIARCXCCRED_DOCUMENTOCXC">
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXP_PARTIDA" Association="Self.FK_AUXILIARCXP_PARTIDA">
+      <End Role="PARTIDA" EntitySet="PARTIDA" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXPCREDITO_DOCUMENTOCXP" Association="Self.FK_AUXILIARCXPCREDITO_DOCUMENTOCXP">
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXPDEBITO_DOCUMENTOCXP" Association="Self.FK_AUXILIARCXPDEBITO_DOCUMENTOCXP">
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CLIENTE_FILIAL" Association="Self.FK_CLIENTE_FILIAL">
+      <End Role="FILIAL" EntitySet="FILIAL" />
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_NOMINA" Association="Self.FK_COLABORADOR_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_PUESTO" Association="Self.FK_COLABORADOR_PUESTO">
+      <End Role="PUESTO" EntitySet="PUESTO" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADORACCIONPERSONAL_COLABORADOR" Association="Self.FK_COLABORADORACCIONPERSONAL_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="COLABORADOR_ACCION_PERSONAL" EntitySet="COLABORADOR_ACCION_PERSONAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS" Association="Self.FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS">
+      <End Role="TIPO_ACCION_PERS" EntitySet="TIPO_ACCION_PERS" />
+      <End Role="COLABORADOR_ACCION_PERSONAL" EntitySet="COLABORADOR_ACCION_PERSONAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_COLABORADOR" Association="Self.FK_CONCEPTOCOLABORADOR_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_CONCEPTO" Association="Self.FK_CONCEPTOCOLABORADOR_CONCEPTO">
+      <End Role="CONCEPTO" EntitySet="CONCEPTO" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_NOMINA" Association="Self.FK_CONCEPTOCOLABORADOR_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOFORMULA_CONCEPTO" Association="Self.FK_CONCEPTOFORMULA_CONCEPTO">
+      <End Role="CONCEPTO" EntitySet="CONCEPTO" />
+      <End Role="CONCEPTO_FORMULA" EntitySet="CONCEPTO_FORMULA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTROLASIST_COLABORADOR" Association="Self.FK_CONTROLASIST_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="CONTROL_ASISTENCIA" EntitySet="CONTROL_ASISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXC_CLIENTE" Association="Self.FK_DOCUMENTOCXC_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXP_PLANILLA_COLABORADOR" Association="Self.FK_DOCUMENTOCXP_PLANILLA_COLABORADOR">
+      <End Role="PLANILLA_COLABORADOR" EntitySet="PLANILLA_COLABORADOR" />
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXP_PROVEEDOR" Association="Self.FK_DOCUMENTOCXP_PROVEEDOR">
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FILIALPERSON_FILIAL" Association="Self.FK_FILIALPERSON_FILIAL">
+      <End Role="FILIAL" EntitySet="FILIAL" />
+      <End Role="FILIAL_PERSONA" EntitySet="FILIAL_PERSONA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOMINA_CONSECUTIVO" Association="Self.FK_NOMINA_CONSECUTIVO">
+      <End Role="CONSECUTIVO" EntitySet="CONSECUTIVO" />
+      <End Role="NOMINA" EntitySet="NOMINA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PARENTESCO_ACCION" Association="Self.FK_PARENTESCO_ACCION">
+      <End Role="ACCION" EntitySet="ACCION" />
+      <End Role="PARENTESCO" EntitySet="PARENTESCO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLA_NOMINA" Association="Self.FK_PLANILLA_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="PLANILLA" EntitySet="PLANILLA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLACOLAB_PLANILLADET" Association="Self.FK_PLANILLACOLAB_PLANILLADET">
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+      <End Role="PLANILLA_COLABORADOR" EntitySet="PLANILLA_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLADET_CONCEPTCOLABORADOR" Association="Self.FK_PLANILLADET_CONCEPTCOLABORADOR">
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLADET_PLANILLA" Association="Self.FK_PLANILLADET_PLANILLA">
+      <End Role="PLANILLA" EntitySet="PLANILLA" />
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROVEEDOR_COLABORADOR" Association="Self.FK_PROVEEDOR_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER_PERFIL" Association="Self.FK_USUARIOPER_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="USUARIO_PERFIL" EntitySet="USUARIO_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER_USUARIO" Association="Self.FK_USUARIOPER_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="USUARIO_PERFIL" EntitySet="USUARIO_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER1_ACCION" Association="Self.FK_USUARIOPER1_ACCION">
+      <End Role="ACCION" EntitySet="ACCION" />
+      <End Role="ACCION_PERFIL" EntitySet="ACCION_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER1_PERFIL" Association="Self.FK_USUARIOPER1_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="ACCION_PERFIL" EntitySet="ACCION_PERFIL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

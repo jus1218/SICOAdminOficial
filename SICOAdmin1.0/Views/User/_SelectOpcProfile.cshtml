@@ -1,0 +1,10 @@
+﻿@model List<SelectListItem>
+
+@Html.DropDownList("Perfiles", Model, "Seleccione un perfil", new
+         {
+             id = "perfilSelect",
+             @class = "form-control select-item border-light",
+             AutoPostBack = "true",
+             OnSelectedIndexChanged = "Selection_Change"
+
+         })

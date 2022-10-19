@@ -1,0 +1,358 @@
+﻿@model SICOAdmin1._0.Models.User.User
+@using SICOAdmin1._0.Models.User
+
+@{
+    ViewBag.Title = "UpdateUser";
+    List<SelectListItem> lstPerfiles = (List<SelectListItem>)ViewBag.viewPerfiles;
+}
+
+@section styles{
+
+
+}
+
+
+
+<div class="container margin-container p-4 glass">
+    <!--IMPUTS-->
+    <h3 class="mb-4">Editar Usuario</h3>
+    @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { role = "form", @class = "row-12" }))
+    {//Primero nombreMetho, nombreController, tipoMetho,
+
+        @Html.HiddenFor(d => d.userName)//Se va en la peticion
+        //@Html.AntiForgeryToken()// seguridad
+        <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
+            <!--Usuario-->
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+
+                @Html.LabelFor(d => d.userName, new { @class = "mt-4" })
+                @Html.TextBoxFor(d => d.userName, new { @class = "form-control", id = "idUsuario", @disabled = true })
+                @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
+
+                @Html.LabelFor(d => d.name, new { @class = "mt-4" })
+                @Html.TextBoxFor(d => d.name, new { @class = "form-control" })
+                @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
+
+                @Html.LabelFor(d => d.email, new { @class = "mt-4" })
+                @Html.TextBoxFor(d => d.email, new { @class = "form-control" })
+                @Html.ValidationMessage("Email", new { @class = "text-danger" })
+
+                @Html.LabelFor(d => d.password, new { @class = "mt-4" })
+                @Html.PasswordFor(d => d.password, new { @class = "form-control" })
+                @Html.ValidationMessage("Password", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                @Html.LabelFor(u => u.type, new { @class = "mt-4" })
+                @Html.DropDownListFor(u => u.type, new SelectList(Enum.GetValues(typeof(TypesU))), "Elija una opción", new { @class = "form-control" })
+
+                @Html.LabelFor(u => u.daysChangePassword, new { @class = "mt-4" })
+                @Html.EditorFor(u => u.daysChangePassword, new { htmlAttributes = new { Type = "number", @class = "form-control" } })
+                @Html.ValidationMessage("daysChangePassword", new { @class = "text-danger" })
+
+                @Html.LabelFor(u => u.failesAttempts, new { @class = "mt-4" })
+                @Html.EditorFor(u => u.failesAttempts, new { htmlAttributes = new { Type = "number", @class = "form-control" } })
+                @Html.ValidationMessage("failesAttempts", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <br /><br /><br /><br />
+                @Html.LabelFor(u => u.active, new { @class = "mt-4" })
+                @Html.CheckBoxFor(u => u.active, new { @class = "form-control" })
+
+                @Html.LabelFor(u => u.locked, new { @class = "mt-4" })
+                @Html.CheckBoxFor(u => u.locked, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <!--BOTONES-->
+        <div class="col mt-4 d-flex justify-content-center">
+            <input class="btn btn-success me-2" type="submit" value="Guardar" />
+            <a class="btn btn-danger" href="@Url.Action("Index","User")">Cerrar</a>
+        </div>
+    }
+
+    <!--PARTE DE ABAJO-->
+    <div class="row mt-5">
+
+        <div class="col-md-4 mt-2">
+            <div class="form-group d-flex justify-content-center" id="selectProfiles">
+                @Html.Partial("_SelectOpcProfile", lstPerfiles)
+            </div>
+
+            <div class="row mt-4 d-flex justify-content-center">
+                <div class="col-xl-6 col-md-6 col-sm-4 mb-3 mt-2">
+                    <input type="button"
+                           id="addPerfil"
+                           value="Agregar"
+                           class="btn btn-success col-12" />
+                </div>
+            </div>
+        </div>
+
+        @*AQUI VA*@
+
+        <div class="col">
+
+            <div class="row">
+
+                <div class="col-8">
+                    <h4 class="col-6 ps-4 pl-0">Perfiles del Usuario</h4>
+
+                    <select class="col-2 form-control select-item border-light" aria-label="Default select example" id="tamPaginacion" onchange="cambTam()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                </div>
+
+
+                <div class="input-group col">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Buscar..."
+                           aria-label="Buscar..."
+                           aria-describedby="button-addon2"
+                           id="buscarPerfil" />
+
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3" id="tableProfile">
+                @Html.Partial("_PerfilesUsuario", (List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>)ViewBag.userPerfil)
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEliminar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Eliminar</h5>
+
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas eliminar el perfil? <br />
+                <label>Numero de perfil: </label>
+                <label id="valor"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button id="btnEliminar" type="button" data-dismiss="modal" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Modal -->
+
+
+@section   scripts{
+    <script>
+        const userLog = document.getElementById("usuarioLog").textContent;
+        const idUser = document.getElementById("idUsuario").value;
+        const numPagePerfUser = document.getElementById("numPagePerfUser").textContent;
+        //numPagePerfUser
+
+        function cargarComponent() {
+            //recarga tabla usuarios
+            $("#tableProfile").load("_PerfilesUsuario", { Usuario: idUser, NumPagina: numPagePerfUser, palabraBuscar: '' }, function (res) {
+                $("#tableProfile").html(res);
+                //Cargamos el dataTable
+                //$("#profiles").dataTable();
+            })
+            //recarga dropDownList
+            $("#selectProfiles").load("_SelectOpcProfile?id=" + idUser, function (res) {
+                $("#selectProfiles").html(res);
+            })
+
+            //$("#buscarPerfil").on("keyup", function () {
+            //    var value = $(this).val().toLowerCase();
+            //    $("#tableProfile").load("_PerfilesUsuario", { Usuario: idUser, NumPagina: 0, palabraBuscar: value }, function (res) {
+            //        $("#tableProfile").html(res);
+            //    })
+            //})
+
+
+        }
+
+
+        //Pasar a la pagina siguiente
+        function jsSiguiente(sig,totalPage) {
+
+            var siguiente = sig - 1;//Limpiamos el valor que viene de la vista
+            $("#tableProfile").load("_PerfilesUsuario",
+                {
+                    Usuario: idUser,
+                    NumPagina: siguiente,
+                    palabraBuscar: "",
+                    estaBuscando: false,
+                    accion: 'S',
+                    totalPaginas: totalPage
+                }, function (res) {
+                $("#tableProfile").html(res);
+            })
+
+        }
+        //Pasar a la pagina anterior
+        function jsRetroceder(ant) {
+
+            var anterior = ant - 1;//Limpiamos el valor que viene de la vista
+            $("#tableProfile").load("_PerfilesUsuario",
+                {
+                    Usuario: idUser,
+                    NumPagina: anterior,
+                    palabraBuscar: "",
+                    estaBuscando: false
+                }, function (res) {
+                $("#tableProfile").html(res);
+            })
+
+        }
+
+       
+
+        // Cambio de tamaño
+        function cambTam() {
+
+            $("#tableProfile").load("_PerfilesUsuario",
+                {
+                    Usuario: idUser,
+                    NumPagina: numPagePerfUser,
+                    CantRegistros: document.getElementById("tamPaginacion").value,
+                    palabraBuscar: "",
+                    estaBuscando: false
+                }, function (res) {
+                    $("#tableProfile").html(res);
+                })
+            //
+        }
+
+
+        let btnAsociar = document.getElementById("addPerfil");
+        let selectValue = document.getElementById("perfilSelect");
+        let userName = document.getElementById("userName");
+        let buscarPerfil = document.getElementById("buscarPerfil");
+
+        // AGREGAR USUARIO AL PERFIL
+        var urlPerfilUsuario = "@Url.Content("~/User/agregarUsuarioPerfil")";
+        $(document).ready(function () {
+
+            // Buscar Usuarios del perfil
+            $("#buscarPerfil").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tableProfile").load("_PerfilesUsuario",
+                    {
+                        Usuario: idUser,
+                        NumPagina: 0,
+                        palabraBuscar: value,
+                        estaBuscando: true,
+                        accion: 'n' //n -> no pasar de pagina
+                    }, function (res) {
+                    $("#tableProfile").html(res);
+                })
+            })
+
+            //Cargamos el dataTable
+
+            $("#addPerfil").click(() => {
+                fetch(urlPerfilUsuario, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        Usuario: idUser,
+                        IdPerfil: document.getElementById("perfilSelect").value,
+                        UsuarioCreacion: userLog,
+                    }),
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then(res => res.ok ? res.json() : null)
+                    .then(res => {
+                        if (res == 1) {
+                            cargarComponent();
+
+                            swal('Bien!',
+                                'Se ha agregado!',
+                                'success')
+                        } else {
+                            swal('Opps!',
+                                'No se asocio el usuario al perfil!',
+                                'error'
+                            )
+                        }
+                    })
+
+            })
+        })
+
+
+
+
+        //ELIMINAR USUARIOS DE PERFIL
+        /*let idUser = document.getElementById("idUsuario");*/
+        const idPerfil = document.getElementById("valor");
+        function jsDeletePerf(pId) {
+            idPerfil.textContent = pId;
+            idPerfil.value = pId;
+        }
+        const btnEliminar = document.getElementById("btnEliminar");
+         var urlEliminarUserProfile = "@Url.Content("~/User/EliminarUsuarioPerfil")";
+        btnEliminar.addEventListener("click", function () {
+            fetch(urlEliminarUserProfile, {
+                method: "POST",
+                body: JSON.stringify({
+                    Usuario: document.getElementById("idUsuario").value,
+                    IdPerfil: idPerfil.value,
+                    UsuarioCreacion: userLog,
+                    FechaCreacion: ""
+                }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    if (res == 1) {
+                        cargarComponent();
+                        swal('Bien!',
+                            'Se ha eliminado!',
+                            'success')
+                    } else {
+                        swal('Opps!',
+                            'No se elimino la relacion usuario al perfil!',
+                            'error'
+                        )
+                    }
+                }
+                )
+
+        })
+
+
+
+    </script>
+
+    @*<script>
+            $(document).ready(function () {
+                $("#buscarPerfil").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#profiles tbody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>*@
+}

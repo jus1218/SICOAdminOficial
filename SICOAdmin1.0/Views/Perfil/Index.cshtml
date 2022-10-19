@@ -1,0 +1,118 @@
+﻿@model List<SICOAdmin1._0.Models.PERFIL>
+@{
+    ViewBag.Title = "Mis Datos";
+}
+
+<div class="container margin-container p-4 glass">
+
+
+    <div class="row fila">
+        <!--TEXTO-->
+        <div class="col-xl-2 col-md-3 d-flex justify-content-center">
+            <h3 class="mt-0">Perfiles</h3>
+        </div>
+        <!--BOTON-->
+        <div class="col-xl-2 col-md-2 mb-3">
+            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
+                Agregar
+            </button>
+        </div>
+        <!--Barra busqueda-->
+        <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
+            <div class="input-group mb-2">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Buscar..."
+                       aria-label="Buscar..."
+                       aria-describedby="button-search"
+                       id="buscar" />
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        disabled="disabled"
+                        id="button-search">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--FILA TABLE-->
+    <div class="row fila scrol-tablex">
+        <table id="users" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Accion</th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align:center;">
+                @foreach (var perfil in Model)
+                {
+                    <tr>
+                        <td>@perfil.IdPerfil</td>
+                        <td>@perfil.Nombre</td>
+                        <td>@perfil.Descripcion</td>
+                        @if (@perfil.Activo == false)
+                        {
+                            <td>
+                                Inactivo
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Activo
+                            </td>
+                        }
+                        <td>
+                            <a class="btn btn-warning" onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil})'">Editar</a>
+                            @if (@perfil.Activo == false)
+                            {
+                                <a class="btn btn-primary" onclick="jsModificarPefil(@perfil.IdPerfil);">Activar</a>
+                            }
+                            else
+                            {
+
+                                <a class="btn btn-danger" onclick="jsModificarPefil(@perfil.IdPerfil);">Inactivar</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+}
+<!--Función JS de búsqueda-->
+<script>
+    //$(document).ready(function () {
+    //    $("#users").dataTable();
+    //});
+
+
+    function jsModificarPefil(pId) {
+       if (confirm('Estas seguro de Inactivar')) {
+            url = "@Url.Content("~/Perfil/ModificarEstadoPerfil")"+"?Id="+pId;
+            $.post(url, function (data){
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/Perfil/Index")";
+                } else if (data == "0") {
+                    document.location.href = "@Url.Content("~/Perfil/Index")";
+                } else {
+                    alert("Error de Cambiar Usuario")
+                }
+
+            })
+        }
+
+
+    }
+
+</script>
+

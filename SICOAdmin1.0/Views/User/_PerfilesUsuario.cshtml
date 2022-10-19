@@ -1,0 +1,60 @@
+﻿@model List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>
+
+
+
+<!--TABLE-->
+
+<div class="col-12 ms-3 scrol-tablex pt-2">
+    <table id="profiles" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        <tbody id="contentTable">
+            @foreach (var perfil in Model)// ViewBag.userPerfil
+            {
+                <tr>
+                    <td>
+                        @perfil.IdPerfil
+                    </td>
+                    <td>
+                        @perfil.Nombre
+                    </td>
+                    <td>
+                        <input type="button" id="btnAlert" value="Editar" class="btn btn-warning" />
+                        <input onclick="jsDeletePerf('@perfil.IdPerfil');" type="button" value="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" />
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+<div class="col">
+    <div class="col">
+        <label>Pagina Actual: <span id="numPagePerfUser">@ViewBag.PagActual</span></label>
+        <label>Total de paginas: <span>@ViewBag.totalPag.Value</span></label>
+    </div>
+
+    <div class="col mr-0">
+        @if (@ViewBag.PagActual > 1)
+        {
+            <input type="button" class="btn btn-outline-success" value="Retroceder" onclick="jsRetroceder(@ViewBag.PagActual)" />
+        }
+        @if (@ViewBag.PagActual != @ViewBag.totalPag.Value)
+        {
+            <input type="button" class="btn btn-outline-success" onclick="jsSiguiente(@ViewBag.PagActual,@ViewBag.totalPag.Value);" value="Siguiente" />
+
+        }
+
+    </div>
+
+
+
+</div>
+        

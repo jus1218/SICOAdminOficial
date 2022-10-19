@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="127358bd2e59447d9481cd61e9116643" Name="Diagram1">
+        <EntityTypeShape EntityType="SICOAdminModel.ACCION" Width="1.5" PointX="17.75" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.ACCION_PERFIL" Width="1.5" PointX="20" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.AUXILIAR_CXC" Width="1.5" PointX="19.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.AUXILIAR_CXP" Width="1.5" PointX="19.5" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CLIENTE" Width="1.5" PointX="13" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.COLABORADOR" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.COLABORADOR_ACCION_PERSONAL" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CONCEPTO" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CONCEPTO_COLABORADOR" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CONCEPTO_FORMULA" Width="1.5" PointX="10.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CONSECUTIVO" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.CONTROL_ASISTENCIA" Width="1.5" PointX="7.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.DOCUMENTO_CXC" Width="1.5" PointX="15.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.DOCUMENTO_CXP" Width="1.5" PointX="17.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.FILIAL" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.FILIAL_PERSONA" Width="1.5" PointX="13" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.NOMINA" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PARAMETRO" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PARENTESCO" Width="1.5" PointX="20" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PARTIDA" Width="1.5" PointX="17.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PERFIL" Width="1.5" PointX="17.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PLANILLA" Width="1.5" PointX="5.25" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PLANILLA_COLABORADOR" Width="1.5" PointX="15" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PLANILLA_DETALLE" Width="1.5" PointX="12.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PROVEEDOR" Width="1.5" PointX="7.5" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.PUESTO" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.TIPO_ACCION_PERS" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.USUARIO" Width="1.5" PointX="17.75" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SICOAdminModel.USUARIO_PERFIL" Width="1.5" PointX="20" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SICOAdminModel.FK_PARENTESCO_ACCION" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_USUARIOPER1_ACCION" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_USUARIOPER1_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXC_PARTIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXCBEB_DOCUMENTOCXC" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXCCRED_DOCUMENTOCXC" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXP_PARTIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXPCREDITO_DOCUMENTOCXP" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_AUXILIARCXPDEBITO_DOCUMENTOCXP" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CLIENTE_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_DOCUMENTOCXC_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_COLABORADOR_NOMINA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_COLABORADOR_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_COLABORADORACCIONPERSONAL_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CONCEPTOCOLABORADOR_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CONTROLASIST_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_PROVEEDOR_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CONCEPTOCOLABORADOR_CONCEPTO" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CONCEPTOFORMULA_CONCEPTO" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_CONCEPTOCOLABORADOR_NOMINA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_PLANILLADET_CONCEPTCOLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_NOMINA_CONSECUTIVO" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_DOCUMENTOCXP_PLANILLA_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_DOCUMENTOCXP_PROVEEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_FILIALPERSON_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_PLANILLA_NOMINA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_USUARIOPER_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_PLANILLADET_PLANILLA" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_PLANILLACOLAB_PLANILLADET" ManuallyRouted="false" />
+        <AssociationConnector Association="SICOAdminModel.FK_USUARIOPER_USUARIO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

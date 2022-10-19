@@ -1,0 +1,53 @@
+﻿@model List<SICOAdmin1._0.Models.SP_P_UsuariosDelPerfil_Result>
+
+<div class="row">
+    <h4 class="col ps-4">Usuarios del perfil</h4>
+    @*<div class="input-group col">
+        <input type="text"
+               class="form-control"
+               placeholder="Buscar..."
+               aria-label="Buscar..."
+               aria-describedby="button-addon2"
+               id="buscarPerfil" />
+
+    </div>*@
+</div>
+<!--TABLE-->
+<div class="row">
+    <div class="col ms-3 scrol-tablex pt-2">
+        <table id="userss" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Accion</th>
+                </tr>
+            </thead>
+            <tbody id="contentTable">
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @user.Usuario
+                        </td>
+                        <td>
+                            @user.Nombre
+                        </td>
+                        <td>
+                            <input onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.Usuario })'" type="button" value="Editar" class="btn btn-warning" />
+                            @*<input onclick="js(@user.Usuario);" type="button" value="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" id="eliminarU" />*@
+                            <button type="button" onclick="asignar('@user.Usuario')" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar">Eliminar</button>
+                            @*<input onclick="document.location.href= '@Url.Content("~/Perfil/eliminarUsuarioPerfil/" + user)'" type="button" value="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" />*@
+                            
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+   
+</script>

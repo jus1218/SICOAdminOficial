@@ -1,0 +1,1471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SICOAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="f_opcionesPerfilesUsuario_Result">
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" />
+  </ComplexType>
+  <ComplexType Name="f_opcionesUsuariosPerfil_Result">
+    <Property Name="Usuario" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="ACCION">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+    </Key>
+    <Property Name="IdAccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Alias" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PARENTESCO" Relationship="Self.FK_PARENTESCO_ACCION" FromRole="ACCION" ToRole="PARENTESCO" />
+    <NavigationProperty Name="ACCION_PERFIL" Relationship="Self.FK_USUARIOPER1_ACCION" FromRole="ACCION" ToRole="ACCION_PERFIL" />
+  </EntityType>
+  <EntityType Name="ACCION_PERFIL">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdAccion" Type="Int32" Nullable="false" />
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ACCION" Relationship="Self.FK_USUARIOPER1_ACCION" FromRole="ACCION_PERFIL" ToRole="ACCION" />
+    <NavigationProperty Name="PERFIL" Relationship="Self.FK_USUARIOPER1_PERFIL" FromRole="ACCION_PERFIL" ToRole="PERFIL" />
+  </EntityType>
+  <EntityType Name="AUXILIAR_CXC">
+    <Key>
+      <PropertyRef Name="DocumentoCredito" />
+      <PropertyRef Name="TipoDocumentoCredito" />
+      <PropertyRef Name="DocumentoDebito" />
+      <PropertyRef Name="TipoDocumentoDebito" />
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="DocumentoCredito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TipoDocumentoCredito" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentoDebito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TipoDocumentoDebito" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="IdPartida" Type="Int32" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PARTIDA" Relationship="Self.FK_AUXILIARCXC_PARTIDA" FromRole="AUXILIAR_CXC" ToRole="PARTIDA" />
+    <NavigationProperty Name="DOCUMENTO_CXC" Relationship="Self.FK_AUXILIARCXCBEB_DOCUMENTOCXC" FromRole="AUXILIAR_CXC" ToRole="DOCUMENTO_CXC" />
+    <NavigationProperty Name="DOCUMENTO_CXC1" Relationship="Self.FK_AUXILIARCXCCRED_DOCUMENTOCXC" FromRole="AUXILIAR_CXC" ToRole="DOCUMENTO_CXC" />
+  </EntityType>
+  <EntityType Name="AUXILIAR_CXP">
+    <Key>
+      <PropertyRef Name="DocumentoCredito" />
+      <PropertyRef Name="TipoDocumentoCredito" />
+      <PropertyRef Name="DocumentoDebito" />
+      <PropertyRef Name="TipoDocumentoDebito" />
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="DocumentoCredito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TipoDocumentoCredito" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentoDebito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TipoDocumentoDebito" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+    <Property Name="IdPartida" Type="Int32" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PARTIDA" Relationship="Self.FK_AUXILIARCXP_PARTIDA" FromRole="AUXILIAR_CXP" ToRole="PARTIDA" />
+    <NavigationProperty Name="DOCUMENTO_CXP" Relationship="Self.FK_AUXILIARCXPCREDITO_DOCUMENTOCXP" FromRole="AUXILIAR_CXP" ToRole="DOCUMENTO_CXP" />
+    <NavigationProperty Name="DOCUMENTO_CXP1" Relationship="Self.FK_AUXILIARCXPDEBITO_DOCUMENTOCXP" FromRole="AUXILIAR_CXP" ToRole="DOCUMENTO_CXP" />
+  </EntityType>
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="IdFilial" Type="Byte" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CondicionPago" Type="Int32" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FecahaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="FILIAL" Relationship="Self.FK_CLIENTE_FILIAL" FromRole="CLIENTE" ToRole="FILIAL" />
+    <NavigationProperty Name="DOCUMENTO_CXC" Relationship="Self.FK_DOCUMENTOCXC_CLIENTE" FromRole="CLIENTE" ToRole="DOCUMENTO_CXC" />
+  </EntityType>
+  <EntityType Name="COLABORADOR">
+    <Key>
+      <PropertyRef Name="IdColaborador" />
+    </Key>
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Genero" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nacionalidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FechaSalida" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IdNomina" Type="Int32" Nullable="false" />
+    <Property Name="EstadoCivil" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SaldoVacaciones" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UltCalculoVacaciones" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdPuesto" Type="Int32" Nullable="false" />
+    <Property Name="FormaPago" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CuentaBancaria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Banco" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ContactoEmergencia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TelefonoContacto" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SalarioReferencia" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="NOMINA" Relationship="Self.FK_COLABORADOR_NOMINA" FromRole="COLABORADOR" ToRole="NOMINA" />
+    <NavigationProperty Name="PUESTO" Relationship="Self.FK_COLABORADOR_PUESTO" FromRole="COLABORADOR" ToRole="PUESTO" />
+    <NavigationProperty Name="COLABORADOR_ACCION_PERSONAL" Relationship="Self.FK_COLABORADORACCIONPERSONAL_COLABORADOR" FromRole="COLABORADOR" ToRole="COLABORADOR_ACCION_PERSONAL" />
+    <NavigationProperty Name="CONCEPTO_COLABORADOR" Relationship="Self.FK_CONCEPTOCOLABORADOR_COLABORADOR" FromRole="COLABORADOR" ToRole="CONCEPTO_COLABORADOR" />
+    <NavigationProperty Name="CONTROL_ASISTENCIA" Relationship="Self.FK_CONTROLASIST_COLABORADOR" FromRole="COLABORADOR" ToRole="CONTROL_ASISTENCIA" />
+    <NavigationProperty Name="PROVEEDOR" Relationship="Self.FK_PROVEEDOR_COLABORADOR" FromRole="COLABORADOR" ToRole="PROVEEDOR" />
+  </EntityType>
+  <EntityType Name="COLABORADOR_ACCION_PERSONAL">
+    <Key>
+      <PropertyRef Name="Id_Accion" />
+    </Key>
+    <Property Name="Id_Accion" Type="Int32" Nullable="false" />
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" />
+    <Property Name="IdTipoAccionPers" Type="Int32" Nullable="false" />
+    <Property Name="FechaAccion" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FechaRige" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FechaVence" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DiasAccion" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioReferencia" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="EstadoEmpleado" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EstadoAccion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Aprovador" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaAprobacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Aplicador" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Anulador" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaAnulacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADORACCIONPERSONAL_COLABORADOR" FromRole="COLABORADOR_ACCION_PERSONAL" ToRole="COLABORADOR" />
+    <NavigationProperty Name="TIPO_ACCION_PERS" Relationship="Self.FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS" FromRole="COLABORADOR_ACCION_PERSONAL" ToRole="TIPO_ACCION_PERS" />
+  </EntityType>
+  <EntityType Name="CONCEPTO">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+    </Key>
+    <Property Name="IdConcepto" Type="Int32" Nullable="false" />
+    <Property Name="Alias" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Unidad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Salarial" Type="Boolean" Nullable="false" />
+    <Property Name="Fijo" Type="Boolean" Nullable="false" />
+    <Property Name="Liquidable" Type="Boolean" Nullable="false" />
+    <Property Name="CantEditable" Type="Boolean" Nullable="false" />
+    <Property Name="MontoEditable" Type="Boolean" Nullable="false" />
+    <Property Name="Periodicidad" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CONCEPTO_COLABORADOR" Relationship="Self.FK_CONCEPTOCOLABORADOR_CONCEPTO" FromRole="CONCEPTO" ToRole="CONCEPTO_COLABORADOR" />
+    <NavigationProperty Name="CONCEPTO_FORMULA" Relationship="Self.FK_CONCEPTOFORMULA_CONCEPTO" FromRole="CONCEPTO" ToRole="CONCEPTO_FORMULA" />
+  </EntityType>
+  <EntityType Name="CONCEPTO_COLABORADOR">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+      <PropertyRef Name="IdColaborador" />
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="IdConcepto" Type="Int32" Nullable="false" />
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" />
+    <Property Name="IdNomina" Type="Int32" Nullable="false" />
+    <Property Name="SaldoAcomulado" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaUltAplicacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_CONCEPTOCOLABORADOR_COLABORADOR" FromRole="CONCEPTO_COLABORADOR" ToRole="COLABORADOR" />
+    <NavigationProperty Name="CONCEPTO" Relationship="Self.FK_CONCEPTOCOLABORADOR_CONCEPTO" FromRole="CONCEPTO_COLABORADOR" ToRole="CONCEPTO" />
+    <NavigationProperty Name="NOMINA" Relationship="Self.FK_CONCEPTOCOLABORADOR_NOMINA" FromRole="CONCEPTO_COLABORADOR" ToRole="NOMINA" />
+    <NavigationProperty Name="PLANILLA_DETALLE" Relationship="Self.FK_PLANILLADET_CONCEPTCOLABORADOR" FromRole="CONCEPTO_COLABORADOR" ToRole="PLANILLA_DETALLE" />
+  </EntityType>
+  <EntityType Name="CONCEPTO_FORMULA">
+    <Key>
+      <PropertyRef Name="IdConcepto" />
+      <PropertyRef Name="IdFormula" />
+    </Key>
+    <Property Name="IdConcepto" Type="Int32" Nullable="false" />
+    <Property Name="IdFormula" Type="Int32" Nullable="false" />
+    <Property Name="ValorInicial" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ValorFinal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Cantidad" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsaCantidad" Type="Boolean" Nullable="false" />
+    <Property Name="UsaMonto" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModicacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CONCEPTO" Relationship="Self.FK_CONCEPTOFORMULA_CONCEPTO" FromRole="CONCEPTO_FORMULA" ToRole="CONCEPTO" />
+  </EntityType>
+  <EntityType Name="CONSECUTIVO">
+    <Key>
+      <PropertyRef Name="IdConsecutivo" />
+    </Key>
+    <Property Name="IdConsecutivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Alias" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mascara" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProximoValor" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="NOMINA" Relationship="Self.FK_NOMINA_CONSECUTIVO" FromRole="CONSECUTIVO" ToRole="NOMINA" />
+  </EntityType>
+  <EntityType Name="CONTROL_ASISTENCIA">
+    <Key>
+      <PropertyRef Name="IdAsistencia" />
+    </Key>
+    <Property Name="IdAsistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" />
+    <Property Name="FechaHoraIngreso" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaHoraSalida" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TipoJornada" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HorasRegulares" Type="Decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HorasExtras" Type="Decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HoraDobles" Type="Decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="HorasExtrasDobles" Type="Decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_CONTROLASIST_COLABORADOR" FromRole="CONTROL_ASISTENCIA" ToRole="COLABORADOR" />
+  </EntityType>
+  <EntityType Name="DOCUMENTO_CXC">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdCliente" />
+      <PropertyRef Name="TipoDocumento" />
+    </Key>
+    <Property Name="Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="TipoDocumento" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CondicionPago" Type="Int32" Nullable="false" />
+    <Property Name="FechaDocumento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AUXILIAR_CXC" Relationship="Self.FK_AUXILIARCXCBEB_DOCUMENTOCXC" FromRole="DOCUMENTO_CXC" ToRole="AUXILIAR_CXC" />
+    <NavigationProperty Name="AUXILIAR_CXC1" Relationship="Self.FK_AUXILIARCXCCRED_DOCUMENTOCXC" FromRole="DOCUMENTO_CXC" ToRole="AUXILIAR_CXC" />
+    <NavigationProperty Name="CLIENTE" Relationship="Self.FK_DOCUMENTOCXC_CLIENTE" FromRole="DOCUMENTO_CXC" ToRole="CLIENTE" />
+  </EntityType>
+  <EntityType Name="DOCUMENTO_CXP">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdProveedor" />
+      <PropertyRef Name="TipoDocumento" />
+    </Key>
+    <Property Name="Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+    <Property Name="TipoDocumento" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CondicionPago" Type="Int32" Nullable="false" />
+    <Property Name="FechaDocumento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="DateTime" Precision="3" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AUXILIAR_CXP" Relationship="Self.FK_AUXILIARCXPCREDITO_DOCUMENTOCXP" FromRole="DOCUMENTO_CXP" ToRole="AUXILIAR_CXP" />
+    <NavigationProperty Name="AUXILIAR_CXP1" Relationship="Self.FK_AUXILIARCXPDEBITO_DOCUMENTOCXP" FromRole="DOCUMENTO_CXP" ToRole="AUXILIAR_CXP" />
+    <NavigationProperty Name="PLANILLA_COLABORADOR" Relationship="Self.FK_DOCUMENTOCXP_PLANILLA_COLABORADOR" FromRole="DOCUMENTO_CXP" ToRole="PLANILLA_COLABORADOR" />
+    <NavigationProperty Name="PROVEEDOR" Relationship="Self.FK_DOCUMENTOCXP_PROVEEDOR" FromRole="DOCUMENTO_CXP" ToRole="PROVEEDOR" />
+  </EntityType>
+  <EntityType Name="FILIAL">
+    <Key>
+      <PropertyRef Name="IdFilial" />
+    </Key>
+    <Property Name="IdFilial" Type="Byte" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CLIENTE" Relationship="Self.FK_CLIENTE_FILIAL" FromRole="FILIAL" ToRole="CLIENTE" />
+    <NavigationProperty Name="FILIAL_PERSONA" Relationship="Self.FK_FILIALPERSON_FILIAL" FromRole="FILIAL" ToRole="FILIAL_PERSONA" />
+  </EntityType>
+  <EntityType Name="FILIAL_PERSONA">
+    <Key>
+      <PropertyRef Name="IdFilial" />
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="IdFilial" Type="Byte" Nullable="false" />
+    <Property Name="IdPersona" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Indentification" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Responsable" Type="Boolean" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Trato" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="WhatsApp" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="FILIAL" Relationship="Self.FK_FILIALPERSON_FILIAL" FromRole="FILIAL_PERSONA" ToRole="FILIAL" />
+  </EntityType>
+  <EntityType Name="NOMINA">
+    <Key>
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="IdNomina" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Frecuencia" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdConsecutivo" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADOR_NOMINA" FromRole="NOMINA" ToRole="COLABORADOR" />
+    <NavigationProperty Name="CONCEPTO_COLABORADOR" Relationship="Self.FK_CONCEPTOCOLABORADOR_NOMINA" FromRole="NOMINA" ToRole="CONCEPTO_COLABORADOR" />
+    <NavigationProperty Name="CONSECUTIVO" Relationship="Self.FK_NOMINA_CONSECUTIVO" FromRole="NOMINA" ToRole="CONSECUTIVO" />
+    <NavigationProperty Name="PLANILLA" Relationship="Self.FK_PLANILLA_NOMINA" FromRole="NOMINA" ToRole="PLANILLA" />
+  </EntityType>
+  <EntityType Name="PARAMETRO">
+    <Key>
+      <PropertyRef Name="IdParametro" />
+    </Key>
+    <Property Name="IdParametro" Type="Int32" Nullable="false" />
+    <Property Name="Mensualidad" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="IdConsecRecibo" Type="Int32" Nullable="false" />
+    <Property Name="InteresMora" Type="Decimal" Precision="11" Scale="8" Nullable="false" />
+    <Property Name="TipoDocumentoCobro" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CondicionPago" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PARENTESCO">
+    <Key>
+      <PropertyRef Name="IdAccion" />
+    </Key>
+    <Property Name="IdAccion" Type="Int32" Nullable="false" />
+    <Property Name="Padre" Type="Int32" Nullable="false" />
+    <Property Name="NumeroHermano" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ACCION" Relationship="Self.FK_PARENTESCO_ACCION" FromRole="PARENTESCO" ToRole="ACCION" />
+  </EntityType>
+  <EntityType Name="PARTIDA">
+    <Key>
+      <PropertyRef Name="IdPartida" />
+    </Key>
+    <Property Name="IdPartida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Alias" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AUXILIAR_CXC" Relationship="Self.FK_AUXILIARCXC_PARTIDA" FromRole="PARTIDA" ToRole="AUXILIAR_CXC" />
+    <NavigationProperty Name="AUXILIAR_CXP" Relationship="Self.FK_AUXILIARCXP_PARTIDA" FromRole="PARTIDA" ToRole="AUXILIAR_CXP" />
+  </EntityType>
+  <EntityType Name="PERFIL">
+    <Key>
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ACCION_PERFIL" Relationship="Self.FK_USUARIOPER1_PERFIL" FromRole="PERFIL" ToRole="ACCION_PERFIL" />
+    <NavigationProperty Name="USUARIO_PERFIL" Relationship="Self.FK_USUARIOPER_PERFIL" FromRole="PERFIL" ToRole="USUARIO_PERFIL" />
+  </EntityType>
+  <EntityType Name="PLANILLA">
+    <Key>
+      <PropertyRef Name="Consecutivo" />
+      <PropertyRef Name="IdNomina" />
+    </Key>
+    <Property Name="Consecutivo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdNomina" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="FechaInicial" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Periodo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Anio" Type="Int32" Nullable="false" />
+    <Property Name="MontoTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="BeneficioTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="DeduccionTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ProyeccionTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NOMINA" Relationship="Self.FK_PLANILLA_NOMINA" FromRole="PLANILLA" ToRole="NOMINA" />
+    <NavigationProperty Name="PLANILLA_DETALLE" Relationship="Self.FK_PLANILLADET_PLANILLA" FromRole="PLANILLA" ToRole="PLANILLA_DETALLE" />
+  </EntityType>
+  <EntityType Name="PLANILLA_COLABORADOR">
+    <Key>
+      <PropertyRef Name="Liquidacion" />
+    </Key>
+    <Property Name="Liquidacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Consecutivo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdNomina" Type="Int32" Nullable="false" />
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MontoTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="BeneficioTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="DeduccionTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="ProyeccionTotal" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="DateTime" Precision="3" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DOCUMENTO_CXP" Relationship="Self.FK_DOCUMENTOCXP_PLANILLA_COLABORADOR" FromRole="PLANILLA_COLABORADOR" ToRole="DOCUMENTO_CXP" />
+    <NavigationProperty Name="PLANILLA_DETALLE" Relationship="Self.FK_PLANILLACOLAB_PLANILLADET" FromRole="PLANILLA_COLABORADOR" ToRole="PLANILLA_DETALLE" />
+  </EntityType>
+  <EntityType Name="PLANILLA_DETALLE">
+    <Key>
+      <PropertyRef Name="Consecutivo" />
+      <PropertyRef Name="IdNomina" />
+      <PropertyRef Name="IdColaborador" />
+    </Key>
+    <Property Name="Consecutivo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdNomina" Type="Int32" Nullable="false" />
+    <Property Name="IdColaborador" Type="Int32" Nullable="false" />
+    <Property Name="IdConcepto" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CONCEPTO_COLABORADOR" Relationship="Self.FK_PLANILLADET_CONCEPTCOLABORADOR" FromRole="PLANILLA_DETALLE" ToRole="CONCEPTO_COLABORADOR" />
+    <NavigationProperty Name="PLANILLA" Relationship="Self.FK_PLANILLADET_PLANILLA" FromRole="PLANILLA_DETALLE" ToRole="PLANILLA" />
+    <NavigationProperty Name="PLANILLA_COLABORADOR" Relationship="Self.FK_PLANILLACOLAB_PLANILLADET" FromRole="PLANILLA_DETALLE" ToRole="PLANILLA_COLABORADOR" />
+  </EntityType>
+  <EntityType Name="PROVEEDOR">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CondicionPago" Type="Int32" Nullable="false" />
+    <Property Name="CuentaBancaria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Banco" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="DateTime" Precision="3" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_PROVEEDOR_COLABORADOR" FromRole="PROVEEDOR" ToRole="COLABORADOR" />
+    <NavigationProperty Name="DOCUMENTO_CXP" Relationship="Self.FK_DOCUMENTOCXP_PROVEEDOR" FromRole="PROVEEDOR" ToRole="DOCUMENTO_CXP" />
+  </EntityType>
+  <EntityType Name="PUESTO">
+    <Key>
+      <PropertyRef Name="IdPuesto" />
+    </Key>
+    <Property Name="IdPuesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SalarioMinimo" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioPromedio" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="SalarioMaximo" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
+    <Property Name="CodigoCCSS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodigoINS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADOR_PUESTO" FromRole="PUESTO" ToRole="COLABORADOR" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TIPO_ACCION_PERS">
+    <Key>
+      <PropertyRef Name="IdTipoAccionPers" />
+    </Key>
+    <Property Name="IdTipoAccionPers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EstadoEmpleado" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RestableceEstado" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="COLABORADOR_ACCION_PERSONAL" Relationship="Self.FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS" FromRole="TIPO_ACCION_PERS" ToRole="COLABORADOR_ACCION_PERSONAL" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="Usuario1" />
+    </Key>
+    <Property Name="Usuario1" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Bloqueado" Type="Boolean" Nullable="false" />
+    <Property Name="Contrasena" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DiasCambioContrasena" Type="Int32" Nullable="false" />
+    <Property Name="IntentosFallidos" Type="Byte" Nullable="false" />
+    <Property Name="UltCambioContrasena" Type="DateTime" Precision="3" />
+    <Property Name="UltIngreso" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="USUARIO_PERFIL" Relationship="Self.FK_USUARIOPER_USUARIO" FromRole="USUARIO" ToRole="USUARIO_PERFIL" />
+  </EntityType>
+  <EntityType Name="USUARIO_PERFIL">
+    <Key>
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="Usuario" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="PERFIL" Relationship="Self.FK_USUARIOPER_PERFIL" FromRole="USUARIO_PERFIL" ToRole="PERFIL" />
+    <NavigationProperty Name="USUARIO1" Relationship="Self.FK_USUARIOPER_USUARIO" FromRole="USUARIO_PERFIL" ToRole="USUARIO" />
+  </EntityType>
+  <Association Name="FK_PARENTESCO_ACCION">
+    <End Role="ACCION" Type="Self.ACCION" Multiplicity="1" />
+    <End Role="PARENTESCO" Type="Self.PARENTESCO" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION">
+        <PropertyRef Name="IdAccion" />
+      </Principal>
+      <Dependent Role="PARENTESCO">
+        <PropertyRef Name="IdAccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER1_ACCION">
+    <End Role="ACCION" Type="Self.ACCION" Multiplicity="1" />
+    <End Role="ACCION_PERFIL" Type="Self.ACCION_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION">
+        <PropertyRef Name="IdAccion" />
+      </Principal>
+      <Dependent Role="ACCION_PERFIL">
+        <PropertyRef Name="IdAccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER1_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="ACCION_PERFIL" Type="Self.ACCION_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="ACCION_PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXC_PARTIDA">
+    <End Role="PARTIDA" Type="Self.PARTIDA" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARTIDA">
+        <PropertyRef Name="IdPartida" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="IdPartida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXCBEB_DOCUMENTOCXC">
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXC">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="TipoDocumento" />
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="DocumentoDebito" />
+        <PropertyRef Name="TipoDocumentoDebito" />
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXCCRED_DOCUMENTOCXC">
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="1" />
+    <End Role="AUXILIAR_CXC" Type="Self.AUXILIAR_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXC">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="TipoDocumento" />
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXC">
+        <PropertyRef Name="DocumentoCredito" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXP_PARTIDA">
+    <End Role="PARTIDA" Type="Self.PARTIDA" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARTIDA">
+        <PropertyRef Name="IdPartida" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="IdPartida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXPCREDITO_DOCUMENTOCXP">
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumento" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="DocumentoCredito" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AUXILIARCXPDEBITO_DOCUMENTOCXP">
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="1" />
+    <End Role="AUXILIAR_CXP" Type="Self.AUXILIAR_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumento" />
+      </Principal>
+      <Dependent Role="AUXILIAR_CXP">
+        <PropertyRef Name="DocumentoDebito" />
+        <PropertyRef Name="IdProveedor" />
+        <PropertyRef Name="TipoDocumentoCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CLIENTE_FILIAL">
+    <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FILIAL">
+        <PropertyRef Name="IdFilial" />
+      </Principal>
+      <Dependent Role="CLIENTE">
+        <PropertyRef Name="IdFilial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXC_CLIENTE">
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXC" Type="Self.DOCUMENTO_CXC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXC">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_PUESTO">
+    <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUESTO">
+        <PropertyRef Name="IdPuesto" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="IdPuesto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADORACCIONPERSONAL_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="COLABORADOR_ACCION_PERSONAL" Type="Self.COLABORADOR_ACCION_PERSONAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="COLABORADOR_ACCION_PERSONAL">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTROLASIST_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="CONTROL_ASISTENCIA" Type="Self.CONTROL_ASISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="CONTROL_ASISTENCIA">
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROVEEDOR_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="PROVEEDOR">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS">
+    <End Role="TIPO_ACCION_PERS" Type="Self.TIPO_ACCION_PERS" Multiplicity="1" />
+    <End Role="COLABORADOR_ACCION_PERSONAL" Type="Self.COLABORADOR_ACCION_PERSONAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_ACCION_PERS">
+        <PropertyRef Name="IdTipoAccionPers" />
+      </Principal>
+      <Dependent Role="COLABORADOR_ACCION_PERSONAL">
+        <PropertyRef Name="IdTipoAccionPers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_CONCEPTO">
+    <End Role="CONCEPTO" Type="Self.CONCEPTO" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO">
+        <PropertyRef Name="IdConcepto" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOFORMULA_CONCEPTO">
+    <End Role="CONCEPTO" Type="Self.CONCEPTO" Multiplicity="1" />
+    <End Role="CONCEPTO_FORMULA" Type="Self.CONCEPTO_FORMULA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO">
+        <PropertyRef Name="IdConcepto" />
+      </Principal>
+      <Dependent Role="CONCEPTO_FORMULA">
+        <PropertyRef Name="IdConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONCEPTOCOLABORADOR_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLADET_CONCEPTCOLABORADOR">
+    <End Role="CONCEPTO_COLABORADOR" Type="Self.CONCEPTO_COLABORADOR" Multiplicity="1" />
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONCEPTO_COLABORADOR">
+        <PropertyRef Name="IdConcepto" />
+        <PropertyRef Name="IdColaborador" />
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA_DETALLE">
+        <PropertyRef Name="IdConcepto" />
+        <PropertyRef Name="IdColaborador" />
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOMINA_CONSECUTIVO">
+    <End Role="CONSECUTIVO" Type="Self.CONSECUTIVO" Multiplicity="1" />
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSECUTIVO">
+        <PropertyRef Name="IdConsecutivo" />
+      </Principal>
+      <Dependent Role="NOMINA">
+        <PropertyRef Name="IdConsecutivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXP_PLANILLA_COLABORADOR">
+    <End Role="PLANILLA_COLABORADOR" Type="Self.PLANILLA_COLABORADOR" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA_COLABORADOR">
+        <PropertyRef Name="Liquidacion" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXP">
+        <PropertyRef Name="Documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCUMENTOCXP_PROVEEDOR">
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="1" />
+    <End Role="DOCUMENTO_CXP" Type="Self.DOCUMENTO_CXP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROVEEDOR">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="DOCUMENTO_CXP">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FILIALPERSON_FILIAL">
+    <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+    <End Role="FILIAL_PERSONA" Type="Self.FILIAL_PERSONA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FILIAL">
+        <PropertyRef Name="IdFilial" />
+      </Principal>
+      <Dependent Role="FILIAL_PERSONA">
+        <PropertyRef Name="IdFilial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLA_NOMINA">
+    <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+    <End Role="PLANILLA" Type="Self.PLANILLA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOMINA">
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA">
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="USUARIO_PERFIL" Type="Self.USUARIO_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="USUARIO_PERFIL">
+        <PropertyRef Name="IdPerfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLADET_PLANILLA">
+    <End Role="PLANILLA" Type="Self.PLANILLA" Multiplicity="1" />
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+      </Principal>
+      <Dependent Role="PLANILLA_DETALLE">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLANILLACOLAB_PLANILLADET">
+    <End Role="PLANILLA_DETALLE" Type="Self.PLANILLA_DETALLE" Multiplicity="1" />
+    <End Role="PLANILLA_COLABORADOR" Type="Self.PLANILLA_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLANILLA_DETALLE">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+        <PropertyRef Name="IdColaborador" />
+      </Principal>
+      <Dependent Role="PLANILLA_COLABORADOR">
+        <PropertyRef Name="Consecutivo" />
+        <PropertyRef Name="IdNomina" />
+        <PropertyRef Name="IdColaborador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIOPER_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="USUARIO_PERFIL" Type="Self.USUARIO_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="Usuario1" />
+      </Principal>
+      <Dependent Role="USUARIO_PERFIL">
+        <PropertyRef Name="Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SICOAdminEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACCION" EntityType="Self.ACCION" />
+    <EntitySet Name="ACCION_PERFIL" EntityType="Self.ACCION_PERFIL" />
+    <EntitySet Name="AUXILIAR_CXC" EntityType="Self.AUXILIAR_CXC" />
+    <EntitySet Name="AUXILIAR_CXP" EntityType="Self.AUXILIAR_CXP" />
+    <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
+    <EntitySet Name="COLABORADOR" EntityType="Self.COLABORADOR" />
+    <EntitySet Name="COLABORADOR_ACCION_PERSONAL" EntityType="Self.COLABORADOR_ACCION_PERSONAL" />
+    <EntitySet Name="CONCEPTO" EntityType="Self.CONCEPTO" />
+    <EntitySet Name="CONCEPTO_COLABORADOR" EntityType="Self.CONCEPTO_COLABORADOR" />
+    <EntitySet Name="CONCEPTO_FORMULA" EntityType="Self.CONCEPTO_FORMULA" />
+    <EntitySet Name="CONSECUTIVO" EntityType="Self.CONSECUTIVO" />
+    <EntitySet Name="CONTROL_ASISTENCIA" EntityType="Self.CONTROL_ASISTENCIA" />
+    <EntitySet Name="DOCUMENTO_CXC" EntityType="Self.DOCUMENTO_CXC" />
+    <EntitySet Name="DOCUMENTO_CXP" EntityType="Self.DOCUMENTO_CXP" />
+    <EntitySet Name="FILIAL" EntityType="Self.FILIAL" />
+    <EntitySet Name="FILIAL_PERSONA" EntityType="Self.FILIAL_PERSONA" />
+    <EntitySet Name="NOMINA" EntityType="Self.NOMINA" />
+    <EntitySet Name="PARAMETRO" EntityType="Self.PARAMETRO" />
+    <EntitySet Name="PARENTESCO" EntityType="Self.PARENTESCO" />
+    <EntitySet Name="PARTIDA" EntityType="Self.PARTIDA" />
+    <EntitySet Name="PERFIL" EntityType="Self.PERFIL" />
+    <EntitySet Name="PLANILLA" EntityType="Self.PLANILLA" />
+    <EntitySet Name="PLANILLA_COLABORADOR" EntityType="Self.PLANILLA_COLABORADOR" />
+    <EntitySet Name="PLANILLA_DETALLE" EntityType="Self.PLANILLA_DETALLE" />
+    <EntitySet Name="PROVEEDOR" EntityType="Self.PROVEEDOR" />
+    <EntitySet Name="PUESTO" EntityType="Self.PUESTO" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TIPO_ACCION_PERS" EntityType="Self.TIPO_ACCION_PERS" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+    <EntitySet Name="USUARIO_PERFIL" EntityType="Self.USUARIO_PERFIL" />
+    <AssociationSet Name="FK_PARENTESCO_ACCION" Association="Self.FK_PARENTESCO_ACCION">
+      <End Role="ACCION" EntitySet="ACCION" />
+      <End Role="PARENTESCO" EntitySet="PARENTESCO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER1_ACCION" Association="Self.FK_USUARIOPER1_ACCION">
+      <End Role="ACCION" EntitySet="ACCION" />
+      <End Role="ACCION_PERFIL" EntitySet="ACCION_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER1_PERFIL" Association="Self.FK_USUARIOPER1_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="ACCION_PERFIL" EntitySet="ACCION_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXC_PARTIDA" Association="Self.FK_AUXILIARCXC_PARTIDA">
+      <End Role="PARTIDA" EntitySet="PARTIDA" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXCBEB_DOCUMENTOCXC" Association="Self.FK_AUXILIARCXCBEB_DOCUMENTOCXC">
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXCCRED_DOCUMENTOCXC" Association="Self.FK_AUXILIARCXCCRED_DOCUMENTOCXC">
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+      <End Role="AUXILIAR_CXC" EntitySet="AUXILIAR_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXP_PARTIDA" Association="Self.FK_AUXILIARCXP_PARTIDA">
+      <End Role="PARTIDA" EntitySet="PARTIDA" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXPCREDITO_DOCUMENTOCXP" Association="Self.FK_AUXILIARCXPCREDITO_DOCUMENTOCXP">
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUXILIARCXPDEBITO_DOCUMENTOCXP" Association="Self.FK_AUXILIARCXPDEBITO_DOCUMENTOCXP">
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+      <End Role="AUXILIAR_CXP" EntitySet="AUXILIAR_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CLIENTE_FILIAL" Association="Self.FK_CLIENTE_FILIAL">
+      <End Role="FILIAL" EntitySet="FILIAL" />
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXC_CLIENTE" Association="Self.FK_DOCUMENTOCXC_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+      <End Role="DOCUMENTO_CXC" EntitySet="DOCUMENTO_CXC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_NOMINA" Association="Self.FK_COLABORADOR_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_PUESTO" Association="Self.FK_COLABORADOR_PUESTO">
+      <End Role="PUESTO" EntitySet="PUESTO" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADORACCIONPERSONAL_COLABORADOR" Association="Self.FK_COLABORADORACCIONPERSONAL_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="COLABORADOR_ACCION_PERSONAL" EntitySet="COLABORADOR_ACCION_PERSONAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_COLABORADOR" Association="Self.FK_CONCEPTOCOLABORADOR_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTROLASIST_COLABORADOR" Association="Self.FK_CONTROLASIST_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="CONTROL_ASISTENCIA" EntitySet="CONTROL_ASISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROVEEDOR_COLABORADOR" Association="Self.FK_PROVEEDOR_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS" Association="Self.FK_COLABORADORACCIONPERSONAL_TIPOACCIONPERS">
+      <End Role="TIPO_ACCION_PERS" EntitySet="TIPO_ACCION_PERS" />
+      <End Role="COLABORADOR_ACCION_PERSONAL" EntitySet="COLABORADOR_ACCION_PERSONAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_CONCEPTO" Association="Self.FK_CONCEPTOCOLABORADOR_CONCEPTO">
+      <End Role="CONCEPTO" EntitySet="CONCEPTO" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOFORMULA_CONCEPTO" Association="Self.FK_CONCEPTOFORMULA_CONCEPTO">
+      <End Role="CONCEPTO" EntitySet="CONCEPTO" />
+      <End Role="CONCEPTO_FORMULA" EntitySet="CONCEPTO_FORMULA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONCEPTOCOLABORADOR_NOMINA" Association="Self.FK_CONCEPTOCOLABORADOR_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLADET_CONCEPTCOLABORADOR" Association="Self.FK_PLANILLADET_CONCEPTCOLABORADOR">
+      <End Role="CONCEPTO_COLABORADOR" EntitySet="CONCEPTO_COLABORADOR" />
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOMINA_CONSECUTIVO" Association="Self.FK_NOMINA_CONSECUTIVO">
+      <End Role="CONSECUTIVO" EntitySet="CONSECUTIVO" />
+      <End Role="NOMINA" EntitySet="NOMINA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXP_PLANILLA_COLABORADOR" Association="Self.FK_DOCUMENTOCXP_PLANILLA_COLABORADOR">
+      <End Role="PLANILLA_COLABORADOR" EntitySet="PLANILLA_COLABORADOR" />
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCUMENTOCXP_PROVEEDOR" Association="Self.FK_DOCUMENTOCXP_PROVEEDOR">
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+      <End Role="DOCUMENTO_CXP" EntitySet="DOCUMENTO_CXP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FILIALPERSON_FILIAL" Association="Self.FK_FILIALPERSON_FILIAL">
+      <End Role="FILIAL" EntitySet="FILIAL" />
+      <End Role="FILIAL_PERSONA" EntitySet="FILIAL_PERSONA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLA_NOMINA" Association="Self.FK_PLANILLA_NOMINA">
+      <End Role="NOMINA" EntitySet="NOMINA" />
+      <End Role="PLANILLA" EntitySet="PLANILLA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER_PERFIL" Association="Self.FK_USUARIOPER_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="USUARIO_PERFIL" EntitySet="USUARIO_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLADET_PLANILLA" Association="Self.FK_PLANILLADET_PLANILLA">
+      <End Role="PLANILLA" EntitySet="PLANILLA" />
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLANILLACOLAB_PLANILLADET" Association="Self.FK_PLANILLACOLAB_PLANILLADET">
+      <End Role="PLANILLA_DETALLE" EntitySet="PLANILLA_DETALLE" />
+      <End Role="PLANILLA_COLABORADOR" EntitySet="PLANILLA_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIOPER_USUARIO" Association="Self.FK_USUARIOPER_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="USUARIO_PERFIL" EntitySet="USUARIO_PERFIL" />
+    </AssociationSet>
+    <FunctionImport Name="f_opcionesPerfilesUsuario" IsComposable="true" ReturnType="Collection(SICOAdminModel.f_opcionesPerfilesUsuario_Result)">
+      <Parameter Name="usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="f_opcionesUsuariosPerfil" IsComposable="true" ReturnType="Collection(SICOAdminModel.f_opcionesUsuariosPerfil_Result)">
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BuscarConsecutivo" ReturnType="Collection(SICOAdminModel.SP_C_BuscarConsecutivo_Result)">
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BuscarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_BuscarPerfil_Result)">
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BuscarUsuario" ReturnType="Collection(SICOAdminModel.SP_C_BuscarUsuario_Result)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_MostrarAcciones" ReturnType="Collection(SICOAdminModel.SP_C_MostrarAcciones_Result)" />
+    <FunctionImport Name="SP_C_MostrarConsecutivos" ReturnType="Collection(SICOAdminModel.SP_C_MostrarConsecutivos_Result)" />
+    <FunctionImport Name="SP_C_MostrarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPerfil_Result)" />
+    <FunctionImport Name="SP_C_MostrarUsuarios" ReturnType="Collection(SICOAdminModel.SP_C_MostrarUsuarios_Result)">
+      <Parameter Name="opcion" Mode="In" Type="String" />
+      <Parameter Name="usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_Get_Next_Consecutivo">
+      <Parameter Name="psValorConsecutivo" Mode="In" Type="String" />
+      <Parameter Name="psMascara" Mode="In" Type="String" />
+      <Parameter Name="psNuevoConsecutivo" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SICOAdminModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SICOAdminModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ActualizarConsecutivo">
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="alias" Mode="In" Type="String" />
+      <Parameter Name="mascara" Mode="In" Type="String" />
+      <Parameter Name="proximoValor" Mode="In" Type="String" />
+      <Parameter Name="activo" Mode="In" Type="Boolean" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ActualizarProximoValorConsecutivo">
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_AddUser">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Tipo" Mode="In" Type="String" />
+      <Parameter Name="Activo" Mode="In" Type="Boolean" />
+      <Parameter Name="Bloqueado" Mode="In" Type="Boolean" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+      <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+      <Parameter Name="DiasCambioContrasena" Mode="In" Type="Int32" />
+      <Parameter Name="IntentosFallidos" Mode="In" Type="Byte" />
+      <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_BloquearUsuario">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CambioContrasena">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="ContrasenaActual" Mode="In" Type="String" />
+      <Parameter Name="ContrasenaNueva" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearAccion">
+      <Parameter Name="alias" Mode="In" Type="String" />
+      <Parameter Name="descipcion" Mode="In" Type="String" />
+      <Parameter Name="tipo" Mode="In" Type="String" />
+      <Parameter Name="usuarioCreacionModificacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearConsecutivo">
+      <Parameter Name="alias" Mode="In" Type="String" />
+      <Parameter Name="mascara" Mode="In" Type="String" />
+      <Parameter Name="proximoValor" Mode="In" Type="String" />
+      <Parameter Name="activo" Mode="In" Type="Boolean" />
+      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearPerfil">
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Activo" Mode="In" Type="Boolean" />
+      <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearUsuarioPerfil">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+      <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_DibujarArbol" ReturnType="Collection(SICOAdminModel.SP_P_DibujarArbol_Result)">
+      <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_EliminarAccion">
+      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_EliminarAll_AccionPerfil">
+      <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_EliminarUsuarioPerfil">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_GuardarCheck">
+      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+      <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+      <Parameter Name="usuCreacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_Logeo">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarAccion">
+      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+      <Parameter Name="alias" Mode="In" Type="String" />
+      <Parameter Name="descripcion" Mode="In" Type="String" />
+      <Parameter Name="tipo" Mode="In" Type="String" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarEstadoConsecutivo">
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarEstadoPerfil">
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarPerfil">
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Activo" Mode="In" Type="Boolean" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarUsuario">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Tipo" Mode="In" Type="String" />
+      <Parameter Name="Activo" Mode="In" Type="Boolean" />
+      <Parameter Name="Bloqueado" Mode="In" Type="Boolean" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+      <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+      <Parameter Name="DiasCambioContrasena" Mode="In" Type="Int32" />
+      <Parameter Name="INTentosFallidos" Mode="In" Type="Byte" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="FechaModificacion" Mode="In" Type="DateTime" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_PerfilesDelUsuario" ReturnType="Collection(SICOAdminModel.SP_P_PerfilesDelUsuario_Result)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="NPag" Mode="In" Type="Int32" />
+      <Parameter Name="CantReg" Mode="In" Type="Int32" />
+      <Parameter Name="palabraBusc" Mode="In" Type="String" />
+      <Parameter Name="TotalPag" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_UsuariosDelPerfil" ReturnType="Collection(SICOAdminModel.SP_P_UsuariosDelPerfil_Result)">
+      <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="SP_C_BuscarConsecutivo_Result">
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_BuscarPerfil_Result">
+    <Property Type="Int32" Name="IdPerfil" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_BuscarUsuario_Result">
+    <Property Type="String" Name="Usuario" Nullable="false" MaxLength="70" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Tipo" Nullable="false" MaxLength="2" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="Boolean" Name="Bloqueado" Nullable="false" />
+    <Property Type="String" Name="Contrasena" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="DiasCambioContrasena" Nullable="false" />
+    <Property Type="Byte" Name="IntentosFallidos" Nullable="false" />
+    <Property Type="DateTime" Name="UltCambioContrasena" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="UltIngreso" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarAcciones_Result">
+    <Property Type="Int32" Name="IdAccion" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Tipo" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarConsecutivos_Result">
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarPerfil_Result">
+    <Property Type="Int32" Name="IdPerfil" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarUsuarios_Result">
+    <Property Type="String" Name="Usuario" Nullable="false" MaxLength="70" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Tipo" Nullable="false" MaxLength="2" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="Boolean" Name="Bloqueado" Nullable="false" />
+    <Property Type="String" Name="Contrasena" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="DiasCambioContrasena" Nullable="false" />
+    <Property Type="Byte" Name="IntentosFallidos" Nullable="false" />
+    <Property Type="DateTime" Name="UltCambioContrasena" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="UltIngreso" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SP_P_DibujarArbol_Result">
+    <Property Type="Int32" Name="IdAccion" Nullable="false" />
+    <Property Type="Int32" Name="Padre" Nullable="false" />
+    <Property Type="Int32" Name="NumeroHermano" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="check" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SP_P_PerfilesDelUsuario_Result">
+    <Property Type="Int32" Name="IdPerfil" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SP_P_UsuariosDelPerfil_Result">
+    <Property Type="String" Name="Usuario" Nullable="false" MaxLength="70" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Tipo" Nullable="false" MaxLength="2" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="Boolean" Name="Bloqueado" Nullable="false" />
+    <Property Type="String" Name="Contrasena" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="DiasCambioContrasena" Nullable="false" />
+    <Property Type="Byte" Name="IntentosFallidos" Nullable="false" />
+    <Property Type="DateTime" Name="UltCambioContrasena" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="UltIngreso" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>
