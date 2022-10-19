@@ -205,7 +205,7 @@
 
         }
         //Pasar a la pagina anterior
-        function jsRetroceder(ant) {
+        function jsRetroceder(ant, totalPage) {
 
             var anterior = ant - 1;//Limpiamos el valor que viene de la vista
             $("#tableProfile").load("_PerfilesUsuario",
@@ -213,7 +213,8 @@
                     Usuario: idUser,
                     NumPagina: anterior,
                     palabraBuscar: "",
-                    estaBuscando: false
+                    estaBuscando: false,
+                    totalPaginas: totalPage
                 }, function (res) {
                 $("#tableProfile").html(res);
             })
