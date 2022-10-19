@@ -44,7 +44,7 @@
     <div class="col mr-0">
         @if (@ViewBag.PagActual > 1)
         {
-            <input type="button" class="btn btn-outline-success" value="Retroceder" onclick="jsRetroceder(@ViewBag.PagActual)" />
+            <input type="button" class="btn btn-outline-success" value="Retroceder" onclick="jsRetroceder(@ViewBag.PagActual,@ViewBag.totalPag.Value)" />
         }
         @if (@ViewBag.PagActual != @ViewBag.totalPag.Value)
         {
