@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SICOAdmin1._0.Models.User
 {
@@ -30,8 +27,15 @@ namespace SICOAdmin1._0.Models.User
 
         [Required]
         [DataType(DataType.Password)]
+        [RegularExpression("^.(?=. {6,})(?=.[a-z])(?=.[A-Z])(?=.[0-9]).$", ErrorMessage = "Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres.")]
         [Display(Name = "Contraseña")]
         public string password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("password", ErrorMessage = "Las contraseñas no son iguales")]
+        [Display(Name = "Contraseña")]
+        public string confirmPassword { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Correo Electrónico")]

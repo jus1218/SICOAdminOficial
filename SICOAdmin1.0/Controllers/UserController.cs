@@ -85,17 +85,34 @@ namespace SICOAdmin.Controllers
         [HttpPost]
         public ActionResult addUser(User model)
         {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
             try
             {
-                if (!ModelState.IsValid)
+                if (model != null)
                 {
                     using (var db = new SICOAdminEntities())
                     {
-                        //int num = db.SP_P_AddUser(model.userName, model.name, Convert.ToString(model.type), model.active, model.locked,
-                        //          model.password, model.email, model.daysChangePassword, (byte)model.failesAttempts, ((User)Session["User"]).userName, ((User)Session["User"]).userName);
+                        int num = db.SP_P_AddUser(model.userName, model.name, Convert.ToString(model.type), model.active, model.locked,
+                                  model.password, model.email, model.daysChangePassword, (byte)model.failesAttempts,
+                                  ((User)Session["User"]).userName, ((User)Session["User"]).userName, resultado, mensaje);
                     }
 
-                    return Redirect(Url.Content("~/User/Index"));
+                    bool bit = Convert.ToBoolean(resultado.Value);
+                    string message = Convert.ToString(mensaje.Value);
+
+                    if (bit)
+                    {
+                        TempData.Clear();
+                        TempData["MessageAdd"] = "1" + message;
+                        return RedirectToAction(Url.Content("/Index"));
+                    }
+                    else
+                    {
+                        TempData.Clear();
+                        TempData["MessageAdd"] = "0" + message;
+                        return RedirectToAction(Url.Content("/Index"));
+                    }
                 }
                 return View(model);
             }
@@ -179,16 +196,36 @@ namespace SICOAdmin.Controllers
         [HttpPost]
         public ActionResult updateUser(User user)
         {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
             try
             {
+
                 if (user != null)
                 {
                     using (var db = new SICOAdminEntities())
                     {
-                        //db.SP_P_ModificarUsuario(user.userName, user.name, Convert.ToString(user.type), user.active, user.locked,
-                        //                        user.password, user.email, user.daysChangePassword, (byte)user.failesAttempts, ((User)Session["User"]).userName, DateTime.Now);
+                        db.SP_P_ModificarUsuario(user.userName, user.name, Convert.ToString(user.type), user.active, user.locked, user.password,
+                                                user.email, user.daysChangePassword, (byte)user.failesAttempts,
+                                                ((User)Session["User"]).userName, DateTime.Now, resultado, mensaje);
+
+                        bool bit = Convert.ToBoolean(resultado.Value);
+                        string message = Convert.ToString(mensaje.Value);
+
+                        if (bit)
+                        {
+                            TempData.Clear();
+                            TempData["MessageUp"] = "1" + message;
+                            return RedirectToAction(Url.Content("/Index"));
+                        }
+                        else
+                        {
+                            TempData.Clear();
+                            TempData["MessageUp"] = "0" + message;
+                            return RedirectToAction(Url.Content("/Index"));
+                        }
                     }
-                    return Redirect(Url.Content("~/User/Index"));
+                    //return RedirectToAction(Url.Content("/Index"));
                 }
                 return View(user);
             }
@@ -286,79 +323,73 @@ namespace SICOAdmin.Controllers
 
 
 
-        //[HttpPost]// super mega importante
-        //public ActionResult TableUserJson(string userName)
-        //{
-        //    lstPerfiles = null;
-        //    //logistica datatable
-        //    var draw = Request.Form.GetValues("draw").FirstOrDefault();
-        //    var start = Request.Form.GetValues("start").FirstOrDefault();
-        //    var length = Request.Form.GetValues("length").FirstOrDefault();
-        //    var sortColumn = Request.Form.GetValues("columns["+ Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-        //    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-        //    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-
-
-        //    pageSize = length != null ? Convert.ToInt32(length) : 0;
-        //    skip = start != null ? Convert.ToInt32(start) : 0;// en que pagina va lo demas lo ignora
-        //    recordsTotal = 0;
-
-
-
-        //    using (SICOAdminEntities db = new SICOAdminEntities())
-        //    {
-        //        lstPerfiles = db.SP_P_PerfilesDelUsuario(userName).ToList();
-        //        recordsTotal = lstPerfiles.Count();
-        //        lstPerfiles = lstPerfiles.Skip(skip).Take(pageSize).ToList();
-        //    }
-
-
-        //    return Json(new { draw = draw,recordsFiltered = recordsTotal,recordsTotal=recordsTotal,data = lstPerfiles });
-        //}
 
 
 
 
 
-
-        public void Bitacora(string userName)
+        public JsonResult GetBitacora(string userName)//NO SE USA AÚN
         {
             User oUser = new User();
-            List<User> bitacora = null;
+            SP_C_MostrarUsuarios_Result user = new SP_C_MostrarUsuarios_Result();
             using (SICOAdminEntities db = new SICOAdminEntities())
             {
-                SP_C_BuscarUsuario_Result user = db.SP_C_BuscarUsuario(userName).FirstOrDefault();
+                user = db.SP_C_MostrarUsuarios("BIT", userName).FirstOrDefault();
 
-                //oUser.userName = user.Usuario;
-                //oUser.name = user.Nombre;
-                //switch (user.Tipo.ToString())
-                //{
-                //    case "Ad":
-                //        oUser.type = TypesU.Administrador;
-                //        break;
-                //    case "Co":
-                //        oUser.type = TypesU.Consulta;
-                //        break;
-                //    case "Tr":
-                //        oUser.type = TypesU.Transaccional;
-                //        break;
-                //}
-                //oUser.active = user.Activo;
-                //oUser.locked = user.Bloqueado;
-                //oUser.password = user.Contrasena;
-                //oUser.email = user.CorreoElectronico;
-                //oUser.daysChangePassword = user.DiasCambioContrasena;
-                //oUser.failesAttempts = user.IntentosFallidos;
-                oUser.lastChangedPassword = (DateTime)user.UltCambioContrasena;
                 oUser.lastEntry = user.UltIngreso;
+                oUser.lastChangedPassword = (DateTime)user.UltCambioContrasena;
                 oUser.userCreation = user.UsuarioCreacion;
                 oUser.dateCreation = user.FechaCreacion;
                 oUser.userModification = user.UsuarioModificacion;
                 oUser.dateModification = (DateTime)user.FechaModificacion;
             }
 
-            ViewBag.bitacora = oUser;
-            //return View(bitacora);
+            var objU = new
+            {
+                lastEntry = oUser.lastEntry.ToString("dd/MM/yyyy H:mm:ss"),
+                lastChangedPassword = oUser.lastChangedPassword.ToString("dd/MM/yyyy H:mm:ss"),
+                oUser.userCreation,
+                dateCreation = oUser.dateCreation.ToString("dd/MM/yyyy H:mm:ss"),
+                oUser.userModification,
+                dateModification = oUser.dateModification.ToString("dd/MM/yyyy H:mm:ss"),
+            };
+
+
+            return Json(objU, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CambiarContrasena(string userName, string password, string newPassword)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+            try
+            {
+                using (SICOAdminEntities db = new SICOAdminEntities())
+                {
+                    db.SP_P_CambioContrasena(userName, password, newPassword, resultado, mensaje);
+
+                    bool bit = Convert.ToBoolean(resultado.Value);
+                    string message = Convert.ToString(mensaje.Value);
+
+
+                    if (bit)
+                    {
+                        ViewBag.Alert = message;
+                        return Redirect(Url.Content("~/Access/Login"));
+                    }
+                    else
+                    {
+                        ViewBag.Alert = message;
+                        return Content(message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content("Ocurrio un error :( \n" + ex.Message);
+            }
+
         }
     }
 }

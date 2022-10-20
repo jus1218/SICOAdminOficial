@@ -2,7 +2,7 @@
 @using SICOAdmin1._0.Models.User
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Control operativo - SICOAdmin";
 }
 
 <head>
@@ -46,9 +46,9 @@
     <div class="row fila scrol-tablex">
         <table id="users" class="table table-bordered">
             <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
+                <tr class="text-center">
                     <th scope="col">Usuario</th>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Correo electrónico</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Activo</th>
@@ -72,7 +72,7 @@
                         <td>@user.failesAttempts</td>
                         <td>
                             <input onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.userName })'" type="button" value="Editar" class="btn btn-warning" />
-                            <input id="btnBitacora" @*onclick="document.location.href = '@Url.Action("Bitacora","User",new { userName = user.userName })'"*@ type="button" value="Bitacora" class="btn btn-primary" data-toggle="modal" data-target="#modalBitacora" />
+                            <input id="btnBitacora" onclick="jsmostrarBitacora('@user.userName')" type="button" value="Bitacora" class="btn btn-primary" data-toggle="modal" data-target="#modalBitacora" />
                         </td>
                     </tr>
                 }
@@ -80,31 +80,6 @@
             </tbody>
         </table>
     </div>
-    @section scripts{
-    }
-    <!--Función JS de búsqueda-->
-    <script>
-        $(document).ready(function () {
-            $("#buscar").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#users tbody tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <!--FUNCIÓN EN PRODUCCIÓN-->
-    <script>
-        function bitacora(i) {
-            let users = Model;
-            let user = users.filter(userName => i);
-            $("#users tbody tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        }
-        
-    </script>
 </div>
 
 
@@ -119,18 +94,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="@Url.Action("AddUser", "User")" method="post" id="frm">
+                <form onsubmit="return jsConfirm(this)" action="@Url.Action("AddUser", "User")" method="post" id="frm">
                     <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
 
                         <div class="col-xl-3 col-md-6 col-sm-12 me-5">
                             <label class="mt-4 h6">Usuario</label>
-                            <input required type="text" name="userName" class="form-control" />
+                            <input required type="text" name="userName" class="form-control" placeholder="(Números/letras)" />
 
                             <label class="mt-4 h6">Contraseña</label>
-                            <input required type="password" name="password" class="form-control" />
+                            <input required name="password" type="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" class="form-control" placeholder="(Ejm: Example12)" title="Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres." />
 
                             <label class="mt-4 h6">Nombre</label>
-                            <input required type="text" name="name" class="form-control" />
+                            <input required type="text" name="name" class="form-control" pattern="[a-z\sA-Z]+" placeholder="(Solo letras)" />
 
                             <label class="mt-4 h6">Correo Electrónico</label>
                             <input required type="email" name="email" class="form-control" placeholder="example@example.com" />
@@ -139,50 +114,51 @@
 
                         <div class="col-xl-3 col-md-6 col-sm-12 me-5">
                             <label class="mt-4 h6">Dias cambio contraseña</label>
-                            <input type="number" name="daysChangePassword" class="form-control" />
+                            <input required type="number" name="daysChangePassword" class="form-control" pattern="^[e]" placeholder="(Solo números)" />
 
-                            <label class="mt-4">Intentos fallidos</label>
-                            <input required type="number" name="failesAttempts" class="form-control" />
+                            <label class="mt-4 h6">Intentos fallidos</label>
+                            <input required type="number" name="failesAttempts" class="form-control" placeholder="(Solo números)" />
 
                             <label class="mt-4 h6">Tipo de usuario</label>
                             <select required name="type" id="types" class="form-control h6">
+                                <option value="" selected disabled hidden>Seleccionar</option>
                                 <option value="Administrador">Administrador</option>
                                 <option value="Transaccional">Transaccional</option>
                                 <option value="Consulta">Consulta</option>
                             </select>
                         </div><br />
 
-                              <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                                  <label class="mt-4 h6">Activo</label>
-                                  <input  type="checkbox" name="active" class="form-control" value="true"/>
+                        <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                            <label class="mt-4 h6">Activo</label>
+                            <input type="checkbox" name="active" class="form-control" value="true" />
 
-                                  <label class="mt-4 h6">Bloqueado</label>
-                                  <input required type="checkbox" name="locked" class="form-control" />
-                              </div><br />
+                            <label class="mt-4 h6">Bloqueado</label>
+                            <input type="checkbox" name="locked" class="form-control" value="true" />
+                        </div><br />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
-                </form>
 
+                </form>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 <!-- MODAL BITACORA -->
 <div class="modal fade" id="modalBitacora" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalBitacoraTitle">Bitacora de usuario - </h5>
+                <h5 class="modal-title" id="modalBitacoraTitle">Bitacora de usuario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table id="users" class="table table-responsive table-hover table-bordered text-center text ">
+                <table id="userBit" class="table table-responsive table-hover table-bordered text-center text ">
                     <thead>
                         <tr>
                             <th>Ultimo ingreso</th>
@@ -193,20 +169,14 @@
                             <th>Fecha modificación</th>
                     </thead>
                     <tbody>
-                        @foreach (var users in Model)
-                        {
-                            if (@users.userName == "") /*ANALIZAR*/
-                            {
-                                <tr>
-                                    <td>@users.lastEntry</td>
-                                    <td>@users.lastChangedPassword</td>
-                                    <td>@users.userCreation</td>
-                                    <td>@users.dateCreation</td>
-                                    <td>@users.userModification</td>
-                                    <td>@users.dateModification</td>
-                                </tr>
-                            }
-                        }
+                        <tr>
+                            <td id="tdBUltIngreso"></td>
+                            <td id="tdBUltiCamContra"></td>
+                            <td id="tdBUsuarioCrea"></td>
+                            <td id="tdBFechaCrea"></td>
+                            <td id="tdBUsuarioModi"></td>
+                            <td id="tdBFechaModi"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -216,3 +186,56 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    //Busqueda
+    var busqueda = document.getElementById("buscar");
+    $(document).ready(function (i) {
+        $("#buscar").on("keyup", function (i) {
+            var value = $(this).val().toLowerCase();
+            $("#users tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    //Mostrar Bitacora por usuario
+    function jsmostrarBitacora(pUserName) {
+        console.log("Bitacora");
+        console.log(pUserName);
+        fetch("@Url.Content("~/User/getBitacora")" + "?userName=" + pUserName)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    console.log(res);
+                    console.log("Bitacora");
+
+                    tdBUltIngreso.textContent = res.lastEntry;
+                    tdBUltiCamContra.textContent = res.lastChangedPassword;
+                    tdBUsuarioCrea.textContent = res.userCreation;
+                    tdBFechaCrea.textContent = res.dateCreation;
+                    tdBUsuarioModi.textContent = res.userModification;
+                    tdBFechaModi.textContent = res.dateModification;
+                })
+    }
+
+</script>
+
+<script type="text/javascript">
+    function jsConfirm(form) {
+        console.log("entra");
+        @if (TempData["MessageAdd"] == null)
+        {
+            <text>
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo modificar',
+                        text: "@TempData["MessageAdd"]".slice(1),
+                        showConfirmButton: false,
+                    })
+                })
+                </text>
+        }
+    }
+</script>
