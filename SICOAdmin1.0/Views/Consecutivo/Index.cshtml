@@ -1,12 +1,10 @@
-﻿
-@model SICOAdmin1._0.Models.Consecutivo.Consecutivo
+﻿@model SICOAdmin1._0.Models.Consecutivo.Consecutivo
 
 
 @using SICOAdmin1._0.Models.Consecutivo
 
 @{
     ViewBag.Title = "Index";
-
     List<Consecutivo> lstConsecutivo = (List<Consecutivo>)ViewBag.Consecutivos;
     var objConsecutivo = new Consecutivo();
 }
@@ -16,6 +14,10 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </head>
 
+@section styles{
+
+
+}
 
 
 
@@ -52,6 +54,8 @@
     </div>
     <!--FILA TABLE-->
     <div class="row fila scrol-tablex">
+        @*<div id="table_refresh">*@
+
         <table id="tbConsecutivo" class="table table-bordered">
             <thead>
                 <tr>
@@ -60,10 +64,7 @@
                     <th scope="col">Mascara</th>
                     <th scope="col">Proximo Valor</th>
                     <th scope="col">Activo</th>
-                    <th scope="col">Usuario Creacion</th>
-                    <th scope="col">Usuario Modificacion</th>
-                    <th scope="col">Fecha Creacion</th>
-                    <th scope="col">Fecha Modificacion</th>
+                    <th scope="col">Acciones</th>
 
                 </tr>
             </thead>
@@ -75,11 +76,18 @@
                         <td>@e.Alias</td>
                         <td>@e.Mascara</td>
                         <td>@e.ProximoValor</td>
-                        <td>@e.Activo</td>
-                        <td>@e.UsuarioCreacion</td>
-                        <td>@e.UsuarioModificacion</td>
-                        <td>@e.FechaCreacion</td>
-                        <td>@e.FechaModificacion</td>
+                        @if (@e.Activo == false)
+                        {
+                            <td id="tbDesactivado">
+                                Desactivado
+                            </td>
+                        }
+                        else
+                        {
+                            <td id="tbActivado">
+                                Activado
+                            </td>
+                        }
                         <td>
                             <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar" class="btn btn-warning"
                                     onclick="jsmostrarDatos(@e.IdConsecutivo);">
@@ -91,6 +99,17 @@
                                 Bitacora
 
                             </button>
+                            @if (e.Activo == false)
+                            {
+                                @*<button id="EstadoAc" type="button" value="ModificarEstado" class="btn btn-primary" onclick="jsModificar(@e.IdConsecutivo);">Activar</button>*@
+                                <a id="btnActivar" class="btn btn-primary" onclick="jsModificarEstado(@e.IdConsecutivo);">Activar</a>
+                            }
+                            else
+                            {
+                                @*<button type="button" class="btn btn-danger" onclick="jsModificar(@e.IdConsecutivo);">Inactivar</button>*@
+
+                                <a id="btnDesactivar" class="btn btn-danger" onclick="jsModificarEstado(@e.IdConsecutivo);">Desactivar</a>
+                            }
 
                         </td>
                     </tr>
@@ -98,6 +117,8 @@
 
             </tbody>
         </table>
+        @*</div>*@
+
     </div>
 
 </div>
@@ -114,30 +135,21 @@
             </div>
 
             <div class="modal-body">
-
+                @*@using (Html.BeginForm("Add", "Consecutivo", FormMethod.Post, new { role = "form", @class = "row-12" }))
+                    {*@
                 @using (Html.BeginForm("Add", "Consecutivo", FormMethod.Post, new { role = "form", @class = "row-12" }))
                 {
                     @Html.ValidationMessage("Error", new { @class = "text-danger" })
-
-                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
-
-                        @Html.HiddenFor(c => c.IdConsecutivo, new { @class = "", id = "txtId" })
-
-                    </div>
-
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
 
                         @Html.LabelFor(c => c.Alias, new { @class = "mt-4" })
                         @Html.TextBoxFor(c => c.Alias, new { @class = "form-control", required = "required", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Alias", null, new { @class = "text-danger" })
-
-
                         @Html.LabelFor(c => c.Mascara, new { @class = "mt-4" })
-                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", placeHolder = "NNNN9999", required = "required", pattern = @"(?=[N]+[9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" />
-
+                        <input id="btnAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" />
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
                         @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
@@ -145,16 +157,16 @@
                         @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
 
                         @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
-                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(?=[+A-Z]+[+0-9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
 
                         <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
 
-                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
-                    </div>
-
                 }
+
+
+
             </div>
 
         </div>
@@ -177,22 +189,18 @@
                 @using (Html.BeginForm("Update", "Consecutivo", FormMethod.Post, new { role = "form", @class = "row-12", name = "FormActualizar" }))
                 {
 
-                    <div class="col-xl-3 col-md-6 col-sm-12 me-5">
 
-                        @Html.HiddenFor(c => c.IdConsecutivo, new { @class = "", id = "txtId" })
-
-                    </div>
-
+                    @Html.HiddenFor(c => c.IdConsecutivo, new { @class = "", id = "txtId" })
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
                         @Html.LabelFor(c => c.Alias, new { @class = "mt-4" })
                         @Html.TextBoxFor(c => c.Alias, new { @class = "form-control", id = "txtAlias", required = "required", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Alias", null, new { @class = "text-danger" })
 
                         @Html.LabelFor(c => c.Mascara, new { @class = "mt-4" })
-                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", id = "txtMascara", placeHolder = "NNNN9999", required = "required", pattern = @"(?=[N]+[9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", id = "txtMascara", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" style="text-align:center" />
+                        <input style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" />
                     </div>
 
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
@@ -202,7 +210,7 @@
                         @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
 
                         @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
-                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(?=[+A-Z]+[+0-9]+[^\s]).{1,30}", HtmlAttributes = new { Type = "text" } })
+                        @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
                         <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
@@ -255,7 +263,7 @@
                                 <td id="tbUsuarioCreacion"> </td>
                                 <td id="tbFechaCreacion"> </td>
                                 <td id="tbUsuarioModificacion"> </td>
-                                <td id="tbFechaModificacion"> </td>                                                             
+                                <td id="tbFechaModificacion"> </td>
                             </tr>
 
 
@@ -277,6 +285,76 @@
 
 
 @section scripts{
+    <script type="text/javascript">
+        console.log('@TempData["Message"]');
+        console.log('@TempData["Message"]');
+        @if (TempData["Resultado"] != null) {
+
+
+            if (TempData["Resultado"].ToString() == "1")
+            {
+                 <text>
+                    $(document).ready(function () {
+                        swal({
+                            title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 2000, showConfirmButton: false });
+                        })
+
+                </text>
+            }
+            else {
+                         <text>
+                    $(document).ready(function () {
+                        swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 2000, showConfirmButton: false});
+                        })
+
+                </text>
+
+            }
+            @*if (TempData["Message"].ToString() == "1") {
+               <text>
+                    $(document).ready(function () {
+                    swal({ title: "Registro Exitoso", text: "Se agrego el Consecutivo.", type: "success" });
+                    })
+
+                </text>
+            }
+            else if (TempData["Message"].ToString() == "-1"){
+                <text>
+                    $(document).ready(function () {
+                        swal({ title: "Error", text: "No se pudo Agregar!!", type: "error" });
+                    })
+                </text>
+            }
+            else if (TempData["Message"].ToString() == "-2") {
+                <text>
+                    $(document).ready(function () {
+                        swal({ title: "Error", text: "La mascara no coincide con el proximo valor!!", type: "info", timer: 1500  });
+                    })
+                </text>
+            }
+            else if (TempData["Message"].ToString() == "0") {
+                <text>
+                    $(document).ready(function () {
+                        swal({ title: "Error", text: "Alias del Consecutivo ya existente.", type: "error", timer: 1500 });
+                    })
+                </text>
+            }
+            else if (TempData["Message"].ToString() == "2") {
+                <text>
+                    $(document).ready(function () {
+                        swal({ title: "Actualizado Exitoso", text: "Se modifico el Consecutivo!!", type: "success", timer: 1500  });
+                    })
+                </text>
+            }
+            else if (TempData["Message"].ToString() == "-3") {
+                <text>
+                    $(document).ready(function () {
+                        swal({ title: "Error", text: "No se pudo actualizar el Consecutivo!!", type: "error", timer: 1500 });
+                    })
+                </text>
+            }*@
+        }
+    </script>
 
     <script>
         const idCons = document.getElementById("txtId");
@@ -287,52 +365,76 @@
 
         const tbId = document.getElementById("tbIdConsecutivo");
         const tbUsuarioCreacion = document.getElementById("tbUsuarioCreacion");
-        const tbUsuarioModificacion = document.getElementById("tbUsuarioCreacion")
-        const tbFechaCreacion = document.getElementById("tbUsuarioModificacion");
-        const tbFechaModificacion = document.getElementById("tbUsuarioModificacion ");
+        const tbUsuarioModificacion = document.getElementById("tbUsuarioModificacion")
 
+        const tbFechaCreacion = document.getElementById("tbFechaCreacion");
+        const tbFechaModificacion = document.getElementById("tbFechaModificacion");
 
-
-        
         function jsmostrarBitacora(pId) {
-            console.log("Bitacora");
-            console.log(pId);
+
             fetch("@Url.Content("~/Consecutivo/pintarDatos")" + "?idCons=" + pId)
                 .then(res => res.ok ? res.json() : null)
                 .then(res => {
 
-                    console.log(res);
 
-                    tbId.textContent = res.UsuarioCreacion;
-                    tbId.value = res.UsuarioCreacion;
+                    tbId.textContent = res.IdConsecutivo;
+                    tbId.value = res.IdConsecutivo;
 
-                    tbUsuarioCreacion.textContent = res.FechaCreacion;
-                    tbUsuarioCreacion.value = res.FechaCreacion;
+                    tbUsuarioCreacion.textContent = res.UsuarioCreacion;
+                    tbUsuarioCreacion.value = res.UsuarioCreacion;
 
                     tbUsuarioModificacion.textContent = res.UsuarioModificacion;
                     tbUsuarioModificacion.value = res.UsuarioModificacion;
 
-                    //tbFechaCreacion.textContent = res.FechaCreacion;
-                    //tbFechaCreacion.value = res.FechaCreacion;
+                    tbFechaCreacion.textContent = res.FechaCreacion;
+                    tbFechaCreacion.value = res.FechaCreacion;
 
-                    //tbFechaModificacion.textContent = res.FechaModificacion;
-                    //tbFechaModificacion.value = res.FechaModificacion;
+                    tbFechaModificacion.textContent = res.FechaModificacion;
+                    tbFechaModificacion.value = res.FechaModificacion;
 
                 })
         }
 
+        function jsModificarEstado(pId) {
+            console.log(pId);
+            fetch("@Url.Content("~/Consecutivo/ModificarEstado")" + "?idCons=" + pId)
+
+              .then(res => res.ok ? res.json() : null)
+                .then(res => {
 
 
+                  console.log(res);
+                    if (res == 2) {
+                        swal({
+                            title: "Cambio Exitoso", text: "Se modifico el Estado!!", type: "success", timer: 2000,
 
-        
+                            showConfirmButton: false
+                        }
+                            //,
+                            //function () {
+                            //    location.reload(true);
+                            //    tr.hide();
+                            //}
+                        );
+                        $("#tbConsecutivo").load(" #tbConsecutivo");
+                    } else {
+                        swal({
+                            title: "Cambio Fallido", text: "No se modifico el Estado!!", type: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        $("#tbConsecutivo").load(" #tbConsecutivo");
+                    }
+
+              })
+        }
 
         function jsmostrarDatos(pId) {
-            console.log(pId);
+
             fetch("@Url.Content("~/Consecutivo/pintarDatos")" + "?idCons=" + pId)
                 .then(res => res.ok ? res.json() : null)
                 .then(res => {
 
-                    console.log(res);
 
                     idCons.textContent = res.IdConsecutivo;
                     idCons.value = res.IdConsecutivo;
