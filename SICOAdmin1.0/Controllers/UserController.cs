@@ -245,6 +245,8 @@ namespace SICOAdmin.Controllers
             if (obj.NumPagina > obj.totalPaginas - 1) obj.NumPagina = Convert.ToInt32(totalPag.Value);
             else if (obj.NumPagina < 0) obj.NumPagina = 0;
 
+
+
             using (SICOAdminEntities db = new SICOAdminEntities())
             {
                 lstUsuariosPerfil = db.SP_P_PerfilesDelUsuario(obj.Usuario, obj.NumPagina, obj.CantRegistros, obj.palabraBuscar, totalPag).ToList();

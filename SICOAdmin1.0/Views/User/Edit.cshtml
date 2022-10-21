@@ -162,11 +162,17 @@
         const userLog = document.getElementById("usuarioLog").textContent;
         const idUser = document.getElementById("idUsuario").value;
         const numPagePerfUser = document.getElementById("numPagePerfUser").textContent;
+        
         //numPagePerfUser
 
         function cargarComponent() {
             //recarga tabla usuarios
-            $("#tableProfile").load("_PerfilesUsuario", { Usuario: idUser, NumPagina: numPagePerfUser, palabraBuscar: '' }, function (res) {
+            $("#tableProfile").load("_PerfilesUsuario", {
+                Usuario: idUser,
+                NumPagina: numPagePerfUser,
+                palabraBuscar: '',
+                CantRegistros: document.getElementById("tamPaginacion").value
+            }, function (res) {
                 $("#tableProfile").html(res);
                 //Cargamos el dataTable
                 //$("#profiles").dataTable();
@@ -198,7 +204,8 @@
                     palabraBuscar: "",
                     estaBuscando: false,
                     accion: 'S',
-                    totalPaginas: totalPage
+                    totalPaginas: totalPage,
+                    CantRegistros: document.getElementById("tamPaginacion").value
                 }, function (res) {
                 $("#tableProfile").html(res);
             })
@@ -214,7 +221,8 @@
                     NumPagina: anterior,
                     palabraBuscar: "",
                     estaBuscando: false,
-                    totalPaginas: totalPage
+                    totalPaginas: totalPage,
+                    CantRegistros: document.getElementById("tamPaginacion").value
                 }, function (res) {
                 $("#tableProfile").html(res);
             })
@@ -252,19 +260,29 @@
             // Buscar Usuarios del perfil
             $("#buscarPerfil").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableProfile").load("_PerfilesUsuario",
-                    {
-                        Usuario: idUser,
-                        NumPagina: 0,
-                        palabraBuscar: value,
-                        estaBuscando: true,
-                        accion: 'n' //n -> no pasar de pagina
-                    }, function (res) {
-                    $("#tableProfile").html(res);
-                })
+
+
+                if (value.length > 2 || value.length == 0) {
+                    $("#tableProfile").load("_PerfilesUsuario",
+                        {
+                            Usuario: idUser,
+                            NumPagina: 0,
+                            palabraBuscar: value,
+                            estaBuscando: true,
+                            accion: 'n', //n -> no pasar de pagina
+                            CantRegistros: document.getElementById("tamPaginacion").value
+
+                        }, function (res) {
+                            $("#tableProfile").html(res);
+                        })
+
+
+                }
+
+               
             })
 
-            //Cargamos el dataTable
+            //AGREGAR PERFIL
 
             $("#addPerfil").click(() => {
                 fetch(urlPerfilUsuario, {

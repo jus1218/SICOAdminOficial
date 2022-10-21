@@ -1,6 +1,9 @@
 ﻿@model List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>
 
+@{ 
+   
 
+}
 
 <!--TABLE-->
 
@@ -16,6 +19,7 @@
         <tbody id="contentTable">
             @foreach (var perfil in Model)// ViewBag.userPerfil
             {
+                
                 <tr>
                     <td>
                         @perfil.IdPerfil
@@ -29,6 +33,7 @@
                     </td>
                 </tr>
             }
+        
 
         </tbody>
     </table>
