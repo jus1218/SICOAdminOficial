@@ -24,6 +24,7 @@ namespace SICOAdmin1._0.Models
         public Pagina() {
             estaBuscando = true;
             CantRegistros = 1;
+            accion = 'A';
 
         }
     }
