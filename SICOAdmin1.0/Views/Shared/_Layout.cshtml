@@ -1,8 +1,13 @@
 ﻿
 @using SICOAdmin1._0.Models.User
-@{ 
-    User UserLog = (User) Session["User"];
+@{
+    User UserLog = (User)Session["User"];
+    string userNameLog = " ";
 
+    if (UserLog != null)
+    {
+        userNameLog = UserLog.name;
+    }
 }
 
 <!DOCTYPE html>
@@ -43,8 +48,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Bienvenido, </span>
-                            <h2 id="usuarioLog">@UserLog.userName</h2>
-                            @*<label>@((User)Session["User"].name)</label>*@
+                            <h2 id="usuarioLog" style="font-size:medium;">@userNameLog</h2>
 
                         </div>
                     </div>
@@ -123,17 +127,17 @@
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Content/images/justin-img.jpeg" alt="">@*<span>@ViewBag.userLogin.userName</span>*@
+                                <a href="javascript:;" class="user-profile dropdown-toggle" style="font-size:medium;" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Content/images/justin-img.jpeg" alt="">@userNameLog
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#exampleModalLong"> Perfil</a>
                                     <a class="dropdown-item" href="javascript:;">
                                         <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
+                                        <span>Opciones</span>
                                     </a>
-                                    <a class="dropdown-item" href="javascript:;">Help</a>
-                                    <a class="dropdown-item" href="@Url.Action("Logout","Home")"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <a class="dropdown-item" href="javascript:;">Ayuda</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout","Home")"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a>
                                 </div>
                             </li>
 

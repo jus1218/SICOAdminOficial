@@ -1,26 +1,25 @@
-﻿
-@{
-    ViewBag.Title = "Login";
+﻿@{
+    ViewBag.Title = "Login - SICOAdmin";
     Layout = null;
 }
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/css/login.css" rel="stylesheet" />
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!-- Include the above in your HEAD tag -->
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <div class="main">
-
-
     <div class="container">
         <center>
             <div class="middle">
@@ -35,6 +34,10 @@
 
                             <div>
                                 <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Iniciar sesión"></span>
+                            </div>
+                            <div>
+                                <br />
+                                <span style="width:48%; text-align:left;  display: inline-block;"><a data-toggle="modal" data-target="#modalChangePass" class="small" href="" style="color:white; text-align:center;">Cambiar contraseña</a></span>
                             </div>
 
 
@@ -55,20 +58,53 @@
             </div>
         </center>
     </div>
-
 </div>
 
-@if (ViewBag.Alert != null)
-{
-    <div class="alert alert-dismissable alert-info">
-        <button type="submit" class="close" data-dismiss="alert">
-            &times;
-        </button>
-        <strong>Providus informa...</strong> @ViewBag.Alert
+<!-- Modal cambio de contraseña -->
+<div class="modal fade in" id="modalChangePass" tabindex="-1" role="dialog" aria-labelledby="changepass" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Cambio de contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="return submitForm(this)" action="@Url.Action("CambiarContrasena", "User")" method="post" id="changePass">
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input required type="text" name="userName" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña actual</label>
+                        <input required type="password" name="password" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="pass1">Contraseña nueva</label>
+                        <input name="newPassword" type="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" title="Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres." class="form-control" id="pass1" required>
+                    </div>
+                    @*<div class="form-group">
+                            <label for="pass2">Vuelve a escribir la nueva contraseña</label>
+                            <input name="newPassword" type="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" title="Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres." class="form-control" id="pass2" required>
+                        </div>*@
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-}
+</div>
+
+
 
 @section scripts{
+    var msg;
 }
 
 <script>
@@ -82,18 +118,103 @@
             parametros = $(this).serialize();
 
             $.post(url, parametros, function (data) {
-                if (data == "1") {
-                    document.location.href = "@Url.Content("~/")";
+                if (data[0] == "1") {
+
+                    var msg = data.slice(20);
+                    console.log(data.slice(20));
+                    const validate = 'Bienvenido al sistema SICOAdmin'
+                    if (data[21] === "B") {
+                        msg = validate;
+                    }
+                    console.log(msg);
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Ingreso correcto',
+                        text: msg,
+                        timer: 3500,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                        }
+                    })
+                    setTimeout( function() { document.location.href = "@Url.Content("~/")" }, 3500);
                 } else {
-                    alert(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ha ocurrido un error',
+                        text: data,
+                        confirmButtonText: 'Aceptar',
+                    })
                 }
 
             })
 
         })
     })
+
+    function submitForm(form) {
+        console.log(form);
+        Swal.fire({
+            title: 'Seguro de cambiar su contraseña?',
+            text: "No podrás revertir este cambio!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cambiar la contraseña!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        })
+        return false;
+    }
 </script>
 
-@*<center>
-        <p class="mensaje">@ViewData["Mensaje"]</p>
-    </center>*@
+<!--<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("entra");
+
+
+        $("#changePass").submit(function (e) {
+            e.preventDefault();
+            url = "@Url.Content("~/User/CambiarContrasena")";
+            parametros = $(this).serialize();
+            $.post(url, parametros, function (resultado) {
+                //console.log(resultado);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cambio éxitoso',
+                    text: "@TempData["MsgChangePass"]",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                //setTimeout(function () {form.submit()}, 2001);
+
+            })
+
+
+        })
+        //Swal.fire({
+        //    title: 'Seguro de cambiar su contraseña?',
+        //    text: "No podrás revertir este cambio!",
+        //    icon: 'warning',
+        //    showCancelButton: true,
+        //    confirmButtonColor: '#3085d6',
+        //    cancelButtonColor: '#d33',
+        //    confirmButtonText: 'Sí, cambiar la contraseña!'
+        //}).then((result) => {
+        //    if (result.isConfirmed) {-->
+@*@if (TempData["MsgChangePass"] == null) {
+        <text>
+
+        </text>
+    }*@
+<!--//    }
+        //})
+        //return false;
+    })
+</script>-->

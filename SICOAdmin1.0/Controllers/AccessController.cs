@@ -11,6 +11,8 @@ namespace SICOAdmin1._0.Controllers
 {
     public class AccessController : Controller
     {
+        static int contG = 0;
+        static string userG = "";
         // GET: Access
         public ActionResult Index()
         {
@@ -25,6 +27,7 @@ namespace SICOAdmin1._0.Controllers
         [HttpPost]
         public ActionResult Login(string userName, string password)
         {
+
             ObjectParameter resultado = new ObjectParameter("resultado", false);
             ObjectParameter mensaje = new ObjectParameter("mensaje", "");
             try
@@ -32,14 +35,14 @@ namespace SICOAdmin1._0.Controllers
 
                 using (SICOAdminEntities db = new SICOAdminEntities())
                 {
-                    //db.SP_P_Logeo(userName, password, resultado, mensaje);
+                    db.SP_P_Logeo(userName, password, resultado, mensaje);
 
 
 
                     bool bit = Convert.ToBoolean(resultado.Value);
                     string message = Convert.ToString(mensaje.Value);
 
-                    if (true)
+                    if (bit)
                     {
                         SP_C_BuscarUsuario_Result user = db.SP_C_BuscarUsuario(userName).FirstOrDefault();
                         User oUser = new User();
@@ -73,14 +76,20 @@ namespace SICOAdmin1._0.Controllers
 
 
                         Session["User"] = oUser;
+                        contG = 0;
+                        userG = " ";
 
-                        ViewBag.Alert = message;
-
-                        return Content("1");
+                        return Content("1" + message);
                     }
                     else
                     {
-                        ViewBag.Alert = message;
+                        string msg = IntentosPermitidos(userName);
+                        if (msg != null)
+                        {
+                            message = msg;
+                            contG = 0;
+                            userG = "";
+                        }
                         return Content(message);
                     }
                 }
@@ -90,6 +99,40 @@ namespace SICOAdmin1._0.Controllers
                 return Content("Ocurrio un error :( \n" + ex.Message);
             }
         }
-   
+
+        public string IntentosPermitidos(string userName)
+        {
+            string msg = null;
+            if (userG != null && userG == userName)
+            {
+                contG = contG - 1;
+                if (contG == 0)
+                {
+                    ObjectParameter mensajeB = new ObjectParameter("mensaje", "");
+                    using (SICOAdminEntities db = new SICOAdminEntities())
+                    {
+                        db.SP_P_BloquearUsuario(userName, mensajeB);
+                        msg = Convert.ToString(mensajeB.Value);
+                    }
+                }
+
+            }
+            else
+            {
+
+                using (SICOAdminEntities db = new SICOAdminEntities())
+                {
+                    SP_C_BuscarUsuario_Result USER = db.SP_C_BuscarUsuario(userName).FirstOrDefault();
+                    if (!USER.Bloqueado)
+                    {
+                        userG = userName;
+                        contG = USER.IntentosFallidos;
+                        contG = contG - 1;
+                    }
+                }
+            }
+
+            return msg;
+        }
     }
 }
