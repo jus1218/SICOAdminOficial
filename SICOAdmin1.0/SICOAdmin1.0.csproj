@@ -290,7 +290,7 @@
     <Compile Include="Models\USUARIO_PERFIL.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModel\UserTableViewModel.cs" />
+    
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
