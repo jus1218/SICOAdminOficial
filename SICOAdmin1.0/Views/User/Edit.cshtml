@@ -27,6 +27,11 @@
             <!--Usuario-->
             <div class="col-xl-3 col-md-6 col-sm-12 me-5">
 
+                @Html.LabelFor(d => d.userName, new { @class = "mt-4" })
+                @Html.TextBoxFor(d => d.userName, new { @class = "form-control", id = "idUsuario", @disabled = true })
+                @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
+
+
                 @Html.LabelFor(d => d.name, new { @class = "mt-4" })
                 @Html.TextBoxFor(d => d.name, new { @class = "form-control" })
                 @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
