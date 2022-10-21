@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SICOAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SICOAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ACCION">
           <Key>
             <PropertyRef Name="IdAccion" />
@@ -1031,6 +1031,7 @@
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
           <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+          <Parameter Name="mensaje" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="SP_P_ActualizarProximoValorConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idConsecutivo" Type="int" Mode="In" />
@@ -1074,6 +1075,7 @@
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
           <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+          <Parameter Name="mensage" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="SP_P_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -1319,8 +1321,7 @@
             <End Role="ACCION_PERFIL" EntitySet="ACCION_PERFIL" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SICOAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2475,10 +2476,10 @@
             <End Role="USUARIO_PERFIL" EntitySet="USUARIO_PERFIL" />
           </AssociationSet>
           <FunctionImport Name="f_opcionesPerfilesUsuario" IsComposable="true" ReturnType="Collection(SICOAdminModel.f_opcionesPerfilesUsuario_Result)">
-            <Parameter Name="usuario" Mode="In" Type="String" />
+          <Parameter Name="usuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="f_opcionesUsuariosPerfil" IsComposable="true" ReturnType="Collection(SICOAdminModel.f_opcionesUsuariosPerfil_Result)">
-            <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -2487,13 +2488,13 @@
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="SP_C_BuscarConsecutivo" ReturnType="Collection(SICOAdminModel.SP_C_BuscarConsecutivo_Result)">
-            <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+          <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_C_BuscarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_BuscarPerfil_Result)">
-            <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_C_BuscarUsuario" ReturnType="Collection(SICOAdminModel.SP_C_BuscarUsuario_Result)">
-            <Parameter Name="Usuario" Mode="In" Type="String" />
+          <Parameter Name="Usuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_C_MostrarAcciones" ReturnType="Collection(SICOAdminModel.SP_C_MostrarAcciones_Result)" />
           <FunctionImport Name="SP_C_MostrarConsecutivos" ReturnType="Collection(SICOAdminModel.SP_C_MostrarConsecutivos_Result)" />
@@ -2533,9 +2534,10 @@
             <Parameter Name="activo" Mode="In" Type="Boolean" />
             <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
             <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+            <Parameter Name="mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_P_ActualizarProximoValorConsecutivo">
-            <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+          <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_AddUser">
             <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -2576,6 +2578,7 @@
             <Parameter Name="activo" Mode="In" Type="Boolean" />
             <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
             <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+            <Parameter Name="mensage" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_P_CrearPerfil">
             <Parameter Name="Nombre" Mode="In" Type="String" />
@@ -2590,13 +2593,13 @@
             <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_P_DibujarArbol" ReturnType="Collection(SICOAdminModel.SP_P_DibujarArbol_Result)">
-            <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="idPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_EliminarAccion">
-            <Parameter Name="idAccion" Mode="In" Type="Int32" />
+          <Parameter Name="idAccion" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_EliminarAll_AccionPerfil">
-            <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="idPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_EliminarUsuarioPerfil">
             <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -2625,7 +2628,7 @@
             <Parameter Name="resultado" Mode="InOut" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="SP_P_ModificarEstadoPerfil">
-            <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_ModificarPerfil">
             <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
@@ -2657,7 +2660,7 @@
             <Parameter Name="TotalPag" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_P_UsuariosDelPerfil" ReturnType="Collection(SICOAdminModel.SP_P_UsuariosDelPerfil_Result)">
-            <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+          <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />

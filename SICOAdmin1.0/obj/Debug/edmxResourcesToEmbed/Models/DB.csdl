@@ -1209,6 +1209,7 @@
       <Parameter Name="activo" Mode="In" Type="Boolean" />
       <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
       <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+      <Parameter Name="mensaje" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_P_ActualizarProximoValorConsecutivo">
       <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
@@ -1252,6 +1253,7 @@
       <Parameter Name="activo" Mode="In" Type="Boolean" />
       <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
       <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+      <Parameter Name="mensage" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_P_CrearPerfil">
       <Parameter Name="Nombre" Mode="In" Type="String" />

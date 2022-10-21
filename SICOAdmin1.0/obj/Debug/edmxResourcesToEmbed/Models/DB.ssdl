@@ -1026,6 +1026,7 @@
     <Parameter Name="activo" Type="bit" Mode="In" />
     <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+    <Parameter Name="mensaje" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="SP_P_ActualizarProximoValorConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
@@ -1069,6 +1070,7 @@
     <Parameter Name="activo" Type="bit" Mode="In" />
     <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+    <Parameter Name="mensage" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="SP_P_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Nombre" Type="varchar" Mode="In" />

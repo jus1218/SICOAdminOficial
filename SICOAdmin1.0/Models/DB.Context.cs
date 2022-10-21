@@ -227,7 +227,7 @@ namespace SICOAdmin1._0.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual int SP_P_ActualizarConsecutivo(Nullable<int> idConsecutivo, string alias, string mascara, string proximoValor, Nullable<bool> activo, string usuarioModificacion, ObjectParameter resultado)
+        public virtual int SP_P_ActualizarConsecutivo(Nullable<int> idConsecutivo, string alias, string mascara, string proximoValor, Nullable<bool> activo, string usuarioModificacion, ObjectParameter resultado, ObjectParameter mensaje)
         {
             var idConsecutivoParameter = idConsecutivo.HasValue ?
                 new ObjectParameter("idConsecutivo", idConsecutivo) :
@@ -253,7 +253,7 @@ namespace SICOAdmin1._0.Models
                 new ObjectParameter("usuarioModificacion", usuarioModificacion) :
                 new ObjectParameter("usuarioModificacion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_ActualizarConsecutivo", idConsecutivoParameter, aliasParameter, mascaraParameter, proximoValorParameter, activoParameter, usuarioModificacionParameter, resultado);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_ActualizarConsecutivo", idConsecutivoParameter, aliasParameter, mascaraParameter, proximoValorParameter, activoParameter, usuarioModificacionParameter, resultado, mensaje);
         }
     
         public virtual int SP_P_ActualizarProximoValorConsecutivo(Nullable<int> idConsecutivo)
@@ -361,7 +361,7 @@ namespace SICOAdmin1._0.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_CrearAccion", aliasParameter, descipcionParameter, tipoParameter, usuarioCreacionModificacionParameter);
         }
     
-        public virtual int SP_P_CrearConsecutivo(string alias, string mascara, string proximoValor, Nullable<bool> activo, string usuarioCreacion, ObjectParameter resultado)
+        public virtual int SP_P_CrearConsecutivo(string alias, string mascara, string proximoValor, Nullable<bool> activo, string usuarioCreacion, ObjectParameter resultado, ObjectParameter mensage)
         {
             var aliasParameter = alias != null ?
                 new ObjectParameter("alias", alias) :
@@ -383,7 +383,7 @@ namespace SICOAdmin1._0.Models
                 new ObjectParameter("usuarioCreacion", usuarioCreacion) :
                 new ObjectParameter("usuarioCreacion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_CrearConsecutivo", aliasParameter, mascaraParameter, proximoValorParameter, activoParameter, usuarioCreacionParameter, resultado);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_CrearConsecutivo", aliasParameter, mascaraParameter, proximoValorParameter, activoParameter, usuarioCreacionParameter, resultado, mensage);
         }
     
         public virtual int SP_P_CrearPerfil(string nombre, string descripcion, Nullable<bool> activo, string usuarioCreacion, string usuarioModificacion)
