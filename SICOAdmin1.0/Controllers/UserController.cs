@@ -271,12 +271,12 @@ namespace SICOAdmin.Controllers
             if (obj.palabraBuscar == null) obj.palabraBuscar = "";
 
             // Validacion si el usuario esta buscado o solo pasando de pagina
-            if (!(obj.estaBuscando))
-            {
+            //if (!(obj.estaBuscando))
+            //{
                 if (obj.accion.Equals('S')) obj.NumPagina += 1; //Enviar al SP
-                else obj.NumPagina -= 1;
-            }
-            else ViewBag.PagActual = obj.NumPagina;
+                else if (obj.accion.Equals('N')) obj.NumPagina -= 1;
+            //}
+            //else ViewBag.PagActual = obj.NumPagina;
 
             // Restricciones para que no busque paginas que no existe
             if (obj.NumPagina > obj.totalPaginas - 1) obj.NumPagina = Convert.ToInt32(totalPag.Value);

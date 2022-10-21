@@ -105,7 +105,7 @@
                 <div class="col-8">
                     <h4 class="col-6 ps-4 pl-0">Perfiles del Usuario</h4>
 
-                    <select class="col-2 form-control select-item border-light" aria-label="Default select example" id="tamPaginacion" onchange="cambTam()">
+                    <select class="col-2 form-control select-item border-light" aria-label="Default select example" id="tamPaginacion" onchange="cambTam(@ViewBag.totalPag.Value)">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -229,7 +229,7 @@
 
         }
 
-
+        let buscarPerfil = document.getElementById("buscarPerfil");
         //Pasar a la pagina siguiente
         function jsSiguiente(sig,totalPage) {
 
@@ -238,8 +238,8 @@
                 {
                     Usuario: idUser,
                     NumPagina: siguiente,
-                    palabraBuscar: "",
-                    estaBuscando: false,
+                    palabraBuscar: $("#buscarPerfil").val().toLowerCase(),//"",
+                    //estaBuscando: false,
                     accion: 'S',
                     totalPaginas: totalPage,
                     CantRegistros: document.getElementById("tamPaginacion").value
@@ -248,6 +248,8 @@
             })
 
         }
+
+        
         //Pasar a la pagina anterior
         function jsRetroceder(ant, totalPage) {
 
@@ -256,8 +258,8 @@
                 {
                     Usuario: idUser,
                     NumPagina: anterior,
-                    palabraBuscar: "",
-                    estaBuscando: false,
+                    palabraBuscar: $("#buscarPerfil").val().toLowerCase(),//buscarPerfil.textContent,
+                    accion: 'N',
                     totalPaginas: totalPage,
                     CantRegistros: document.getElementById("tamPaginacion").value
                 }, function (res) {
@@ -268,16 +270,18 @@
 
        
 
-        // Cambio de tamaño
-        function cambTam() {
+        // Cambio de tamaño de paginacion
+        function cambTam(totalPage) {
 
             $("#tableProfile").load("_PerfilesUsuario",
                 {
                     Usuario: idUser,
-                    NumPagina: numPagePerfUser,
+                    //NumPagina: numPagePerfUser,
+                    palabraBuscar: $("#buscarPerfil").val().toLowerCase(),
                     CantRegistros: document.getElementById("tamPaginacion").value,
-                    palabraBuscar: "",
-                    estaBuscando: false
+                     //buscarPerfil.textContent
+                    //estaBuscando: false
+                    totalPaginas: totalPage
                 }, function (res) {
                     $("#tableProfile").html(res);
                 })
@@ -288,7 +292,7 @@
         let btnAsociar = document.getElementById("addPerfil");
         let selectValue = document.getElementById("perfilSelect");
         let userName = document.getElementById("userName");
-        let buscarPerfil = document.getElementById("buscarPerfil");
+       
 
         // AGREGAR USUARIO AL PERFIL
         var urlPerfilUsuario = "@Url.Content("~/User/agregarUsuarioPerfil")";
@@ -299,22 +303,22 @@
                 var value = $(this).val().toLowerCase();
 
 
-                if (value.length > 2 || value.length == 0) {
+                //if (value.length > 2 || value.length == 0) {
                     $("#tableProfile").load("_PerfilesUsuario",
                         {
                             Usuario: idUser,
                             NumPagina: 0,
                             palabraBuscar: value,
                             estaBuscando: true,
-                            accion: 'n', //n -> no pasar de pagina
-                            CantRegistros: document.getElementById("tamPaginacion").value
+                            accion: 'n' //n -> no pasar de pagina
+                            //CantRegistros: document.getElementById("tamPaginacion").value
 
                         }, function (res) {
                             $("#tableProfile").html(res);
                         })
 
 
-                }
+                //}
 
                
             })
