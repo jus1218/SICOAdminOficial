@@ -206,8 +206,8 @@
             //recarga tabla usuarios
             $("#tableProfile").load("_PerfilesUsuario", {
                 Usuario: idUser,
-                NumPagina: numPagePerfUser,
-                palabraBuscar: '',
+                NumPagina: 0,//numPagePerfUser
+                palabraBuscar: $("#buscarPerfil").val().toLowerCase(),
                 CantRegistros: document.getElementById("tamPaginacion").value
             }, function (res) {
                 $("#tableProfile").html(res);
@@ -218,7 +218,7 @@
             $("#selectProfiles").load("_SelectOpcProfile?id=" + idUser, function (res) {
                 $("#selectProfiles").html(res);
             })
-
+            //document.getElementById("numPagePerfUser").textContent = '';
             //$("#buscarPerfil").on("keyup", function () {
             //    var value = $(this).val().toLowerCase();
             //    $("#tableProfile").load("_PerfilesUsuario", { Usuario: idUser, NumPagina: 0, palabraBuscar: value }, function (res) {

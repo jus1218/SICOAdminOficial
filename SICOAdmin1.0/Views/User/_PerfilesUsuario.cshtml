@@ -1,8 +1,7 @@
 ﻿@model List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>
 
-@{ 
-   
-
+@{
+    byte i = 0;
 }
 
 <!--TABLE-->
@@ -19,7 +18,7 @@
         <tbody id="contentTable">
             @foreach (var perfil in Model)// ViewBag.userPerfil
             {
-                
+                i++;
                 <tr>
                     <td>
                         @perfil.IdPerfil
@@ -33,7 +32,7 @@
                     </td>
                 </tr>
             }
-        
+
 
         </tbody>
     </table>
@@ -47,11 +46,14 @@
     </div>
 
     <div class="col mr-0">
+
+
+
         @if (@ViewBag.PagActual > 1)
         {
             <input type="button" class="btn btn-outline-success" value="Retroceder" onclick="jsRetroceder(@ViewBag.PagActual,@ViewBag.totalPag.Value)" />
         }
-        @if (@ViewBag.PagActual != @ViewBag.totalPag.Value)
+        @if (@ViewBag.PagActual != @ViewBag.totalPag.Value && i != 0)
         {
             <input type="button" class="btn btn-outline-success" onclick="jsSiguiente(@ViewBag.PagActual,@ViewBag.totalPag.Value);" value="Siguiente" />
 
@@ -62,4 +64,4 @@
 
 
 </div>
-        
+
