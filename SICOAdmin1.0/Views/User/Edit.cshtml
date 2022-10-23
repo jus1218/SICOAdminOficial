@@ -4,6 +4,14 @@
 @{
     ViewBag.Title = "UpdateUser";
     List<SelectListItem> lstPerfiles = (List<SelectListItem>)ViewBag.viewPerfiles;
+
+
+
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
 }
 
 @section styles{
@@ -73,69 +81,71 @@
 
         <!--BOTONES-->
         <div class="col mt-4 d-flex justify-content-center">
-            <input class="btn btn-success me-2" type="submit" value="Guardar" />
+            <input class="btn btn-primary me-2" type="submit" value="Guardar" />
             <a class="btn btn-danger" href="@Url.Action("Index", "User")">Cerrar</a>
         </div>
     }
+    @if (@lstActions.Contains(3))
+    {
+        <!--PARTE DE ABAJO-->
+        <div class="row mt-5">
 
-    <!--PARTE DE ABAJO-->
-    <div class="row mt-5">
+            <div class="col-md-4 mt-2">
+                <div class="form-group d-flex justify-content-center" id="selectProfiles">
+                    @Html.Partial("_SelectOpcProfile", lstPerfiles)
+                </div>
 
-        <div class="col-md-4 mt-2">
-            <div class="form-group d-flex justify-content-center" id="selectProfiles">
-                @Html.Partial("_SelectOpcProfile", lstPerfiles)
-            </div>
-
-            <div class="row mt-4 d-flex justify-content-center">
-                <div class="col-xl-6 col-md-6 col-sm-4 mb-3 mt-2">
-                    <input type="button"
-                           id="addPerfil"
-                           value="Agregar"
-                           class="btn btn-success col-12" />
+                <div class="row mt-4 d-flex justify-content-center">
+                    <div class="col-xl-6 col-md-6 col-sm-4 mb-3 mt-2">
+                        <input type="button"
+                               id="addPerfil"
+                               value="Agregar"
+                               class="btn btn-primary col-12" />
+                    </div>
                 </div>
             </div>
+
+            @*AQUI VA*@
+
+            <div class="col">
+
+                <div class="row">
+
+                    <div class="col-8">
+                        <h4 class="col-6 ps-4 pl-0">Perfiles del Usuario</h4>
+
+                        <select class="col-2 form-control select-item border-light" aria-label="Default select example" id="tamPaginacion" onchange="cambTam(@ViewBag.totalPag.Value)">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group col">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Buscar..."
+                               aria-label="Buscar..."
+                               aria-describedby="button-addon2"
+                               id="buscarPerfil" />
+
+                    </div>
+
+
+
+                </div>
+                <div class="row pt-3" id="tableProfile">
+                    @Html.Partial("_PerfilesUsuario", (List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>)ViewBag.userPerfil)
+
+                </div>
+            </div>
+
+
         </div>
-
-        @*AQUI VA*@
-
-        <div class="col">
-
-            <div class="row">
-
-                <div class="col-8">
-                    <h4 class="col-6 ps-4 pl-0">Perfiles del Usuario</h4>
-
-                    <select class="col-2 form-control select-item border-light" aria-label="Default select example" id="tamPaginacion" onchange="cambTam(@ViewBag.totalPag.Value)">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-
-                </div>
-
-
-                <div class="input-group col">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Buscar..."
-                           aria-label="Buscar..."
-                           aria-describedby="button-addon2"
-                           id="buscarPerfil" />
-
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3" id="tableProfile">
-                @Html.Partial("_PerfilesUsuario", (List<SICOAdmin1._0.Models.SP_P_PerfilesDelUsuario_Result>)ViewBag.userPerfil)
-
-            </div>
-        </div>
-
-
+    }
     </div>
-</div>
 
 <!-- Modal ELIMINAR PERFIL -->
 <div class="modal fade" id="modalEliminar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -206,8 +216,8 @@
             //recarga tabla usuarios
             $("#tableProfile").load("_PerfilesUsuario", {
                 Usuario: idUser,
-                NumPagina: numPagePerfUser,
-                palabraBuscar: '',
+                NumPagina: 0,//numPagePerfUser
+                palabraBuscar: $("#buscarPerfil").val().toLowerCase(),
                 CantRegistros: document.getElementById("tamPaginacion").value
             }, function (res) {
                 $("#tableProfile").html(res);
@@ -218,7 +228,7 @@
             $("#selectProfiles").load("_SelectOpcProfile?id=" + idUser, function (res) {
                 $("#selectProfiles").html(res);
             })
-
+            //document.getElementById("numPagePerfUser").textContent = '';
             //$("#buscarPerfil").on("keyup", function () {
             //    var value = $(this).val().toLowerCase();
             //    $("#tableProfile").load("_PerfilesUsuario", { Usuario: idUser, NumPagina: 0, palabraBuscar: value }, function (res) {
@@ -310,7 +320,8 @@
                             NumPagina: 0,
                             palabraBuscar: value,
                             estaBuscando: true,
-                            accion: 'n' //n -> no pasar de pagina
+                            accion: 'n', //n -> no pasar de pagina
+                            CantRegistros: document.getElementById("tamPaginacion").value,
                             //CantRegistros: document.getElementById("tamPaginacion").value
 
                         }, function (res) {

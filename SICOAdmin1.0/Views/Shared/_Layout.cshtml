@@ -8,6 +8,13 @@
     {
         userNameLog = UserLog.name;
     }
+
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
+
 }
 
 <!DOCTYPE html>
@@ -61,21 +68,29 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
+
                                 <li>
-                                    <a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i>Inicio</a>
+                                    <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>Inicio</a>
                                 </li>
+
                                 <li>
                                     <a><i class="fa fa-pencil-square-o"></i> Control Operativo <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="@Url.Action("Index","User")">Admin. Usuarios</a></li>
-                                        <li><a href="@Url.Action("Index","Perfil")">Admin. Pefiles</a></li>
-                                        <li><a href="@Url.Action("Index","Segunda")">Admin. E/S</a></li>
-                                        <li><a href="@Url.Action("Index","Segunda")">Admin. Filial</a></li>
-                                        <li><a href="@Url.Action("Index","Segunda")">Registro de marca</a></li>
-                                        <li><a href="@Url.Action("Index","Consecutivo")">Consecutivo</a></li>
+
+                                        @if (@lstActions.Contains(6))
+                                        {
+                                            <li><a href="@Url.Action("Index", "User")">Admin. Usuarios</a></li>
+                                        }
+                                        <li><a href="@Url.Action("Index", "Perfil")">Admin. Pefiles</a></li>
+                                        <li><a href="@Url.Action("Index", "Segunda")">Admin. E/S</a></li>
+                                        <li><a href="@Url.Action("Index", "Segunda")">Admin. Filial</a></li>
+                                        <li><a href="@Url.Action("Index", "Segunda")">Registro de marca</a></li>
+                                        <li><a href="@Url.Action("Index", "Consecutivo")">Consecutivo</a></li>
 
                                     </ul>
                                 </li>
+
+
                                 <li>
                                     <a><i class="fa fa-clone"></i>Planilla <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">

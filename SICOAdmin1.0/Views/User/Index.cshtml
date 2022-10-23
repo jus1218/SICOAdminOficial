@@ -3,6 +3,12 @@
 
 @{
     ViewBag.Title = "Control operativo - SICOAdmin";
+
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
 }
 
 <head>
@@ -20,10 +26,13 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
-                Agregar
-            </button>
-        </div>
+            @if (@lstActions.Contains(3))
+            {
+                <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
+                    Agregar
+                </button>
+            }
+            </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
             <div class="input-group mb-2">

@@ -1,4 +1,5 @@
 ﻿
+using SICOAdmin1._0.Filters;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.User;
 using System;
@@ -22,6 +23,7 @@ namespace SICOAdmin.Controllers
         int PagActual = 0;
 
         // GET: User
+        [AuthorizeUser(pAccion: 6)]
         public ActionResult Index()
         {
             List<SP_C_MostrarUsuarios_Result> lst = null;
@@ -75,7 +77,7 @@ namespace SICOAdmin.Controllers
 
             return View(lstModel);
         }
-
+        [AuthorizeUser(pAccion: 3)]
         [HttpGet]
         public ActionResult addUser()
         {
@@ -236,6 +238,7 @@ namespace SICOAdmin.Controllers
         }
 
         // ############################################## ASOCIACIONES USUARIO CON PERFIL ##############################################
+       // [AuthorizeUser(pAccion: 63)]
         [HttpPost]
         public JsonResult agregarUsuarioPerfil(UsuarioPerfil obj)//
         {

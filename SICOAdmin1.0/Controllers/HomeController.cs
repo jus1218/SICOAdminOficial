@@ -10,6 +10,17 @@ namespace SICOAdmin1._0.Controllers
     {
         public ActionResult Index()
         {
+            //using () { 
+            
+            
+            //}
+            //List<int?> lstActions = null;
+            //lstActions = db.SP_C_AuthorizeUser(oUser.userName).ToList();
+            //TempData.Clear();
+            //TempData["privilegios"] = lstActions;
+
+
+
             return View();
         }
 

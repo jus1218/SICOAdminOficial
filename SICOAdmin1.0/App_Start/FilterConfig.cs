@@ -9,6 +9,7 @@ namespace SICOAdmin1._0
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new Filters.VerifySession());
+            
         }
     }
 }

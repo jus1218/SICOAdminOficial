@@ -1,4 +1,5 @@
-﻿using SICOAdmin1._0.Models;
+﻿using SICOAdmin1._0.Filters;
+using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Perfil;
 using SICOAdmin1._0.Models.ViewModels;
 using System;
@@ -15,6 +16,7 @@ namespace SICOAdmin1._0.Controllers
         // GET: Perfil
         /*Muestra la Tabla*/
         #region Mostrar
+        [AuthorizeUser(pAccion: 6)]// cambiar
         public ActionResult Index()
         {
             List<SP_C_MostrarPerfil_Result> lst = null;
