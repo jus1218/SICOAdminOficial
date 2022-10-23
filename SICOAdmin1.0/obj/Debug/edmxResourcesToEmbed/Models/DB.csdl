@@ -1213,6 +1213,8 @@
     </FunctionImport>
     <FunctionImport Name="SP_P_ActualizarProximoValorConsecutivo">
       <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="valorActual" Mode="In" Type="String" />
+      <Parameter Name="accion" Mode="In" Type="Int16" />
     </FunctionImport>
     <FunctionImport Name="SP_P_AddUser">
       <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1343,6 +1345,36 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="SP_C_AuthorizeUser" ReturnType="Collection(Int32)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BuscarNomina" ReturnType="Collection(SICOAdminModel.SP_C_BuscarNomina_Result)">
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_ConsecutivosActivos" ReturnType="Collection(SICOAdminModel.SP_C_ConsecutivosActivos_Result)" />
+    <FunctionImport Name="SP_C_MostarNominas" ReturnType="Collection(SICOAdminModel.SP_C_MostarNominas_Result)" />
+    <FunctionImport Name="SP_P_ActualizarNomina">
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+      <Parameter Name="descripcion" Mode="In" Type="String" />
+      <Parameter Name="frecuencia" Mode="In" Type="String" />
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="fechaModificacion" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearNomina">
+      <Parameter Name="descripcion" Mode="In" Type="String" />
+      <Parameter Name="frecuencia" Mode="In" Type="String" />
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearParentesco">
+      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+      <Parameter Name="padre" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioCreacionModf" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_EliminarNomina">
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_C_BuscarConsecutivo_Result">
     <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
@@ -1469,5 +1501,36 @@
     <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
     <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_BuscarNomina_Result">
+    <Property Type="Int32" Name="IdNomina" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Frecuencia" Nullable="false" MaxLength="4" />
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="Fecha_Modificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_ConsecutivosActivos_Result">
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostarNominas_Result">
+    <Property Type="Int32" Name="IdNomina" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Frecuencia" Nullable="false" MaxLength="4" />
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="Fecha_Modificacion" Nullable="false" Precision="23" />
   </ComplexType>
 </Schema>

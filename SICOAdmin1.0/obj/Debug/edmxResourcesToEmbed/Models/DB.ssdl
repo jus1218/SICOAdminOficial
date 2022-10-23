@@ -939,6 +939,9 @@
   <Function Name="F_LoginTMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
     <Parameter Name="UserName" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="F_MensajesConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="numeroMessage" Type="smallint" Mode="In" />
+  </Function>
   <Function Name="f_opcionesPerfilesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="usuario" Type="varchar" Mode="In" />
     <ReturnType>
@@ -979,8 +982,14 @@
     <Parameter Name="version" Type="int" Mode="In" />
     <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
   </Function>
+  <Function Name="SP_C_AuthorizeUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="SP_C_BuscarConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_C_BuscarNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idNomina" Type="int" Mode="In" />
   </Function>
   <Function Name="SP_C_BuscarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdPerfil" Type="int" Mode="In" />
@@ -988,6 +997,8 @@
   <Function Name="SP_C_BuscarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="SP_C_ConsecutivosActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostarNominas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_C_MostrarAcciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_C_MostrarConsecutivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1028,8 +1039,18 @@
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
     <Parameter Name="mensaje" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="SP_P_ActualizarNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idNomina" Type="int" Mode="In" />
+    <Parameter Name="descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="frecuencia" Type="varchar" Mode="In" />
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="fechaModificacion" Type="datetime" Mode="In" />
+  </Function>
   <Function Name="SP_P_ActualizarProximoValorConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+    <Parameter Name="valorActual" Type="varchar" Mode="In" />
+    <Parameter Name="accion" Type="smallint" Mode="In" />
   </Function>
   <Function Name="SP_P_AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
@@ -1072,6 +1093,17 @@
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
     <Parameter Name="mensage" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="SP_P_CrearNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="frecuencia" Type="varchar" Mode="In" />
+    <Parameter Name="idConsecutivo" Type="int" Mode="In" />
+    <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_P_CrearParentesco" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="padre" Type="int" Mode="In" />
+    <Parameter Name="usuarioCreacionModf" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="SP_P_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
     <Parameter Name="Descripcion" Type="varchar" Mode="In" />
@@ -1092,6 +1124,9 @@
   </Function>
   <Function Name="SP_P_EliminarAll_AccionPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idPerfil" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_P_EliminarNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idNomina" Type="int" Mode="In" />
   </Function>
   <Function Name="SP_P_EliminarUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
