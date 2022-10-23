@@ -79,7 +79,12 @@ namespace SICOAdmin1._0.Controllers
                         contG = 0;
                         userG = " ";
 
-                        return Content("1" + message);
+                        //CARGAMOS LOS PRIVILEGIOS
+                        List<int?> lstActions = null;
+                        lstActions = db.SP_C_AuthorizeUser(oUser.userName).ToList();
+                        Session["lstActions"] = lstActions;
+
+                        return Content("1" + message);//message
                     }
                     else
                     {

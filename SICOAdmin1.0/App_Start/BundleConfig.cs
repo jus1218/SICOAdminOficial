@@ -27,7 +27,7 @@ namespace SICOAdmin1._0
                         "~/Vendors/nprogress/nprogress.css",
                         "~/Content/css/style.css", 
                         "~/Content/css/sweetalert.min.css",
-                        "~/Content/bootstrap4.min.css",//
+                        //"~/Content/bootstrap4.min.css",//
                         "~/Content/gijgo.min.css",//
                         "~/Content/css/custom.min.css"
                         ));
