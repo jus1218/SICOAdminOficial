@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Consecutivo;
+using SICOAdmin1._0.Models.User;
 
 namespace SICOAdmin1._0.Controllers
 {
@@ -49,21 +50,22 @@ namespace SICOAdmin1._0.Controllers
         [HttpPost]
         public ActionResult Add(Consecutivo model)
         {
-            model.UsuarioCreacion = "Daniel";
+            //model.UsuarioCreacion = "Daniel";
             int Response = 0;
             string Message = "";
             ObjectParameter resultSP = new ObjectParameter("resultado", 0);
             ObjectParameter mensajeSP = new ObjectParameter("mensage", 0);
             TempData.Clear();
             if (!ModelState.IsValid)
-            {
-                return RedirectToAction(Url.Content("/Index"));
+            {               
+                 return RedirectToAction(Url.Content("/Index"));
             }
             try
             {
                 using (var DB = new SICOAdminEntities())
                 {
-                    DB.SP_P_CrearConsecutivo(model.Alias, model.Mascara, model.ProximoValor, model.Activo, model.UsuarioCreacion, resultSP, mensajeSP);
+                    DB.SP_P_CrearConsecutivo(model.Alias, model.Mascara, model.ProximoValor, model.Activo,
+                                  ((User)Session["User"]).userName, resultSP, mensajeSP);
                     Response = Convert.ToInt32(resultSP.Value);
                     Message = Convert.ToString(mensajeSP.Value);
                 }
@@ -72,13 +74,15 @@ namespace SICOAdmin1._0.Controllers
                 TempData["Message"] = Message;
                 TempData.Keep("Resultado");
                 TempData.Keep("Message");
-                return RedirectToAction(Url.Content("/Index"));
+                
+                 return RedirectToAction(Url.Content("/Index"));             
             }
             catch (Exception ex)
             {
                 TempData["Message"] = Message;
-                TempData["Resultado"] = 0;
+                TempData["Resultado"] = 0;                
                 return RedirectToAction(Url.Content("/Index"));
+               
             }
         }
 
@@ -125,34 +129,19 @@ namespace SICOAdmin1._0.Controllers
             if (pModel.IdConsecutivo == 0)
             {
                 return Redirect(Url.Content("/Index"));
-            }
-            else
-            {
-
-                model = getConsecutivo(pModel.IdConsecutivo);
-                verificarDatos = verificarDatosModificar(model, pModel);
-                if (!verificarDatos)
-                {
-                    pModel.UsuarioModificacion = "CarlosDaniel";
-                }
-                else
-                {
-                    return RedirectToAction(Url.Content("/Index"));
-                }
-
-            }
+            }      
             try
             {
-                if (model != null)
+                model = getConsecutivo(pModel.IdConsecutivo);
+                if (model != null && model != pModel)
                 {
                     using (SICOAdminEntities db = new SICOAdminEntities())
                     {
-                        db.SP_P_ActualizarConsecutivo(pModel.IdConsecutivo, pModel.Alias, pModel.Mascara, pModel.ProximoValor, pModel.Activo, pModel.UsuarioModificacion, resultSP, mensajeSP);
-
+                        db.SP_P_ActualizarConsecutivo(pModel.IdConsecutivo, pModel.Alias, pModel.Mascara, pModel.ProximoValor, pModel.Activo, 
+                                  ((User)Session["User"]).userName, resultSP, mensajeSP);
                         Response = Convert.ToInt32(resultSP.Value);
                         Message = Convert.ToString(mensajeSP.Value);
                     }
-
                 }
                 TempData["Message"] = Message;
                 TempData["Resultado"] = Response;
@@ -162,10 +151,8 @@ namespace SICOAdmin1._0.Controllers
             }
             catch (Exception ex)
             {
-
                 TempData["Message"] = Message;
                 TempData["Resultado"] = 0;
-
                 return RedirectToAction(Url.Content("/Index"));
             }
         }
@@ -182,24 +169,8 @@ namespace SICOAdmin1._0.Controllers
                 db.SP_P_ModificarEstadoConsecutivo(idCons, resultadoSP);
                 Response = Convert.ToInt32(resultadoSP.Value);
             }
-            //TempData["Message"] = Response;            
-            // return RedirectToAction(Url.Content("/Index"));
             return Json(Response, JsonRequestBehavior.AllowGet);
-        }
-
-        public bool verificarDatosModificar(Consecutivo modelDb, Consecutivo modelUpdate)
-        {
-
-
-            if (modelDb.Activo.Equals(modelUpdate.Activo)
-                && (modelDb.Alias.Equals(modelUpdate.Alias)
-                && (modelDb.Mascara.Equals(modelUpdate.Mascara))
-                && (modelDb.ProximoValor.Equals(modelUpdate.ProximoValor))))
-            {
-                return true;
-            }
-            return false;
-        }
+        }       
         public JsonResult pintarDatos(int idCons)
         {
             Consecutivo model = getConsecutivo(idCons);
@@ -229,7 +200,6 @@ namespace SICOAdmin1._0.Controllers
             {
                 lst = db.SP_C_MostrarConsecutivos().ToList();
             }
-
             foreach (var e in lst)
             {
                 objM = new Consecutivo();

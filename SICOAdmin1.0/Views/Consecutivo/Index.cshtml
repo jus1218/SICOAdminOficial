@@ -87,22 +87,24 @@
                         }
                         <td>
                             <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
-                                    class="btn btn-warning fa fa-pencil btn-sm" style=" 14px"
+                                    class="btn btn-warning fa fa-pencil btn-sm"
                                     onclick="jsmostrarDatos(@e.IdConsecutivo);">
                                 Editar</button>
 
                             <button id="Bitacora" data-toggle="modal" data-target="#ModalBitacora" type="button" value="Bitacora"
-                                    class="btn btn-info fa fa-book btn-sm"
+                                    class="btn btn-info fa fa-book btn-sm" 
                                     onclick="jsmostrarBitacora(@e.IdConsecutivo);">
                                 Bitacora
                             </button>
                             @if (e.Activo == false)
                             {
-                                <button id="btnActivar" class="btn btn-primary fa fa-unlock btn-sm" type="button" onclick="jsModificarEstado(@e.IdConsecutivo);"> Activar</button>
+                                <button id="btnActivar" class="btn btn-primary fa fa-unlock btn-sm" 
+                                        style="width: 23%;" type="button" onclick="jsModificarEstado(@e.IdConsecutivo);"> Activar</button>
                             }
                             else
                             {
-                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm" onclick="jsModificarEstado(@e.IdConsecutivo);"> Desactivar</button>
+                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm"
+                                        style="width: 23%;" onclick="jsModificarEstado(@e.IdConsecutivo);"> Desactivar</button>
                             }
                         </td>
                     </tr>
@@ -152,7 +154,7 @@
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
 
-                        <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                        <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
                     </div>
 
                 }
@@ -204,7 +206,7 @@
                         @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
-                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
 
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
@@ -261,7 +263,7 @@
 
                         </tbody>
                     </table>
-                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
 
 
@@ -358,15 +360,15 @@
                   console.log(res);
                     if (res == 2) {
                         swal({
-                            title: "Cambio Exitoso", text: "Se modifico el Estado!!", type: "success", timer: 2000,
+                            title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
                             showConfirmButton: false
                         }
                         );
                         $("#tbConsecutivo").load(" #tbConsecutivo");
                     } else {
                         swal({
-                            title: "Cambio Fallido", text: "No se modifico el Estado!!", type: "error",
-                            timer: 2000,
+                            title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                            timer: 3000,
                             showConfirmButton: false
                         });
                         $("#tbConsecutivo").load(" #tbConsecutivo");
