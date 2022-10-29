@@ -60,7 +60,7 @@ namespace SICOAdmin1._0.Controllers
                      return new SelectListItem()
                      {
                          Value = d.IdConsecutivo.ToString(),
-                         Text = d.IdConsecutivo.ToString() +" - "+ d.Alias.ToString(),
+                         Text = "# " + d.IdConsecutivo.ToString() +" - "+ d.Alias.ToString(),
                          Selected = false
                      };
                  });
@@ -72,20 +72,23 @@ namespace SICOAdmin1._0.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Payroll model)
+        public ActionResult Add(Payroll pModel)
         {
-            string Message = "";
             int Response = 0;
+            string Message = "";
             ObjectParameter resultSP = new ObjectParameter("resultado", 0);
-            ObjectParameter mensajeSP = new ObjectParameter("mensaje", 0);
+            ObjectParameter mensage = new ObjectParameter("mensage", 0);
             TempData.Clear();
             try
             {
-                using (SICOAdminEntities db = new SICOAdminEntities())
+                using (var db = new SICOAdminEntities())
                 {
-                    db.SP_P_CrearNomina(model.Descripcion,model.Frecuencia,model.IdConsecutivo, ((User)Session["User"]).userName,resultSP,mensajeSP);
+
+                    db.SP_P_CrearNomina(pModel.Descripcion, pModel.Frecuencia, pModel.IdConsecutivo,
+                        ((User)Session["User"]).userName, resultSP, mensage);
+
                     Response = Convert.ToInt32(resultSP.Value);
-                    Message = Convert.ToString(mensajeSP.Value);
+                    Message = Convert.ToString(mensage.Value);
                 }
 
                 TempData["Message"] = Message;
