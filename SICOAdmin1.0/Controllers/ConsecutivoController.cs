@@ -50,7 +50,7 @@ namespace SICOAdmin1._0.Controllers
         [HttpPost]
         public ActionResult Add(Consecutivo model)
         {
-            //model.UsuarioCreacion = "Daniel";
+            
             int Response = 0;
             string Message = "";
             ObjectParameter resultSP = new ObjectParameter("resultado", 0);
@@ -122,7 +122,7 @@ namespace SICOAdmin1._0.Controllers
             int Response = 0;
             string Message = "";
             TempData.Clear();
-            bool verificarDatos = false;
+            
             Consecutivo model = null;
             ObjectParameter resultSP = new ObjectParameter("resultado", 0);
             ObjectParameter mensajeSP = new ObjectParameter("mensaje", 0);
@@ -153,6 +153,8 @@ namespace SICOAdmin1._0.Controllers
             {
                 TempData["Message"] = Message;
                 TempData["Resultado"] = 0;
+                TempData.Keep("Resultado");
+                TempData.Keep("Message");
                 return RedirectToAction(Url.Content("/Index"));
             }
         }

@@ -358,16 +358,23 @@
               .then(res => res.ok ? res.json() : null)
                 .then(res => {
                   console.log(res);
-                    if (res == 2) {
+                    if (res == 1) {
                         swal({
                             title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
                             showConfirmButton: false
                         }
                         );
                         $("#tbConsecutivo").load(" #tbConsecutivo");
+                    } else if (res == -1) {
+                        swal({
+                            title: "Ups... Ha ocurrido un error", text: "No se puede desactivar un Consecutivo ligado a una Nomina!!", type: "error",
+                            timer: 5000,
+                            showConfirmButton: false
+                        });
+                        $("#tbConsecutivo").load(" #tbConsecutivo");
                     } else {
                         swal({
-                            title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                            title: "Ups... Ha ocurrido un error", text: "No se modifico el estado!!", type: "error",
                             timer: 3000,
                             showConfirmButton: false
                         });
