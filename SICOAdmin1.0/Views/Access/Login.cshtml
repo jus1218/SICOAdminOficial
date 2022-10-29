@@ -3,62 +3,60 @@
     Layout = null;
 }
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión</title>
     <link href="~/Content/css/login.css" rel="stylesheet" />
-
-
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 
 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<div class="main">
-    <div class="container">
-        <center>
-            <div class="middle">
-                <div id="login">
+<body>
+    <div class="main">
+        <div class="container">
+            <center>
+                <div class="middle">
+                    <div id="login">
 
-                    <form action="@Url.Action("Login", "Access")" method="post" id="frm">
+                        <form action="@Url.Action("Login", "Access")" method="post" id="frm">
 
-                        <fieldset class="clearfix">
+                            <fieldset class="clearfix">
 
-                            <p><span class="fa fa-user"></span><input type="text" name="userName" Placeholder="Nombre de usuario" required></p>
-                            <p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Contraseña" required></p>
+                                <p><span class="fa fa-user"></span><input type="text" name="userName" Placeholder="Nombre de usuario" required></p>
+                                <p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Contraseña" required></p>
 
-                            <div>
-                                <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Iniciar sesión"></span>
-                            </div>
-                            <div>
-                                <br />
-                                <span style="width:48%; text-align:left;  display: inline-block;"><a data-toggle="modal" data-target="#modalChangePass" class="small" href="" style="color:white; text-align:center;">Cambiar contraseña</a></span>
-                            </div>
+                                <div>
+                                    <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Iniciar sesión"></span>
+                                </div>
+                                <div>
+                                    <br />
+                                    <span style="width:48%; text-align:left;  display: inline-block;"><a data-toggle="modal" data-target="#modalChangePass" class="small" href="" style="color:white; text-align:center;">Cambiar contraseña</a></span>
+                                </div>
 
 
-                        </fieldset>
+                            </fieldset>
+                            <div class="clearfix"></div>
+                        </form>
+
                         <div class="clearfix"></div>
-                    </form>
 
-                    <div class="clearfix"></div>
+                    </div> <!-- end login -->
+                    <div style="position:relative; border-radius:50%; background-color:white; padding:5px; border-color: black; border: 10px solid;">
+                        <img id="imagenD" src="~/Content/Images/logo  1.png"
+                             style="width: 8cm; height:1.5cm; position:inherit; top:50%; transform: translate(0, -50%); padding-left:8px;" />
 
-                </div> <!-- end login -->
-                <div style="position:relative; border-radius:50%; background-color:white; padding:5px; border-color: black; border: 10px solid;">
-                    <img id="imagenD" src="~/Content/Images/logo  1.png"
-                         style="width: 8cm; height:1.5cm; position:inherit; top:50%; transform: translate(0, -50%); padding-left:8px;" />
+                        <div class="clearfix"></div>
+                    </div>
 
-                    <div class="clearfix"></div>
                 </div>
-
-            </div>
-        </center>
+            </center>
+        </div>
     </div>
-</div>
+</body>
 
 <!-- Modal cambio de contraseña -->
 <div class="modal fade in" id="modalChangePass" tabindex="-1" role="dialog" aria-labelledby="changepass" aria-hidden="true">
@@ -85,10 +83,6 @@
                         <label for="pass1">Contraseña nueva</label>
                         <input name="newPassword" type="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" title="Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres." class="form-control" id="pass1" required>
                     </div>
-                    @*<div class="form-group">
-                            <label for="pass2">Vuelve a escribir la nueva contraseña</label>
-                            <input name="newPassword" type="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" title="Debe ingresar al menos una mayúscula, una minúscula, un digito y tener entre 8 y 16 caracteres." class="form-control" id="pass2" required>
-                        </div>*@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -131,7 +125,6 @@
                         icon: 'info',
                         title: 'Ingreso correcto',
                         text: msg,
-                        timer: 3500,
                         allowEscapeKey: false,
                         allowOutsideClick: false,
                         showConfirmButton: false,
@@ -139,7 +132,7 @@
                             Swal.showLoading()
                         }
                     })
-                    setTimeout( function() { document.location.href = "@Url.Content("~/")" }, 3500);
+                    setTimeout( function() { document.location.href = "@Url.Content("~/")" }, 2500);
                 } else {
                     Swal.fire({
                         icon: 'error',

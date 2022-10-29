@@ -67,8 +67,6 @@ namespace SICOAdmin.Controllers
                 objM.dateModification = (DateTime)e.FechaModificacion;
 
                 lstModel.Add(objM);
-
-                ViewBag.bitacora = objM;
             }
 
 
@@ -322,12 +320,6 @@ namespace SICOAdmin.Controllers
 
             return PartialView("_SelectOpcProfile", ddlUsuarios);
         }
-
-
-
-
-
-
 
 
         public JsonResult GetBitacora(string userName)//NO SE USA AÚN

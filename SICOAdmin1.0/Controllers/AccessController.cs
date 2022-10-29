@@ -123,11 +123,13 @@ namespace SICOAdmin1._0.Controllers
                 using (SICOAdminEntities db = new SICOAdminEntities())
                 {
                     SP_C_BuscarUsuario_Result USER = db.SP_C_BuscarUsuario(userName).FirstOrDefault();
-                    if (!USER.Bloqueado)
-                    {
-                        userG = userName;
-                        contG = USER.IntentosFallidos;
-                        contG = contG - 1;
+                    if (USER != null) {
+                        if (!USER.Bloqueado && USER.Activo)
+                        {
+                            userG = userName;
+                            contG = USER.IntentosFallidos;
+                            contG = contG - 1;
+                        }
                     }
                 }
             }
