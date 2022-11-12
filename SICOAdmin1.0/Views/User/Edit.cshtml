@@ -18,7 +18,7 @@
 <div class="container margin-container p-4 glass">
     <!--INPUTS-->
     <h3 class="mb-4">Editar Usuario</h3>
-    @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { role = "form", @class = "row-12", onsubmit = "return jsConfirm(this)" }))
+    @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { role = "form", @class = "row-12 was-validated", onsubmit = "return jsConfirm(this)" }))
     {//Primero nombreMetho, nombreController, tipoMetho,
 
         @Html.HiddenFor(d => d.userName)//Se va en la peticion
@@ -48,7 +48,7 @@
 
             <div class="col-xl-3 col-md-6 col-sm-12 me-5">
                 @Html.LabelFor(u => u.type, new { @class = "mt-4" })
-                @Html.DropDownListFor(u => u.type, new SelectList(Enum.GetValues(typeof(TypesU))), "Elija una opción", new { @class = "form-control" })
+                @Html.DropDownListFor(u => u.type, new SelectList(Enum.GetValues(typeof(TypesU))), "Elija una opción", new { @class = "form-control custom-select" })
 
                 @Html.LabelFor(u => u.daysChangePassword, new { @class = "mt-4" })
                 @Html.EditorFor(u => u.daysChangePassword, new { htmlAttributes = new { Type = "number", @class = "form-control" } })

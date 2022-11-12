@@ -20,7 +20,7 @@ namespace SICOAdmin1._0.Controllers
             List<SP_C_MostrarPuestos_Result> lstPositionsDB = null;
             List<Collaborator> lstCollaborators = new List<Collaborator>();
 
-            
+
 
 
             using (SICOAdminEntities db = new SICOAdminEntities())
@@ -74,10 +74,43 @@ namespace SICOAdmin1._0.Controllers
             {
                 objDB = db.SP_C_MostrarColaboradores(id, "one").FirstOrDefault();
 
+                objC.Id = objDB.IdColaborador;
                 objC.Name = objDB.Nombre;
-                objC.Gender = Convert.ToChar(objDB.Genero);
+                switch (objDB.Genero.ToString())
+                {
+                    case "M":
+                        objC.Gender = "Masculino";
+                        break;
+                    case "F":
+                        objC.Gender = "Femenino";
+                        break;
+                    case "P":
+                        objC.Gender = "Prefiero no decirlo";
+                        break;
+                    case "O":
+                        objC.Gender = "Otro";
+                        break;
+                }
                 objC.Active = objDB.Activo;
                 objC.State = objDB.Estado;
+                switch (objDB.Estado.ToString())
+                {
+                    case "Acti":
+                        objC.State = "Activo";
+                        break;
+                    case "Inac":
+                        objC.State = "Inactivo";
+                        break;
+                    case "Inca":
+                        objC.State = "Incapacitado";
+                        break;
+                    case "Vaca":
+                        objC.State = "Vacaciones";
+                        break;
+                    case "PL":
+                        objC.State = "Pendiente de liquidar";
+                        break;
+                }
                 objC.Address = objDB.Direccion;
                 objC.Telephone1 = objDB.Telefono1;
                 objC.Telephone2 = objDB.Telefono2;
@@ -87,7 +120,6 @@ namespace SICOAdmin1._0.Controllers
                 objC.DateEntry = objDB.FechaIngreso;
                 objC.DateDeparture = objDB.FechaSalida;
                 objC.IdNomina = objDB.IdNomina;
-                //objC.CivilStatus = objDB.EstadoCivil;
                 switch (objDB.EstadoCivil.ToString())
                 {
                     case "Ca":
@@ -96,11 +128,22 @@ namespace SICOAdmin1._0.Controllers
                     case "So":
                         objC.CivilStatus = "Soltero(a)";
                         break;
+                    case "Vi":
+                        objC.CivilStatus = "Viudo(a)";
+                        break;
+                    case "Di":
+                        objC.CivilStatus = "Divorciado(a)";
+                        break;
+                    case "Ul":
+                        objC.CivilStatus = "Union libre";
+                        break;
+                    case "Ot":
+                        objC.CivilStatus = "Otro";
+                        break;
                 }
                 objC.VacationBalance = objDB.SaldoVacaciones;
                 objC.LastVacationCalc = objDB.UltCalculoVacaciones;
                 objC.IdPuesto = objDB.IdPuesto;
-                //objC.FormPayment = objDB.FormaPago;
                 switch (objDB.FormaPago.ToString())
                 {
                     case "Tr":
@@ -130,10 +173,45 @@ namespace SICOAdmin1._0.Controllers
 
 
 
-
         [HttpGet]
         public ActionResult AddCollaborator()
         {
+            List<SP_C_MostarNominas_Result> lstPayrollsDB = null;
+            List<SP_C_MostrarPuestos_Result> lstPositionsDB = null;
+
+
+
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                lstPayrollsDB = db.SP_C_MostarNominas("tod", 0).ToList();
+                lstPositionsDB = db.SP_C_MostrarPuestos().ToList();
+            }
+
+            List<SelectListItem> payrolls = lstPayrollsDB.ConvertAll(
+                 d =>
+                 {
+                     return new SelectListItem()
+                     {
+                         Value = d.IdNomina.ToString(),
+                         Text = d.Descripcion,
+                         Selected = false
+                     };
+                 });
+
+            List<SelectListItem> positions = lstPositionsDB.ConvertAll(
+                 d =>
+                 {
+                     return new SelectListItem()
+                     {
+                         Value = d.IdPuesto.ToString(),
+                         Text = d.Descripcion,
+                         Selected = false
+                     };
+                 });
+
+            ViewBag.Positions = positions;
+            ViewBag.Payrolls = payrolls;
             return View();
         }
 
@@ -189,17 +267,101 @@ namespace SICOAdmin1._0.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Update(Collaborator pModel)
+        public ActionResult Update(string id)
         {
+            Collaborator modelC = new Collaborator();
+
+            List<SP_C_MostarNominas_Result> lstPayrollsDB = null;
+            List<SP_C_MostrarPuestos_Result> lstPositionsDB = null;
+
+
+
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                lstPayrollsDB = db.SP_C_MostarNominas("tod", 0).ToList();
+                lstPositionsDB = db.SP_C_MostrarPuestos().ToList();
+            }
+
+            List<SelectListItem> payrolls = lstPayrollsDB.ConvertAll(
+                 d =>
+                 {
+                     return new SelectListItem()
+                     {
+                         Value = d.IdNomina.ToString(),
+                         Text = d.Descripcion,
+                         Selected = false
+                     };
+                 });
+
+            List<SelectListItem> positions = lstPositionsDB.ConvertAll(
+                 d =>
+                 {
+                     return new SelectListItem()
+                     {
+                         Value = d.IdPuesto.ToString(),
+                         Text = d.Descripcion,
+                         Selected = false
+                     };
+                 });
+
+            ViewBag.Positions = positions;
+            ViewBag.Payrolls = payrolls;
+
+            modelC = GetCollaborator(id);
+                
+            return View(modelC);
+        }
+
+        [HttpPost]
+        public ActionResult Update(Collaborator CModel)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+            string Message = "";
+            bool result = false;
             try
             {
+                if (CModel != null)
+                {
+                    if (CModel.FormPayment != "Tr")
+                    {
+                        CModel.BankAccount = "N/A";
+                        CModel.Bank = "N/A";
+                    }
+
+                    using (SICOAdminEntities db = new SICOAdminEntities())
+                    {
+                        db.SP_P_ModificarColaborador(CModel.Identification,CModel.State, CModel.Address, CModel.Telephone1, CModel.Telephone2,
+                                                     CModel.Nationality, CModel.DateEntry,CModel.DateDeparture, CModel.IdNomina, CModel.CivilStatus, CModel.VacationBalance, 
+                                                     CModel.LastVacationCalc, CModel.IdPuesto, CModel.FormPayment, CModel.BankAccount, CModel.Bank,
+                                                     CModel.Email, CModel.EmergencyContact, CModel.TelephoneContact, CModel.ReferenceSalary, 
+                                                     ((User)Session["User"]).userName, resultado, mensaje);
+
+                        Message = Convert.ToString(mensaje.Value);
+                        result = Convert.ToBoolean(resultado.Value);
+                    }
+
+                    TempData.Clear();
+                    if (result)
+                    {
+                        TempData["Resultado"] = "1";
+                        TempData["Message"] = Message;
+                    }
+                    else
+                    {
+                        TempData["Resultado"] = "0";
+                        TempData["Message"] = Message;
+                    }
+                    TempData.Keep("Resultado");
+                    TempData.Keep("Message");
+                }
+
                 return RedirectToAction(Url.Content("/Index"));
             }
             catch (Exception ex)
             {
-
-                return RedirectToAction(Url.Content("/Index"));
+                throw new Exception(ex.Message);
             }
         }
 
@@ -250,11 +412,11 @@ namespace SICOAdmin1._0.Controllers
 
             foreach (var pa in lstPayrollsDB)
             {
-                if(objCDB.IdNomina == pa.IdNomina)
+                if (objCDB.IdNomina == pa.IdNomina)
                 {
                     payroll = pa.Descripcion;
                 }
-               
+
             }
 
             foreach (var po in lstPositionsDB)
@@ -285,7 +447,7 @@ namespace SICOAdmin1._0.Controllers
                 IdNomina = payroll,
                 objC.CivilStatus,
                 objC.VacationBalance,
-                LastVacationCalc = objC.LastVacationCalc.ToString("dd/MM/yyyy H:mm:ss"),
+                LastVacationCalc = objC.LastVacationCalc.ToString("dd MMMM, yyyy"),
                 IdPuesto = position,
                 objC.FormPayment,
                 objC.BankAccount,

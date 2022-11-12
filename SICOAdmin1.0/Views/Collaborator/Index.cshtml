@@ -2,10 +2,9 @@
 @using SICOAdmin1._0.Models.Collaborator
 
 @{
-    ViewBag.Title = "Modulo Colaborador - SICOAdmin";
+    ViewBag.Title = "Colaboradores - SICOAdmin";
     List<Collaborator> modelCollaborators = (List<Collaborator>)ViewBag.Collaborators;
-    List<SelectListItem> lstPayrolls = (List<SelectListItem>)ViewBag.Payrolls;
-    List<SelectListItem> lstPositions = (List<SelectListItem>)ViewBag.Positions;
+   
 }
 
 <head>
@@ -23,9 +22,7 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#addModal">
-                <span class="glyphicon glyphicon-plus-sign"></span>  Agregar
-            </button>
+            <button type="button" class="btn btn-primary col-12 fa fa-plus-circle" onclick="document.location.href = '@Url.Action("AddCollaborator","Collaborator")'"> Agregar</button>
         </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
@@ -36,11 +33,10 @@
                        aria-label="Buscar..."
                        aria-describedby="button-search"
                        id="buscar" />
-                <button class="btn btn-outline-secondary"
+                <button class="btn btn-outline-secondary fa fa-search"
                         type="button"
                         disabled="disabled"
                         id="button-search">
-                    Buscar
                 </button>
             </div>
         </div>
@@ -50,6 +46,7 @@
         <table id="tbCollaborators" class="table table-bordered">
             <thead>
                 <tr class="text-center">
+                    <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Identificacion</th>
                     <th scope="col">Género</th>
@@ -65,6 +62,7 @@
                 @foreach (var collaborator in modelCollaborators)
                 {
                     <tr>
+                        <td>@collaborator.Id</td>
                         <td>@collaborator.Name</td>
                         <td>@collaborator.Identification</td>
                         <td>@collaborator.Gender</td>
@@ -74,8 +72,8 @@
                         <td>@collaborator.Nationality</td>
                         <td>@collaborator.DateBirth.ToString("dd MMMM, yyyy")</td>
 
-                        <td width="500">
-                            <button id="btnEdit" onclick="jsViewCollaborator('@collaborator.Identification')" class="btn btn-warning fa fa-pencil btn-sm" data-toggle="modal" data-target="#modalUpdate"> Editar</button>
+                        <td width="400px">
+                            <button id="btnEdit" onclick="document.location.href = '@Url.Action("Update","Collaborator",new { id = collaborator.Identification })'" class="btn btn-warning fa fa-pencil btn-sm"> Editar</button>
                             <button id="btnBitacora" onclick="jsmostrarBitacora('@collaborator.Identification')" class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#modalBitacora"> Bitácora</button>
                             <button id="btnDetails" onclick="jsViewDetails('@collaborator.Identification')" class="btn btn-primary fa fa-info-circle btn-sm" data-toggle="modal" data-target="#detailsModal"> Detalles</button>
 
@@ -92,198 +90,6 @@
                 }
             </tbody>
         </table>
-    </div>
-</div>
-
-
-<!-- Modal addCollaborator -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Agregar colaborador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form @*onsubmit="return jsConfirm(this)"*@ action="@Url.Action("AddCollaborator", "Collaborator")" method="post" id="frm">
-                    <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
-
-                        <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                            <label class="mt-4 h6">Nombre</label>
-                            <input required type="text" name="name" class="form-control" placeholder="(Solo letras)" />
-
-                            <label class="mt-4 h6">Identificación</label>
-                            <input required type="text" name="identification" class="form-control" />
-
-                            <label class="mt-4 h6">Género</label>
-                            <select required name="gender" id="genders" class="form-control h6">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                            </select>
-
-                            <label class="mt-4 h6">Estado civil</label>
-                            <select required name="civilStatus" id="civilStatus" class="form-control h6">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option value="Casado">Casado(a)</option>
-                                <option value="Soltero">Soltero(a)</option>
-                            </select>
-
-                            <label class="mt-4 h6">Correo electrónico</label>
-                            <input required type="email" name="email" class="form-control" />
-
-                            <label class="mt-4 h6">Nacionalidad</label>
-                            <input required type="text" name="nationality" class="form-control" />
-                        </div><br />
-
-                        <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                            <label class="mt-4 h6">Teléfono 1</label>
-                            <input required type="text" name="telephone1" class="form-control" />
-
-                            <label class="mt-4 h6">Teléfono 2</label>
-                            <input required type="text" name="telephone2" class="form-control" />
-
-                            <label class="mt-4 h6">Dirección</label>
-                            <input required type="text" name="address" class="form-control" />
-
-                            <label class="mt-4 h6">Fecha de nacimiento</label>
-                            <input required type="date" name="dateBirth" class="form-control" />
-
-                            <label class="mt-4 h6">Fecha de entrada</label>
-                            <input required type="date" name="dateEntry" class="form-control" />
-
-                            <label class="mt-4 h6">Fecha de salida</label>
-                            <input required type="date" name="dateDeparture" class="form-control" />
-                        </div> <br />
-
-                        <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                            <label class="mt-4 h6">Nomina</label>
-                            <select required name="IdNomina" id="IdNomina" class="form-control">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                @foreach (var e in lstPayrolls)
-                                {
-                                    <option value="@e.Value"> @e.Text</option>
-                                }
-                            </select>
-
-                            <label class="mt-4 h6">Puesto</label>
-                            <select required name="IdPuesto" id="IdPuesto" class="form-control">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                @foreach (var e in lstPositions)
-                                {
-                                    <option value="@e.Value"> @e.Text</option>
-                                }
-                            </select>
-
-                            <label class="mt-4 h6">Activo</label>
-                            <input type="checkbox" name="active" class="form-control" value="true" />
-
-                            <label class="mt-4 h6">Forma de pago</label>
-                            <select required name="formPayment" id="formPayment" class="form-control h6">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option value="Efectivo">Efectivo</option>
-                                <option value="Transferencia">Transferencia</option>
-                                <option value="Cheque">Cheque</option>
-                            </select>
-
-                            <label class="mt-4 h6">Cuenta Bancaria</label>
-                            <input required type="text" name="bankAccount" id="bankAccount" class="form-control" disabled />
-
-                            <label class="mt-4 h6">Banco</label>
-                            <input required type="text" name="bank" id="bank" class="form-control" disabled />
-                        </div><br />
-
-                        <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                            <label class="mt-4 h6">Estado</label>
-                            <input required type="text" name="state" class="form-control" />
-
-                            <label class="mt-4 h6">Contacto de emergencia</label>
-                            <input required type="text" name="emergencyContact" class="form-control" />
-
-                            <label class="mt-4 h6">Teléfono de contacto</label>
-                            <input required type="text" name="telephoneContact" class="form-control" />
-
-                            <label class="mt-4 h6">Saldo vacaciones</label>
-                            <input required type="text" name="vacationBalance" class="form-control" />
-
-                            <label class="mt-4 h6">Último cálculo vacaciones</label>
-                            <input required type="date" name="lastVacationCalc" class="form-control" />
-
-                            <label class="mt-4 h6">Salario de referencia</label>
-                            <input required type="text" name="referenceSalary" class="form-control" />
-
-                        </div><br />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success" onclick="jsalert()">Guardar</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modal editar colaborador -->
-<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdate" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 style="text-align:center" class="modal-title" id="ModalTitle"> Editar Colaborador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                @using (Html.BeginForm("Update", "Collaborator", FormMethod.Post, new { role = "form", @class = "row-12", name = "FormActualizar" }))
-                {
-                    @Html.HiddenFor(c => c.Identification, new { @class = "", id = "txtIdentification" })
-                    <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-                        <label class="mt-4 h6">Nacionalidad</label>
-                        @Html.TextBoxFor(c => c.Nationality, new { @class = "form-control", id = "txtNationality", required = "required", HtmlAttributes = new { Type = "text" } })
-                        @Html.ValidationMessage("Email", null, new { @class = "text-danger" })
-
-                        <label class="mt-4 h6">Estado civil</label>
-
-                        <label class="mt-4 h6">Correo electrónico</label>
-                        @Html.TextBoxFor(c => c.Email, new { @class = "form-control", id = "txtEmail", required = "required", HtmlAttributes = new { Type = "text" } })
-                        @Html.ValidationMessage("Email", null, new { @class = "text-danger" })
-
-                        @*<label class="mt-4 h6">Teléfono 1</label>*@
-                        @Html.LabelFor(c => c.Telephone1, new { @class = "mt-4" })
-                        @Html.TextBoxFor(c => c.Telephone1, new { @class = "form-control", id = "txtTelephone1", required = "required", HtmlAttributes = new { Type = "text" } })
-                        @Html.ValidationMessage("Telephone1", null, new { @class = "text-danger" })
-
-                        <label class="mt-4 h6">Teléfono 2</label>
-                        @Html.TextBoxFor(c => c.Telephone2, new { @class = "form-control", id = "txtTelephone1", required = "required", HtmlAttributes = new { Type = "text" } })
-                        @Html.ValidationMessage("Telephone2", null, new { @class = "text-danger" })
-
-                        <label class="mt-4 h6">Dirección</label>
-                        @Html.TextBoxFor(c => c.Address, new { @class = "form-control", id = "txtAddress", required = "required", HtmlAttributes = new { Type = "text" } })
-                        @Html.ValidationMessage("Address", null, new { @class = "text-danger" })
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 col-sm-12 me-5">
-
-                    </div>
-                }
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" onclick="jsalert()">Guardar</button>
-                </div>
-            </div>
-
-        </div>
     </div>
 </div>
 
@@ -336,7 +142,7 @@
             </div>
             <div class="modal-body">
                 <div class="row fila scrol-tablex">
-                    <table id="collaboratorsDetails" style="float: left; color:black;" width="50%">
+                    <table id="collaboratorsDetails" style="float: left; color:black; font-size:medium" width="50%">
                         <tr>
                             <th scope="col">Nombre</th>
                             <td id="tdBName"></td>
@@ -394,7 +200,7 @@
                             <td id="tdBCivilStatus"></td>
                         </tr>
                     </table>
-                    <table id="collaboratorsDetails" width="50%" style="color:black;">
+                    <table id="collaboratorsDetails" width="50%" style="color:black; font-size:medium;">
                         <tr>
                             <th scope="col">Saldo de vacaciones</th>
                             <td id="tdBVacationBalance"></td>
@@ -459,18 +265,7 @@
             });
         });
 
-        //Desbloquear inputs al seleccionar el método de pago por transferencia
-        $(function () {
-            $("#formPayment").change(function () {
-                if ($(this).val() === "Transferencia") {
-                    $("#bankAccount").prop("disabled", false);
-                    $("#bank").prop("disabled", false);
-                } else {
-                    $("#bankAccount").prop("disabled", true);
-                    $("#bank").prop("disabled", true);
-                }
-            });
-        });
+        
 
         //Mostrar Bitacora por colaborador
         function jsmostrarBitacora(pId) {
@@ -529,75 +324,7 @@
                 })
         }
 
-        //Campos para modificar
-        function jsViewCollaborator(pId) {
-            const idtTelephone1 = document.getElementById("txtTelephone1");
-            const idIdentification = document.getElementById("txtIdentification");
-            const idAddress = document.getElementById("txtAddress");
-            console.log(pId);
-            fetch("@Url.Content("~/Collaborator/GetDetails")" + "?id=" + pId)
-                .then(res => res.ok ? res.json() : null)
-                .then(res => {
-                    console.log(res);
-                    idIdentification.textContent = res.Identification;
-                    idIdentification.value = res.Identification;
-
-                    idState.textContent = res.State;
-                    idtState.value = res.State;
-
-                    idAddress.textContent = res.Address;
-                    idAddress.value = res.Address;
-
-                    idTelephone1.textContent = res.Telephone1;
-                    idtTelephone1.value = res.Telephone1;
-
-                    //txtTelephone2.textContent = res.Telephone2;
-                    //txtTelephone2.value = res.Telephone2;
-
-                    //txtNationality.textContent = res.Nationality;
-                    //txtNationality.value = res.Nationality;
-
-                    //txtDateDeparture.textContent = res.DateDeparture;
-                    //txtDateDeparture.value = res.DateDeparture;
-
-                    //selectIdNomina.textContent = res.IdNomina;
-                    //selectIdNomina.value = res.IdNomina;
-
-                    //selectCivilStatus.textContent = res.CivilStatus;
-                    //selectCivilStatus.value = res.CivilStatus;
-
-                    //txtVacationBalance.textContent = res.VacationBalance;
-                    //txtVacationBalance.value = res.VacationBalance;
-
-                    //txtLastVacationCalc.textContent = res.LastVacationCalc;
-                    //txtLastVacationCalc.value = res.LastVacationCalc;
-
-                    //selectIdPuesto.textContent = res.IdPuesto;
-                    //selectIdPuesto.value = res.IdPuesto;
-
-                    //selectFormPayment.textContent = res.FormPayment;
-                    //selectFormPayment.value = res.FormPayment;
-
-                    //txtBankAccount.textContent = res.BankAccount;
-                    //txtBankAccount.value = res.BankAccount;
-
-                    //txtBank.textContent = res.Bank;
-                    //txtBank.value = res.Bank;
-
-                    //txtEmail.textContent = res.Email;
-                    //txtEmail.value = res.Email;
-
-                    //txtEmergencyContact.textContent = res.EmergencyContact;
-                    //txtEmergencyContact.value = res.EmergencyContact;
-
-                    //txtTelephoneContact.textContent = res.TelephoneContact;
-                    //txtTelephoneContact.value = res.TelephoneContact;
-
-                    //txtReferenceSalary.textContent = res.ReferenceSalary;
-                    //txtReferenceSalary.value = res.ReferenceSalary;
-                })
-        }
-
+        //Activar - desactivar
         function jsModificarEstado(pId) {
             console.log(pId);
             fetch("@Url.Content("~/Collaborator/ModificarEstado")" + "?idCol=" + pId)
@@ -619,7 +346,7 @@
                         });
                         $("#tbCollaborators").load(" #tbCollaborators");
                     }
-              })
+             })
         }
 
     </script>
@@ -645,6 +372,8 @@
                 </text>
 
             }
+
+            TempData.Clear();
         }
     </script>
 }

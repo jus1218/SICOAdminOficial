@@ -7,8 +7,9 @@ namespace SICOAdmin1._0.Models.Collaborator
 {
     public class Collaborator
     {
+        public int Id { get; set; } //Autoincremental en la DB
         public string Name { get; set; }
-        public char Gender { get; set; }
+        public string Gender { get; set; }
         public bool Active { get; set; }
         public string State { get; set; }
         public string Address { get; set; }
@@ -35,5 +36,11 @@ namespace SICOAdmin1._0.Models.Collaborator
         public DateTime DateCreation { get; set; }
         public string UserModification { get; set; }
         public DateTime DateModification { get; set; }
+    }
+
+    public enum CivilStatus
+    {
+        Soltero,
+        Casado
     }
 }

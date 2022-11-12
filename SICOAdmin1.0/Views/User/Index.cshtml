@@ -20,9 +20,7 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
-                Agregar
-            </button>
+            <button type="button" class="btn btn-primary col-12 fa fa-plus-circle" data-toggle="modal" data-target="#exampleModalLong"> Agregar</button>
         </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
@@ -33,26 +31,25 @@
                        aria-label="Buscar..."
                        aria-describedby="button-search"
                        id="buscar" />
-                <button class="btn btn-outline-secondary"
+                <button class="btn btn-outline-secondary fa fa-search"
                         type="button"
                         disabled="disabled"
                         id="button-search">
-                    Buscar
                 </button>
             </div>
         </div>
     </div>
     <!--FILA TABLE-->
     <div class="row fila scrol-tablex">
-        <table id="users" class="table table-bordered">
+        <table id="tbUsers" class="table table-bordered">
             <thead>
                 <tr class="text-center">
                     <th scope="col">Usuario</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo electrónico</th>
                     <th scope="col">Tipo</th>
-                    <th scope="col">Activo</th>
-                    <th scope="col">Bloqueado</th>
+                    @*<th scope="col">Activo</th>
+                    <th scope="col">Bloqueado</th>*@
                     <th scope="col">Dias cambio contraseña</th>
                     <th scope="col">Intentos fallidos permitidos</th>
                     <th scope="col">Acciones</th>
@@ -66,13 +63,31 @@
                         <td>@user.name</td>
                         <td>@user.email</td>
                         <td>@user.type</td>
-                        <td><input type="checkbox" checked="@user.active" disabled="disabled" /></td>
-                        <td><input type="checkbox" checked="@user.locked" disabled="disabled" /></td>
+                        @*<td><input type="checkbox" checked="@user.active" disabled="disabled" /></td>
+                        <td><input type="checkbox" checked="@user.locked" disabled="disabled" /></td>*@
                         <td>@user.daysChangePassword</td>
                         <td>@user.failesAttempts</td>
                         <td>
-                            <input onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.userName })'" type="button" value="Editar" class="btn btn-warning" />
-                            <input id="btnBitacora" onclick="jsmostrarBitacora('@user.userName')" type="button" value="Bitacora" class="btn btn-primary" data-toggle="modal" data-target="#modalBitacora" />
+                            <button onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.userName })'" class="btn btn-warning fa fa-pencil btn-sm"> Editar</button>
+                            <button id="btnBitacora" onclick="jsmostrarBitacora('@user.userName')" class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#modalBitacora"> Bitácora</button>
+
+                            @if (user.active)
+                            {
+                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm" style="width: 24%;" onclick="jsModificarEstado('@user.userName', 'Activ')"> Desactivar</button>
+                            }
+                            else
+                            {
+                                <button id="btnActivar" class="btn btn-success fa fa-unlock btn-sm" style="width: 24%;" onclick="jsModificarEstado('@user.userName', 'Activ')"> Activar</button>
+                            }
+
+                            @if (user.locked)
+                            {
+                                <button id="btnDesbloquear" class="btn btn-success fa fa-lock btn-sm" style="width: 27%;" onclick="jsModificarEstado('@user.userName', 'lock')"> Desbloquear</button>
+                            }
+                            else
+                            {
+                                <button id="btnBloquear" class="btn btn-danger fa fa-unlock btn-sm" style="width: 27%;" onclick="jsModificarEstado('@user.userName', 'lock')"> Bloquear</button>
+                            }
                         </td>
                     </tr>
                 }
@@ -108,7 +123,7 @@
                             <input required type="text" name="name" class="form-control" pattern="[a-z\sA-Z]+" placeholder="(Solo letras)" />
 
                             <label class="mt-4 h6">Correo Electrónico</label>
-                            <input required type="email" name="email" class="form-control" placeholder="example@example.com" />
+                            <input required type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com" />
 
                         </div><br />
 
@@ -187,8 +202,8 @@
     </div>
 </div>
 
-
-<script>
+@section scripts{
+    <script>
     //Busqueda
     var busqueda = document.getElementById("buscar");
     $(document).ready(function (i) {
@@ -219,8 +234,56 @@
                 })
     }
 
-</script>
+    //Bloquear - desbloquear / Activar - desactivar
+        function jsModificarEstado(pUserName, pAction) {
+            console.log(pUserName);
+            console.log(pAction);
+            if (pAction === 'Activ') {
+                fetch("@Url.Content("~/User/ActivUser")" + "?userName=" + pUserName)
+                    .then(res => res.ok ? res.json() : null)
+                    .then(res => {
+                        console.log(res);
+                        if (res == "1") {
+                            swal({
+                                title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
+                                showConfirmButton: false
+                            });
+                            $("#tbUsers").load(" #tbUsers");
+                        } else {
+                            swal({
+                                title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                            $("#tbUsers").load(" #tbUsers");
+                        }
+                    })
+            } else if (pAction === 'lock') {
+                fetch("@Url.Content("~/User/LockUser")" + "?userName=" + pUserName)
+                    .then(res => res.ok ? res.json() : null)
+                    .then(res => {
+                        console.log(res);
+                        if (res == "1") {
+                            swal({
+                                title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
+                                showConfirmButton: false
+                            }
+                            );
+                            $("#tbUsers").load(" #tbUsers");
+                        } else {
+                            swal({
+                                title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                            $("#tbUsers").load(" #tbUsers");
+                        }
+                    })
+            }
+        }
 
+    </script>
+}
 <script type="text/javascript">
     function jsConfirm(form) {
         console.log("entra");
