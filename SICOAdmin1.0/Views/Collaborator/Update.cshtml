@@ -104,17 +104,30 @@
 
                 <label class="mt-4 h6">Forma de pago</label>
                 <select required name="formPayment" id="formPayment" class="form-control custom-select">
-                    <option value="@Model.FormPayment" selected hidden>@Model.FormPayment</option>
+                    <option value="'@Model.FormPayment.Substring(0, 2)'" selected hidden>@Model.FormPayment</option>
                     <option value="Ef">Efectivo</option>
                     <option value="Tr">Transferencia</option>
                     <option value="Ch">Cheque</option>
                 </select>
 
-                <label class="mt-4 h6">Cuenta Bancaria</label>
-                <input required type="text" name="bankAccount" id="bankAccount" class="form-control" disabled/>
+                @if (Model.BankAccount != "N/A")
+                {
+                    <label class="mt-4 h6">Cuenta Bancaria</label>
+                    <input required type="text" name="bankAccount" id="bankAccount" value="@Model.BankAccount" class="form-control" enabled />
 
-                <label class="mt-4 h6">Banco</label>
-                <input required type="text" name="bank" id="bank" class="form-control" disabled/>
+                    <label class="mt-4 h6">Banco</label>
+                    <input required type="text" name="bank" id="bank" value="@Model.Bank" pattern="[A-z ]+" title="Solo se permite ingresar letras." class="form-control" enabled />
+                }
+                else
+                {
+                    <label class="mt-4 h6">Cuenta Bancaria</label>
+                    <input required type="text" name="bankAccount" id="bankAccount" value="@Model.BankAccount" class="form-control" disabled />
+
+                    <label class="mt-4 h6">Banco</label>
+                    <input required type="text" name="bank" id="bank" value="@Model.Bank" pattern="[A-z ]+" title="Solo se permite ingresar letras." class="form-control" disabled />
+                }
+
+
             </div>
 
             <div class="col-xl-3 col-md-6 col-sm-12 me-5">
@@ -150,11 +163,14 @@
                 } else {
                     $("#bankAccount").prop("disabled", true);
                     $("#bank").prop("disabled", true);
+                    $("#bankAccount").val("N/A");
+                    $("#bank").val("N/A");
                 }
             });
         });
+    </script>
 
-        function alert() {
+        @*function alert() {
             if (@TempData["Resultado"] != '1') {
                 swal({
                     title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
@@ -184,6 +200,6 @@
                         $("#tbCollaborators").load(" #tbCollaborators");
                     }
              })
-        }
-    </script>
+        }*@
+    
 }
