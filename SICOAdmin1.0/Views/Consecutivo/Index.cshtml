@@ -27,7 +27,7 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Editar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
 
                 Agregar
             </button>
@@ -154,7 +154,7 @@
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
 
-                        <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
+                        <button style="margin-top: 10px" type="button" class="btn btn-danger" data-dismiss="modal" >Cerrar</button>
                     </div>
 
                 }

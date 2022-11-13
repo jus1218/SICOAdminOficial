@@ -32,7 +32,7 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
                 Agregar
             </button>
 
@@ -116,7 +116,7 @@
 
 
                             <label class="mt-4 h6">Tipo de Nómina</label>
-                            <select required name="Frecuencia" id="Frecuencia" class="form-control h6">
+                            <select required name="Frecuencia" id="Frecuencia" class="form-control h6 was-validated">
                                 <option value="" selected disabled hidden>Tipo Nomina</option>
                                 <option value="SEM">Semanal</option>
                                 <option value="BSM">Bisemanal</option>
@@ -145,7 +145,7 @@
                     <div class="col mt-4 d-flex justify-content-center mb-2">
                         <button id="btnModalAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar">Guardar</button>
                         <button style="margin-top: 10px" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    </div>
+                    </div>z
                 </form>
 
             </div>
@@ -335,7 +335,9 @@
     const idNom = document.getElementById("txtId");
 
     //El tipo de variable LET se utiliza para los select
+    //lo unico que cambia al hacerlo con let y const, es el tipo de variable
     let idCons = document.getElementById("upIdConsecutivo");
+
     const idDesc = document.getElementById("upDescripcion");
     const idFrec = document.getElementById("upFrecuencia");
     function jsmostrarDatos(pId) {
@@ -358,6 +360,7 @@
                 } else if (res.Frecuencia == "MEN") {
                     idFrec.options.item(3).selected = 'selected';
                 }
+                //Aqui selecciono el valor en la lista del select
                 idCons.value = res.IdConsecutivo;
             })
 
