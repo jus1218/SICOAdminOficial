@@ -3,10 +3,12 @@
 @{
     User UserLog = (User)Session["User"];
     string userNameLog = " ";
+    string name = "";
 
     if (UserLog != null)
     {
-        userNameLog = UserLog.name;
+        userNameLog = UserLog.userName;
+        name = UserLog.name;
     }
 
     List<int?> lstActions = (List<int?>)Session["lstActions"];
@@ -56,8 +58,8 @@
                         </div>
                         <div class="profile_info">
                             <span>Bienvenido, </span>
-                            <h2 id="usuarioLog" style="font-size:medium;">@userNameLog</h2>
-
+                            <h2 id="usuarioLog" style="font-size:medium;">@userNameLog</h2> <br />
+                            <h2 id="usuarioName" style="font-size:medium;">@name</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -78,10 +80,10 @@
                                     <a><i class="fa fa-pencil-square-o"></i> Control Operativo <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
 
-                                        @if (@lstActions.Contains(6))
-                                        {
-                                            <li><a href="@Url.Action("Index", "User")">Admin. Usuarios</a></li>
-                                        }
+                                        @*@if (@lstActions.Contains(6))*@
+                                        @* {*@
+                                        <li><a href="@Url.Action("Index", "User")">Admin. Usuarios</a></li>
+                                        @* } *@
                                         <li><a href="@Url.Action("Index", "Perfil")">Admin. Pefiles</a></li>
                                         <li><a href="@Url.Action("Index", "Segunda")">Admin. E/S</a></li>
                                         <li><a href="@Url.Action("Index", "Segunda")">Admin. Filial</a></li>

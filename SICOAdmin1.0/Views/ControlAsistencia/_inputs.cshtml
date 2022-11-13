@@ -1,0 +1,27 @@
+﻿
+
+
+<div class="form-group" id="contentTipoJornada">
+
+    <label for="tipoJornada">Tipo jornada:</label>
+    <select required name="tipoJornada" class="custom-select" id="tipoJornada">
+        <option>Seleccione una jornada...</option>
+        <option value="DR">Diurna</option>
+        <option value="NT">Nocturna</option>
+        <option value="MT">Mixto</option>
+    </select>
+</div>
+
+<div class="form-group mt-4">
+
+    <label for="FechaHoraIngresos">Fecha y hora ingreso:</label>
+    <input type="datetime-local" id="FechaHoraIngresos" required name="FechaHoraIngresos" class="form-control" />
+</div>
+
+<div class="form-group mt-4">
+
+    <label for="FechaHoraSalidas">Fecha y hora salida:</label>
+    <input type="datetime-local" id="FechaHoraSalidas" required name="FechaHoraSalidas" class="form-control" />
+</div>
+
+<div class="form-group">horas calculadas: <span id="horaCalculada2">0</span></div>

@@ -1,0 +1,52 @@
+﻿@model List<SICOAdmin1._0.Models.ControlAsistencia>
+  
+
+@{ //int horaR = 0;
+}
+
+
+
+<table id="tColaboradores" class="table table-bordered ">
+    <thead class="">
+        <tr>
+            <th scope="col" class="th"># Asistencia</th>
+            <th scope="col" class="th">Nombre Colaborador</th>
+            <th scope="col" class="th">Tipo Jornada</th>
+            <th scope="col" class="th">Hora Regular</th>
+            <th scope="col" class="th">Hora Extras</th>
+            <th scope="col" class="th">Hora Dobles</th>
+            <th scope="col" class="th">Hora Extra Doble</th>
+            <th scope="col" class="th">Acciones</th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+
+        @if (Model != null)
+        {
+            foreach (var ctrlAsistencia in Model)
+            {
+                <tr>
+                    <td>@ctrlAsistencia.IdAsistencia</td>
+                    <td>@ctrlAsistencia.NomColaborador</td>
+                    <td>@ctrlAsistencia.TipoJornada</td>
+                    <td>@ctrlAsistencia.HorasRegulares</td>
+                    <td>@ctrlAsistencia.HorasExtras</td>
+                    <td>@ctrlAsistencia.HoraDoble</td>
+                    <td>@ctrlAsistencia.HorasExtrasDobles</td>
+
+                    @*
+                        data-toggle="modal" data-target="#editCtrlAsistencia"
+                        data-toggle="modal" data-target="#viewMore"
+                    *@
+
+                    <td>
+                        <button class="btn btn-warning" onclick="llamarModalModCtrlAsist('@ctrlAsistencia.IdAsistencia');"><i class="fa fa-pencil mr-2" aria-hidden="true"></i>Editar</button>
+
+                        <input class="btn btn-light" type="button" value="Ver más" onclick="viewMore('@ctrlAsistencia.IdAsistencia');" />
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>

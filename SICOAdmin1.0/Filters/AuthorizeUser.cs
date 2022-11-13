@@ -28,17 +28,20 @@ namespace SICOAdmin1._0.Filters
             try
             {
                 objUser = (User)HttpContext.Current.Session["User"];
-                using (SICOAdminEntities db = new SICOAdminEntities())
-                {
-                    lstActions = db.SP_C_AuthorizeUser(objUser.userName).ToList();
-                }
 
-                HttpContext.Current.Session["lstActions"] = lstActions;
+                if (objUser!=null) {
+                    using (SICOAdminEntities db = new SICOAdminEntities())
+                    {
+                        lstActions = db.SP_C_AuthorizeUser(objUser.userName).ToList();
+                    }
 
-                //lstActions.Count() < 1
-                if (!(lstActions.Contains(accion)))
-                {//Por si no tiene permisos
-                    filterContext.Result = new RedirectResult("~/Home/Index");
+                    HttpContext.Current.Session["lstActions"] = lstActions;
+
+                    //lstActions.Count() < 1
+                    if (!(lstActions.Contains(accion)))
+                    {//Por si no tiene permisos
+                        filterContext.Result = new RedirectResult("~/Home/Index");
+                    } 
                 }
 
             }
