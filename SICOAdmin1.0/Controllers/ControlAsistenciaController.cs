@@ -1,4 +1,5 @@
 ﻿using SICOAdmin1._0.Models;
+using SICOAdmin1._0.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -140,7 +141,7 @@ namespace SICOAdmin1._0.Controllers
             using (var db = new SICOAdminEntities())
             {
                 resp = db.SP_P_CrearControlAsistencia(obj.IdColaborador, obj.FechaHoraIngreso, obj.FechaHoraSalida,
-                    obj.TipoJornada, obj.HorasRegulares, obj.HorasExtras, obj.HoraDobles, obj.HorasExtrasDobles, obj.UsuarioCreacion, msj);
+                    obj.TipoJornada, obj.HorasRegulares, obj.HorasExtras, obj.HoraDobles, obj.HorasExtrasDobles, ((User)Session["User"]).userName, msj);
             }
 
             return Json(new
@@ -161,7 +162,7 @@ namespace SICOAdmin1._0.Controllers
             using (var db = new SICOAdminEntities()){
                 resp = db.SP_P_ModificarControlAsistencia(obj.IdAsistencia,obj.IdColaborador, obj.FechaHoraIngreso, obj.FechaHoraSalida,
                     obj.TipoJornada, obj.HorasRegulares, obj.HorasExtras, obj.HoraDobles, obj.HorasExtrasDobles,
-                    obj.UsuarioModificacion, msj);
+                    ((User)Session["User"]).userName, msj);
             }
 
             return Json(new{

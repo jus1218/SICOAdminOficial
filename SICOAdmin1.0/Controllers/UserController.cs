@@ -245,7 +245,7 @@ namespace SICOAdmin.Controllers
             int resp = 0;
             using (var db = new SICOAdminEntities())
             {
-                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, obj.UsuarioCreacion);
+                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, ((User)Session["User"]).userName);
             }
 
             return Json(resp, JsonRequestBehavior.AllowGet);
