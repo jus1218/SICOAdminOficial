@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Agregar Colaborador";
+    List<SelectListItem> lstPayrolls = (List<SelectListItem>)ViewBag.Payrolls;
+    List<SelectListItem> lstPositions = (List<SelectListItem>)ViewBag.Positions;
+}
+
+
+<div class="container margin-container p-4 glass">
+    <!--INPUTS-->
+    <h3 class="mb-4">Agregar colaborador</h3>
+    <form action="@Url.Action("AddCollaborator", "Collaborator")" method="post" id="frm">
+        <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Nombre</label>
+                <input required type="text" name="name" pattern = "[A-záéíóú ]+" class="form-control" placeholder="(Solo letras)" />
+
+                <label class="mt-4 h6">Identificación</label>
+                <input required type="text" name="identification" class="form-control" />
+
+                <label class="mt-4 h6">Género</label>
+                <select required name="gender" id="genders" class="form-control">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="P">Prefirero no decirlo</option>
+                    <option value="O">Otro</option>
+                </select>
+
+                <label class="mt-4 h6">Estado civil</label>
+                <select required name="civilStatus" id="civilStatus" class="form-control">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    <option value="Ca">Casado(a)</option>
+                    <option value="So">Soltero(a)</option>
+                    <option value="Vi">Viudo(a)</option>
+                    <option value="Di">Divorciado(a)</option>
+                    <option value="Ul">Union libre</option>
+                    <option value="Ot">Otro</option>
+                </select>
+
+                <label class="mt-4 h6">Correo electrónico</label>
+                <input required type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com"/>
+
+                <label class="mt-4 h6">Nacionalidad</label>
+                <input required type="text" name="nationality" pattern="[A-z]+" class="form-control" placeholder="Ejm: Costarricense"/>
+            </div><br />
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Teléfono 1</label>
+                <input required type="tel" pattern="[0-9]+" title="Solo se permite ingresar números" name="telephone1" class="form-control" placeholder="(Solo números)"/>
+
+                <label class="mt-4 h6">Teléfono 2</label>
+                <input required type="tel" pattern="[0-9]+" title="Solo se permite ingresar números" name="telephone2" class="form-control" placeholder="(Solo números)" />
+
+                <label class="mt-4 h6">Dirección</label>
+                <input required type="text" name="address" class="form-control" />
+
+                <label class="mt-4 h6">Fecha de nacimiento</label>
+                <input required type="date" name="dateBirth" class="form-control" />
+
+                <label class="mt-4 h6">Fecha de entrada</label>
+                <input required type="date" name="dateEntry" class="form-control" />
+
+                <label class="mt-4 h6">Fecha de salida</label>
+                <input required type="date" name="dateDeparture" class="form-control" value="1999-01-01" disabled title="Fecha por defecto."/>
+            </div> <br />
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Nomina</label>
+                <select required name="IdNomina" id="IdNomina" class="form-control">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    @foreach (var e in lstPayrolls)
+                    {
+                        <option value="@e.Value"> @e.Text</option>
+                    }
+                </select>
+
+                <label class="mt-4 h6">Puesto</label>
+                <select required name="IdPuesto" id="IdPuesto" class="form-control">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    @foreach (var e in lstPositions)
+                    {
+                        <option value="@e.Value"> @e.Text</option>
+                    }
+                </select>
+
+                <label class="mt-4 h6">Activo</label>
+                <input type="checkbox" name="active" class="form-control" value="true" />
+
+                <label class="mt-4 h6">Forma de pago</label>
+                <select required name="formPayment" id="formPayment" class="form-control">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tr">Transferencia</option>
+                    <option value="Cheque">Cheque</option>
+                </select>
+
+                <label class="mt-4 h6">Cuenta Bancaria</label>
+                <input required type="number" pattern="[0-9]+" name="bankAccount" id="bankAccount" class="form-control" disabled />
+
+                <label class="mt-4 h6">Nombre del banco</label>
+                <input required type="text" pattern="[A-z ]+" name="bank" id="bank" class="form-control" disabled />
+            </div><br />
+
+                  <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                      <label class="mt-4 h6">Estado</label>
+                      <select required name="state" id="selectState" class="form-control">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option value="Acti">Activo</option>
+                          <option value="Inac">Inactivo</option>
+                          <option value="Inca">Incapacitado</option>
+                          <option value="Vaca">Vacaciones</option>
+                          <option value="PL">Pendiente de liquidar</option>
+                      </select>
+
+                      <label class="mt-4 h6">Contacto de emergencia</label>
+                      <input required type="text" name="emergencyContact" pattern = "[A-záéíóú ]+" class="form-control" placeholder="(Solo letras)"/>
+
+                      <label class="mt-4 h6">Teléfono de contacto</label>
+                      <input required type="tel" pattern="[0-9]+" title="Solo se permite ingresar números" name="telephoneContact" class="form-control" placeholder="(Solo números)"/>
+
+                      <label class="mt-4 h6">Saldo vacaciones</label>
+                      <input required type="number" min="0" step="0.01" name="vacationBalance" class="form-control" />
+
+                      <label class="mt-4 h6">Último cálculo vacaciones</label>
+                      <input required type="date" name="lastVacationCalc" class="form-control" />
+
+                      <label class="mt-4 h6">Salario de referencia</label>
+                      <input required type="number" step="0.01" min="0" pattern="[0-9]" title="Solo se permite ingresar números" name="referenceSalary" class="form-control" />
+
+                  </div><br />
+        </div>
+        <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success fa fa-save" style="width:10%;font-size:large;">  Guardar</button>
+            <a class="btn btn-danger fa fa-ban" style="width:10%;font-size:large;" href=" @Url.Action("Index", "Collaborator")">  Cancelar</a>
+        </div>
+
+    </form>
+</div>
+
+@section scripts{
+    <script>
+        //Desbloquear inputs al seleccionar el método de pago por transferencia
+        $(function () {
+            $("#formPayment").change(function () {
+                if ($(this).val() === "Tr") {
+                    $("#bankAccount").prop("disabled", false);
+                    $("#bank").prop("disabled", false);
+                } else {
+                    $("#bankAccount").prop("disabled", true);
+                    $("#bank").prop("disabled", true);
+                }
+            });
+        });
+    </script>
+    }

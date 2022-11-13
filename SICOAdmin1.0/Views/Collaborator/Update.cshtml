@@ -1,0 +1,205 @@
+﻿@model SICOAdmin1._0.Models.Collaborator.Collaborator
+@using SICOAdmin1._0.Models.Collaborator
+
+@{
+    ViewBag.Title = "Editar colaborador";
+    List<SelectListItem> lstPayrolls = (List<SelectListItem>)ViewBag.Payrolls;
+    List<SelectListItem> lstPositions = (List<SelectListItem>)ViewBag.Positions;
+
+}
+
+<div class="container margin-container p-4 glass">
+    <h3 class="mb-4">Editar colaborador - @Model.Name</h3>
+    @using (Html.BeginForm("Update", "Collaborator", FormMethod.Post, new { id = "frm", role = "form", @class = "row-12 was-validated", name = "FormActualizar", }))
+    {
+
+        @Html.HiddenFor(c => c.Identification, new { @class = "", id = "txtIdentification" })
+        <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Correo electrónico</label>
+                @Html.TextBoxFor(c => c.Email, new { @class = "form-control", id = "txtEmail", required = "required", type = "email", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Email", null, new { @class = "text-danger" })
+
+                <label class="mt-4 h6">Teléfono 1</label>
+                @Html.TextBoxFor(c => c.Telephone1, new { @class = "form-control", id = "txtTelephone1", pattern = "[0-9]+", required = "required", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Telephone1", null, new { @class = "text-danger" })
+
+                <label class="mt-4 h6">Teléfono 2</label>
+                @Html.TextBoxFor(c => c.Telephone2, new { @class = "form-control", id = "txtTelephone1", pattern = "[0-9]+", required = "required", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Telephone2", null, new { @class = "text-danger" })
+
+                <label class="mt-4 h6">Dirección</label>
+                @Html.TextBoxFor(c => c.Address, new { @class = "form-control", id = "txtAddress", required = "required", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Address", null, new { @class = "text-danger" })
+
+                <label class="mt-4 h6">Nacionalidad</label>
+                @Html.TextBoxFor(c => c.Nationality, new { @class = "form-control", id = "txtNationality", pattern = "[A-z]+", required = "required", title = "Solo se permiten letras.", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Email", null, new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Estado civil</label>
+                <select required name="civilStatus" id="civilStatus" class="form-control custom-select">
+                    <option value="@Model.CivilStatus" selected hidden>@Model.CivilStatus</option>
+                    <option value="Ca">Casado(a)</option>
+                    <option value="So">Soltero(a)</option>
+                    <option value="Vi">Viudo(a)</option>
+                    <option value="Di">Divorciado(a)</option>
+                    <option value="Ul">Union libre</option>
+                    <option value="Ot">Otro</option>
+                </select>
+
+                <label class="mt-4 h6">Estado</label>
+                <select required name="state" id="selectState" class="form-control custom-select">
+                    <option value="@Model.State" selected hidden>@Model.State</option>
+                    <option value="Acti">Activo</option>
+                    <option value="Inac">Inactivo</option>
+                    <option value="Inca">Incapacitado</option>
+                    <option value="Vaca">Vacaciones</option>
+                    <option value="PL">Pendiente de liquidar</option>
+                </select>
+
+                <label class="mt-4 h6">Fecha de entrada</label>
+                <input required type="date" value="@Model.DateEntry.ToString("yyyy-MM-dd")" name="dateEntry" class="form-control" disabled />
+
+                <label class="mt-4 h6">Fecha de salida</label>
+                <input required type="date" value="@Model.DateEntry.ToString("yyyy-MM-dd")" name="dateDeparture" class="form-control" />
+
+                <label class="mt-4 h6">Salario de referencia</label>
+                <input required type="text" value="@Model.ReferenceSalary" pattern="[^A-z]+" min="0" step="0.01" title="Solo se permite ingresar números" name="referenceSalary" class="form-control" />
+            </div>
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Nomina</label>
+                <select required name="IdNomina" id="IdNomina" class="form-control custom-select">
+
+                    @foreach (var pa in lstPayrolls)
+                    {
+                        if ((Model.IdNomina).ToString() != pa.Value)
+                        {
+                            <option value="@pa.Value"> @pa.Text</option>
+                        }
+                        else if ((Model.IdNomina).ToString() == pa.Value)
+                        {
+                            <option value="@pa.Value" selected hidden>@pa.Text</option>
+                        }
+                    }
+                </select>
+
+                <label class="mt-4 h6">Puesto</label>
+                <select required name="IdPuesto" id="IdPuesto" class="form-control custom-select">
+                    @foreach (var po in lstPositions)
+                    {
+                        if ((Model.IdPuesto).ToString() != po.Value)
+                        {
+                            <option value="@po.Value"> @po.Text</option>
+                        }
+                        else if ((Model.IdPuesto).ToString() == po.Value)
+                        {
+                            <option value="@po.Value" selected hidden>@po.Text</option>
+                        }
+                    }
+                </select>
+
+                <label class="mt-4 h6">Forma de pago</label>
+                <select required name="formPayment" id="formPayment" class="form-control custom-select">
+                    <option value="'@Model.FormPayment.Substring(0, 2)'" selected hidden>@Model.FormPayment</option>
+                    <option value="Ef">Efectivo</option>
+                    <option value="Tr">Transferencia</option>
+                    <option value="Ch">Cheque</option>
+                </select>
+
+                @if (Model.BankAccount != "N/A")
+                {
+                    <label class="mt-4 h6">Cuenta Bancaria</label>
+                    <input required type="text" name="bankAccount" id="bankAccount" value="@Model.BankAccount" class="form-control" enabled />
+
+                    <label class="mt-4 h6">Banco</label>
+                    <input required type="text" name="bank" id="bank" value="@Model.Bank" pattern="[A-z ]+" title="Solo se permite ingresar letras." class="form-control" enabled />
+                }
+                else
+                {
+                    <label class="mt-4 h6">Cuenta Bancaria</label>
+                    <input required type="text" name="bankAccount" id="bankAccount" value="@Model.BankAccount" class="form-control" disabled />
+
+                    <label class="mt-4 h6">Banco</label>
+                    <input required type="text" name="bank" id="bank" value="@Model.Bank" pattern="[A-z ]+" title="Solo se permite ingresar letras." class="form-control" disabled />
+                }
+
+
+            </div>
+
+            <div class="col-xl-3 col-md-6 col-sm-12 me-5">
+                <label class="mt-4 h6">Contacto de emergencia</label>
+                <input required type="text" value="@Model.EmergencyContact" name="emergencyContact" class="form-control" placeholder="(Solo letras)" />
+
+                <label class="mt-4 h6">Teléfono de contacto</label>
+                <input required type="tel" value="@Model.TelephoneContact" pattern="[0-9]+" title="Solo se permite ingresar números" name="telephoneContact" class="form-control" placeholder="(Solo números)" />
+
+                <label class="mt-4 h6">Saldo vacaciones</label>
+                <input required type="text" value="@Model.VacationBalance" pattern="[^A-z]+" min="0" step="0.01" name="vacationBalance" class="form-control" />
+
+                <label class="mt-4 h6">Último cálculo vacaciones</label>
+                <input required type="date" value="@Model.LastVacationCalc.ToString("yyyy-MM-dd")" name="lastVacationCalc" class="form-control" />
+            </div>
+
+        </div>
+        <div class="col mt-4 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success fa fa-save" style="width:10%;font-size:large;">  Guardar</button>
+            <a class="btn btn-danger fa fa-ban" style="width:10%;font-size:large;" href=" @Url.Action("Index", "Collaborator")">  Cancelar</a>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        //Desbloquear inputs al seleccionar el método de pago por transferencia
+        $(function () {
+            $("#formPayment").change(function () {
+                if ($(this).val() === "Tr") {
+                    $("#bankAccount").prop("disabled", false);
+                    $("#bank").prop("disabled", false);
+                } else {
+                    $("#bankAccount").prop("disabled", true);
+                    $("#bank").prop("disabled", true);
+                    $("#bankAccount").val("N/A");
+                    $("#bank").val("N/A");
+                }
+            });
+        });
+    </script>
+
+        @*function alert() {
+            if (@TempData["Resultado"] != '1') {
+                swal({
+                    title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
+                    showConfirmButton: false
+                });
+            }
+        }
+
+        function jsAlert() {
+            fetch("@Url.Content("~/Collaborator/Update")" + "?idCol=" + pId)
+              .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                  console.log(res);
+                    if (res == "1") {
+                        swal({
+                            title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
+                            showConfirmButton: false
+                        }
+                        );
+                        $("#tbCollaborators").load(" #tbCollaborators");
+                    } else {
+                        swal({
+                            title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                        $("#tbCollaborators").load(" #tbCollaborators");
+                    }
+             })
+        }*@
+    
+}

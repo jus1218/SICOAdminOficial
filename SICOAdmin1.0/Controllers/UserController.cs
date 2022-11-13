@@ -69,8 +69,6 @@ namespace SICOAdmin.Controllers
                 objM.dateModification = (DateTime)e.FechaModificacion;
 
                 lstModel.Add(objM);
-
-                ViewBag.bitacora = objM;
             }
 
 
@@ -327,12 +325,6 @@ namespace SICOAdmin.Controllers
         }
 
 
-
-
-
-
-
-
         public JsonResult GetBitacora(string userName)//NO SE USA AÚN
         {
             User oUser = new User();
@@ -395,6 +387,54 @@ namespace SICOAdmin.Controllers
                 return Content("Ocurrio un error :( \n" + ex.Message);
             }
 
+        }
+
+        public JsonResult LockUser(string userName)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+
+            string message = "";
+            bool result = false;
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                db.SP_P_ModificarEstadosUsuario( userName, ((User)Session["User"]).userName, "lock", resultado, mensaje);
+                result = Convert.ToBoolean(resultado.Value);
+            }
+            if (result)
+            {
+                message = "1";
+            }
+            else
+            {
+                message = "2";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ActivUser(string userName)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+
+            string message = "";
+            bool result = false;
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                db.SP_P_ModificarEstadosUsuario(userName, ((User)Session["User"]).userName, "Activ", resultado, mensaje);
+                result = Convert.ToBoolean(resultado.Value);
+            }
+            if (result)
+            {
+                message = "1";
+            }
+            else
+            {
+                message = "2";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
     }
 }

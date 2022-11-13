@@ -1,0 +1,379 @@
+﻿@model SICOAdmin1._0.Models.Collaborator.Collaborator
+@using SICOAdmin1._0.Models.Collaborator
+
+@{
+    ViewBag.Title = "Colaboradores";
+    List<Collaborator> modelCollaborators = (List<Collaborator>)ViewBag.Collaborators;
+   
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+
+<div class="container margin-container p-4 glass">
+
+
+    <div class="row fila">
+        <!--TEXTO-->
+        <div class="col-xl-2 col-md-3 d-flex justify-content-center">
+            <h3 class="mt-0">Colaboradores</h3>
+        </div>
+        <!--BOTON-->
+        <div class="col-xl-2 col-md-2 mb-3">
+            <button type="button" class="btn btn-primary col-12 fa fa-plus-circle" onclick="document.location.href = '@Url.Action("AddCollaborator","Collaborator")'"> Agregar</button>
+        </div>
+        <!--Barra busqueda-->
+        <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
+            <div class="input-group mb-2">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Buscar..."
+                       aria-label="Buscar..."
+                       aria-describedby="button-search"
+                       id="buscar" />
+                <button class="btn btn-outline-secondary fa fa-search"
+                        type="button"
+                        disabled="disabled"
+                        id="button-search">
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--FILA TABLE-->
+    <div class="row fila scrol-tablex">
+        <table id="tbCollaborators" class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Identificacion</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Activo</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Teléfono 1</th>
+                    <th scope="col">Nacionalidad</th>
+                    <th scope="col">Fecha de nacimiento</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:center;">
+                @foreach (var collaborator in modelCollaborators)
+                {
+                    <tr>
+                        <td>@collaborator.Id</td>
+                        <td>@collaborator.Name</td>
+                        <td>@collaborator.Identification</td>
+                        <td>@collaborator.Gender</td>
+                        <td><input type="checkbox" checked="@collaborator.Active" disabled="disabled" /></td>
+                        <td>@collaborator.Address</td>
+                        <td>@collaborator.Telephone1</td>
+                        <td>@collaborator.Nationality</td>
+                        <td>@collaborator.DateBirth.ToString("dd MMMM, yyyy")</td>
+
+                        <td width="400px">
+                            <button id="btnEdit" onclick="document.location.href = '@Url.Action("Update","Collaborator",new { id = collaborator.Identification })'" class="btn btn-warning fa fa-pencil btn-sm"> Editar</button>
+                            <button id="btnBitacora" onclick="jsmostrarBitacora('@collaborator.Identification')" class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#modalBitacora"> Bitácora</button>
+                            <button id="btnDetails" onclick="jsViewDetails('@collaborator.Identification')" class="btn btn-primary fa fa-info-circle btn-sm" data-toggle="modal" data-target="#detailsModal"> Detalles</button>
+
+                            @if (collaborator.Active)
+                            {
+                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm" style="width: 23%;" onclick="jsModificarEstado('@collaborator.Identification')"> Desactivar</button>
+                            }
+                            else
+                            {
+                                <button id="btnActivar" class="btn btn-success fa fa-unlock btn-sm" style="width: 23%;" onclick="jsModificarEstado('@collaborator.Identification')"> Activar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MODAL BITACORA -->
+<div class="modal fade" id="modalBitacora" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBitacoraTitle">Bitacora de colaborador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="userBit" class="table table-hover table-bordered text-center text ">
+                    <thead>
+                        <tr>
+                            <th>Usuario creación</th>
+                            <th>Fecha creación</th>
+                            <th>Usuario modificación</th>
+                            <th>Fecha modificación</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="tdBUsuarioCrea"></td>
+                            <td id="tdBFechaCrea"></td>
+                            <td id="tdBUsuarioModi"></td>
+                            <td id="tdBFechaModi"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- TABLA PARA MÁS DETALLES COLABORADOR -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Detalles de colaborador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row fila scrol-tablex">
+                    <table id="collaboratorsDetails" style="float: left; color:black; font-size:medium" width="50%">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <td id="tdBName"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Género</th>
+                            <td id="tdBGender"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Activo</th>
+                            <td><input id="tdBActive" type="checkbox" checked="" disabled="disabled" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Estado</th>
+                            <td id="tdBState"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Dirección</th>
+                            <td id="tdBAddress"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Teléfono 1</th>
+                            <td id="tdBTelephone1"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Teléfono 2</th>
+                            <td id="tdBTelephone2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Identificacion</th>
+                            <td id="tdBIdentification"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Nacionalidad</th>
+                            <td id="tdNationality"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Fecha de nacimiento</th>
+                            <td id="tdBDateBirth"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Fecha de ingreso</th>
+                            <td id="tdBDateEntry"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Fecha de salida</th>
+                            <td id="tdBDateDeparture"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Nomina</th>
+                            <td id="tdBIdNomina"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Estado civil</th>
+                            <td id="tdBCivilStatus"></td>
+                        </tr>
+                    </table>
+                    <table id="collaboratorsDetails" width="50%" style="color:black; font-size:medium;">
+                        <tr>
+                            <th scope="col">Saldo de vacaciones</th>
+                            <td id="tdBVacationBalance"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Último cálculo de vacaciones</th>
+                            <td id="tdBLastVacationCalc"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Puesto</th>
+                            <td id="tdBIdPuesto"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Forma de pago</th>
+                            <td id="tdBFormPayment"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Cuenta bancaria</th>
+                            <td id="tdBBankAccount"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Banco</th>
+                            <td id="tdBBank"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Correo electrónico</th>
+                            <td id="tdBEmail"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Contacto de emergencia</th>
+                            <td id="tdBEmergencyContact"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Teléfono de contacto</th>
+                            <td id="tdBTelephoneContact"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Salario de referencia</th>
+                            <td id="tdBReferenceSalary"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        //Busqueda
+        var busqueda = document.getElementById("buscar");
+        $(document).ready(function (i) {
+            $("#buscar").on("keyup", function (i) {
+                var value = $(this).val().toLowerCase();
+                $("#tbCollaborators tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        
+
+        //Mostrar Bitacora por colaborador
+        function jsmostrarBitacora(pId) {
+            console.log("Bitacora");
+            console.log(pId);
+            fetch("@Url.Content("~/Collaborator/GetBitacora")" + "?id=" + pId)
+                    .then(res => res.ok ? res.json() : null)
+                    .then(res => {
+                        console.log(res);
+                        console.log("Bitacora");
+
+                        tdBUsuarioCrea.textContent = res.UserCreation;
+                        tdBFechaCrea.textContent = res.DateCreation;
+                        tdBUsuarioModi.textContent = res.UserModification;
+                        tdBFechaModi.textContent = res.DateModification;
+                    })
+        }
+
+        //Mostrar detalles por colaborador
+        function jsViewDetails(pId) {
+            console.log("Bitacora");
+            console.log(pId);
+            fetch("@Url.Content("~/Collaborator/GetDetails")" + "?id=" + pId)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    console.log(res);
+
+                    tdBName.textContent = res.Name;
+                    tdBGender.textContent = res.Gender;
+                    tdBActive.textContent = res.Active;
+                    tdBState.textContent = res.State;
+                    tdBAddress.textContent = res.Address;
+                    tdBTelephone1.textContent = res.Telephone1;
+                    tdBTelephone2.textContent = res.Telephone2;
+                    tdBIdentification.textContent = res.Identification;
+                    tdNationality.textContent = res.Nationality;
+                    tdBDateBirth.textContent = res.DateBirth;
+                    tdBDateEntry.textContent = res.DateEntry;
+                    tdBDateDeparture.textContent = res.DateDeparture;
+                    tdBIdNomina.textContent = res.IdNomina;
+                    tdBCivilStatus.textContent = res.CivilStatus;
+                    tdBVacationBalance.textContent = res.VacationBalance;
+                    tdBLastVacationCalc.textContent = res.LastVacationCalc;
+                    tdBIdPuesto.textContent = res.IdPuesto;
+                    tdBFormPayment.textContent = res.FormPayment;
+                    tdBBankAccount.textContent = res.BankAccount;
+                    tdBBank.textContent = res.Bank;
+                    tdBEmail.textContent = res.Email;
+                    tdBEmergencyContact.textContent = res.EmergencyContact;
+                    tdBTelephoneContact.textContent = res.TelephoneContact;
+                    tdBReferenceSalary.textContent = res.ReferenceSalary;
+                    tdBUsuarioCrea.textContent = res.UserCreation;
+                    tdBFechaCrea.textContent = res.DateCreation;
+                    tdBUsuarioModi.textContent = res.UserModification;
+                    tdBFechaModi.textContent = res.DateModification;
+                })
+        }
+
+        //Activar - desactivar
+        function jsModificarEstado(pId) {
+            console.log(pId);
+            fetch("@Url.Content("~/Collaborator/ModificarEstado")" + "?idCol=" + pId)
+              .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                  console.log(res);
+                    if (res == "1") {
+                        swal({
+                            title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
+                            showConfirmButton: false
+                        }
+                        );
+                        $("#tbCollaborators").load(" #tbCollaborators");
+                    } else {
+                        swal({
+                            title: "Ups... Ha ocurrido un error", text: "No se modifico el Estado!!", type: "error",
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                        $("#tbCollaborators").load(" #tbCollaborators");
+                    }
+             })
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        console.log('@TempData["Message"]');
+        console.log('@TempData["Message"]');
+        @if (TempData["Resultado"] != null) {
+
+            if (TempData["Resultado"].ToString() == "1")
+            {
+                 <text>
+            $(document).ready(function {
+                swal({ title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 2000, showConfirmButton: false });
+            })
+                </text>
+            }
+            else {
+                <text>
+            $(document).ready(function () {
+                swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error", timer: 2000, showConfirmButton: false });
+            })
+                </text>
+
+            }
+
+            TempData.Clear();
+        }
+    </script>
+}
