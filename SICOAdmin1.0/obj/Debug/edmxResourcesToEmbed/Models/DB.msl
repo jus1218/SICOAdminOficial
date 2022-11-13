@@ -554,6 +554,17 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SICOAdminModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="SP_C_AuthorizeUser" FunctionName="SICOAdminModel.Store.SP_C_AuthorizeUser" />
+    <FunctionImportMapping FunctionImportName="SP_C_BItacoraPuesto" FunctionName="SICOAdminModel.Store.SP_C_BItacoraPuesto">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_BItacoraPuesto_Result">
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_C_BuscarConsecutivo" FunctionName="SICOAdminModel.Store.SP_C_BuscarConsecutivo">
       <ResultMapping>
         <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_BuscarConsecutivo_Result">
@@ -566,6 +577,26 @@
           <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_BuscarControlAsistencia" FunctionName="SICOAdminModel.Store.SP_C_BuscarControlAsistencia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_BuscarControlAsistencia_Result">
+          <ScalarProperty Name="IdAsistencia" ColumnName="IdAsistencia" />
+          <ScalarProperty Name="IdColaborador" ColumnName="IdColaborador" />
+          <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
+          <ScalarProperty Name="FechaHoraSalida" ColumnName="FechaHoraSalida" />
+          <ScalarProperty Name="TipoJornada" ColumnName="TipoJornada" />
+          <ScalarProperty Name="HorasRegulares" ColumnName="HorasRegulares" />
+          <ScalarProperty Name="HorasExtras" ColumnName="HorasExtras" />
+          <ScalarProperty Name="HoraDobles" ColumnName="HoraDobles" />
+          <ScalarProperty Name="HorasExtrasDobles" ColumnName="HorasExtrasDobles" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="nomColaborador" ColumnName="nomColaborador" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -604,6 +635,35 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_ConsecutivosActivos" FunctionName="SICOAdminModel.Store.SP_C_ConsecutivosActivos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_ConsecutivosActivos_Result">
+          <ScalarProperty Name="IdConsecutivo" ColumnName="IdConsecutivo" />
+          <ScalarProperty Name="Alias" ColumnName="Alias" />
+          <ScalarProperty Name="Mascara" ColumnName="Mascara" />
+          <ScalarProperty Name="ProximoValor" ColumnName="ProximoValor" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_MostarNominas" FunctionName="SICOAdminModel.Store.SP_C_MostarNominas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostarNominas_Result">
+          <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Frecuencia" ColumnName="Frecuencia" />
+          <ScalarProperty Name="IdConsecutivo" ColumnName="IdConsecutivo" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="Fecha_Modificacion" ColumnName="Fecha_Modificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_C_MostrarAcciones" FunctionName="SICOAdminModel.Store.SP_C_MostrarAcciones">
       <ResultMapping>
         <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarAcciones_Result">
@@ -611,6 +671,41 @@
           <ScalarProperty Name="Alias" ColumnName="Alias" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_MostrarColaboradores" FunctionName="SICOAdminModel.Store.SP_C_MostrarColaboradores">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarColaboradores_Result">
+          <ScalarProperty Name="IdColaborador" ColumnName="IdColaborador" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+          <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+          <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+          <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+          <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+          <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
+          <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+          <ScalarProperty Name="SaldoVacaciones" ColumnName="SaldoVacaciones" />
+          <ScalarProperty Name="UltCalculoVacaciones" ColumnName="UltCalculoVacaciones" />
+          <ScalarProperty Name="IdPuesto" ColumnName="IdPuesto" />
+          <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+          <ScalarProperty Name="CuentaBancaria" ColumnName="CuentaBancaria" />
+          <ScalarProperty Name="Banco" ColumnName="Banco" />
+          <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+          <ScalarProperty Name="ContactoEmergencia" ColumnName="ContactoEmergencia" />
+          <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+          <ScalarProperty Name="SalarioReferencia" ColumnName="SalarioReferencia" />
           <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
           <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
@@ -633,6 +728,43 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_MostrarControlAsistencia" FunctionName="SICOAdminModel.Store.SP_C_MostrarControlAsistencia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarControlAsistencia_Result">
+          <ScalarProperty Name="IdAsistencia" ColumnName="IdAsistencia" />
+          <ScalarProperty Name="IdColaborador" ColumnName="IdColaborador" />
+          <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
+          <ScalarProperty Name="FechaHoraSalida" ColumnName="FechaHoraSalida" />
+          <ScalarProperty Name="TipoJornada" ColumnName="TipoJornada" />
+          <ScalarProperty Name="HorasRegulares" ColumnName="HorasRegulares" />
+          <ScalarProperty Name="HorasExtras" ColumnName="HorasExtras" />
+          <ScalarProperty Name="HoraDobles" ColumnName="HoraDobles" />
+          <ScalarProperty Name="HorasExtrasDobles" ColumnName="HorasExtrasDobles" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="NomColaborador" ColumnName="NomColaborador" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_MostrarParametros" FunctionName="SICOAdminModel.Store.SP_C_MostrarParametros">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarParametros_Result">
+          <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
+          <ScalarProperty Name="Mensualidad" ColumnName="Mensualidad" />
+          <ScalarProperty Name="IdConsecRecibo" ColumnName="IdConsecRecibo" />
+          <ScalarProperty Name="InteresMora" ColumnName="InteresMora" />
+          <ScalarProperty Name="TipoDocumentoCobro" ColumnName="TipoDocumentoCobro" />
+          <ScalarProperty Name="CondicionPago" ColumnName="CondicionPago" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_C_MostrarPerfil" FunctionName="SICOAdminModel.Store.SP_C_MostrarPerfil">
       <ResultMapping>
         <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarPerfil_Result">
@@ -640,6 +772,23 @@
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_C_MostrarPuestos" FunctionName="SICOAdminModel.Store.SP_C_MostrarPuestos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostrarPuestos_Result">
+          <ScalarProperty Name="IdPuesto" ColumnName="IdPuesto" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="SalarioMinimo" ColumnName="SalarioMinimo" />
+          <ScalarProperty Name="SalarioPromedio" ColumnName="SalarioPromedio" />
+          <ScalarProperty Name="SalarioMaximo" ColumnName="SalarioMaximo" />
+          <ScalarProperty Name="CodigoCCSS" ColumnName="CodigoCCSS" />
+          <ScalarProperty Name="CodigoINS" ColumnName="CodigoINS" />
           <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
           <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
@@ -691,13 +840,22 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_P_ActualizarConsecutivo" FunctionName="SICOAdminModel.Store.SP_P_ActualizarConsecutivo" />
+    <FunctionImportMapping FunctionImportName="SP_P_ActualizarNomina" FunctionName="SICOAdminModel.Store.SP_P_ActualizarNomina" />
+    <FunctionImportMapping FunctionImportName="SP_P_ActualizarParametro" FunctionName="SICOAdminModel.Store.SP_P_ActualizarParametro" />
     <FunctionImportMapping FunctionImportName="SP_P_ActualizarProximoValorConsecutivo" FunctionName="SICOAdminModel.Store.SP_P_ActualizarProximoValorConsecutivo" />
     <FunctionImportMapping FunctionImportName="SP_P_AddUser" FunctionName="SICOAdminModel.Store.SP_P_AddUser" />
     <FunctionImportMapping FunctionImportName="SP_P_BloquearUsuario" FunctionName="SICOAdminModel.Store.SP_P_BloquearUsuario" />
+    <FunctionImportMapping FunctionImportName="SP_P_CambiarEstadoColaborador" FunctionName="SICOAdminModel.Store.SP_P_CambiarEstadoColaborador" />
     <FunctionImportMapping FunctionImportName="SP_P_CambioContrasena" FunctionName="SICOAdminModel.Store.SP_P_CambioContrasena" />
     <FunctionImportMapping FunctionImportName="SP_P_CrearAccion" FunctionName="SICOAdminModel.Store.SP_P_CrearAccion" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearColaborador" FunctionName="SICOAdminModel.Store.SP_P_CrearColaborador" />
     <FunctionImportMapping FunctionImportName="SP_P_CrearConsecutivo" FunctionName="SICOAdminModel.Store.SP_P_CrearConsecutivo" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearControlAsistencia" FunctionName="SICOAdminModel.Store.SP_P_CrearControlAsistencia" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearNomina" FunctionName="SICOAdminModel.Store.SP_P_CrearNomina" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearParametro" FunctionName="SICOAdminModel.Store.SP_P_CrearParametro" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearParentesco" FunctionName="SICOAdminModel.Store.SP_P_CrearParentesco" />
     <FunctionImportMapping FunctionImportName="SP_P_CrearPerfil" FunctionName="SICOAdminModel.Store.SP_P_CrearPerfil" />
+    <FunctionImportMapping FunctionImportName="SP_P_CrearPuesto" FunctionName="SICOAdminModel.Store.SP_P_CrearPuesto" />
     <FunctionImportMapping FunctionImportName="SP_P_CrearUsuarioPerfil" FunctionName="SICOAdminModel.Store.SP_P_CrearUsuarioPerfil" />
     <FunctionImportMapping FunctionImportName="SP_P_DibujarArbol" FunctionName="SICOAdminModel.Store.SP_P_DibujarArbol">
       <ResultMapping>
@@ -712,13 +870,19 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SP_P_EliminarAccion" FunctionName="SICOAdminModel.Store.SP_P_EliminarAccion" />
     <FunctionImportMapping FunctionImportName="SP_P_EliminarAll_AccionPerfil" FunctionName="SICOAdminModel.Store.SP_P_EliminarAll_AccionPerfil" />
+    <FunctionImportMapping FunctionImportName="SP_P_EliminarNomina" FunctionName="SICOAdminModel.Store.SP_P_EliminarNomina" />
     <FunctionImportMapping FunctionImportName="SP_P_EliminarUsuarioPerfil" FunctionName="SICOAdminModel.Store.SP_P_EliminarUsuarioPerfil" />
     <FunctionImportMapping FunctionImportName="SP_P_GuardarCheck" FunctionName="SICOAdminModel.Store.SP_P_GuardarCheck" />
     <FunctionImportMapping FunctionImportName="SP_P_Logeo" FunctionName="SICOAdminModel.Store.SP_P_Logeo" />
     <FunctionImportMapping FunctionImportName="SP_P_ModificarAccion" FunctionName="SICOAdminModel.Store.SP_P_ModificarAccion" />
+    <FunctionImportMapping FunctionImportName="SP_P_ModificarColaborador" FunctionName="SICOAdminModel.Store.SP_P_ModificarColaborador" />
+    <FunctionImportMapping FunctionImportName="SP_P_ModificarControlAsistencia" FunctionName="SICOAdminModel.Store.SP_P_ModificarControlAsistencia" />
     <FunctionImportMapping FunctionImportName="SP_P_ModificarEstadoConsecutivo" FunctionName="SICOAdminModel.Store.SP_P_ModificarEstadoConsecutivo" />
+    <FunctionImportMapping FunctionImportName="SP_P_ModificarEstadoParametro" FunctionName="SICOAdminModel.Store.SP_P_ModificarEstadoParametro" />
     <FunctionImportMapping FunctionImportName="SP_P_ModificarEstadoPerfil" FunctionName="SICOAdminModel.Store.SP_P_ModificarEstadoPerfil" />
+    <FunctionImportMapping FunctionImportName="SP_P_ModificarEstadosUsuario" FunctionName="SICOAdminModel.Store.SP_P_ModificarEstadosUsuario" />
     <FunctionImportMapping FunctionImportName="SP_P_ModificarPerfil" FunctionName="SICOAdminModel.Store.SP_P_ModificarPerfil" />
+    <FunctionImportMapping FunctionImportName="SP_P_ModificarPuesto" FunctionName="SICOAdminModel.Store.SP_P_ModificarPuesto" />
     <FunctionImportMapping FunctionImportName="SP_P_ModificarUsuario" FunctionName="SICOAdminModel.Store.SP_P_ModificarUsuario" />
     <FunctionImportMapping FunctionImportName="SP_P_PerfilesDelUsuario" FunctionName="SICOAdminModel.Store.SP_P_PerfilesDelUsuario">
       <ResultMapping>
@@ -752,53 +916,5 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SICOAdminModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SICOAdminModel.Store.sp_upgraddiagrams" />
-    <FunctionImportMapping FunctionImportName="SP_C_AuthorizeUser" FunctionName="SICOAdminModel.Store.SP_C_AuthorizeUser" />
-    <FunctionImportMapping FunctionImportName="SP_C_BuscarNomina" FunctionName="SICOAdminModel.Store.SP_C_BuscarNomina">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_BuscarNomina_Result">
-          <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="Frecuencia" ColumnName="Frecuencia" />
-          <ScalarProperty Name="IdConsecutivo" ColumnName="IdConsecutivo" />
-          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
-          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
-          <ScalarProperty Name="Fecha_Modificacion" ColumnName="Fecha_Modificacion" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="SP_C_ConsecutivosActivos" FunctionName="SICOAdminModel.Store.SP_C_ConsecutivosActivos">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_ConsecutivosActivos_Result">
-          <ScalarProperty Name="IdConsecutivo" ColumnName="IdConsecutivo" />
-          <ScalarProperty Name="Alias" ColumnName="Alias" />
-          <ScalarProperty Name="Mascara" ColumnName="Mascara" />
-          <ScalarProperty Name="ProximoValor" ColumnName="ProximoValor" />
-          <ScalarProperty Name="Activo" ColumnName="Activo" />
-          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
-          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
-          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="SP_C_MostarNominas" FunctionName="SICOAdminModel.Store.SP_C_MostarNominas">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SICOAdminModel.SP_C_MostarNominas_Result">
-          <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="Frecuencia" ColumnName="Frecuencia" />
-          <ScalarProperty Name="IdConsecutivo" ColumnName="IdConsecutivo" />
-          <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
-          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-          <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
-          <ScalarProperty Name="Fecha_Modificacion" ColumnName="Fecha_Modificacion" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="SP_P_ActualizarNomina" FunctionName="SICOAdminModel.Store.SP_P_ActualizarNomina" />
-    <FunctionImportMapping FunctionImportName="SP_P_CrearNomina" FunctionName="SICOAdminModel.Store.SP_P_CrearNomina" />
-    <FunctionImportMapping FunctionImportName="SP_P_CrearParentesco" FunctionName="SICOAdminModel.Store.SP_P_CrearParentesco" />
-    <FunctionImportMapping FunctionImportName="SP_P_EliminarNomina" FunctionName="SICOAdminModel.Store.SP_P_EliminarNomina" />
   </EntityContainerMapping>
 </Mapping>

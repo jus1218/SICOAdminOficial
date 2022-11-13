@@ -380,7 +380,7 @@
     <Key>
       <PropertyRef Name="IdParametro" />
     </Key>
-    <Property Name="IdParametro" Type="Int32" Nullable="false" />
+    <Property Name="IdParametro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Mensualidad" Type="Decimal" Precision="28" Scale="8" Nullable="false" />
     <Property Name="IdConsecRecibo" Type="Int32" Nullable="false" />
     <Property Name="InteresMora" Type="Decimal" Precision="11" Scale="8" Nullable="false" />
@@ -389,8 +389,8 @@
     <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="UsuarioCreacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <EntityType Name="PARENTESCO">
     <Key>
@@ -1162,8 +1162,18 @@
       <Parameter Name="version" Mode="In" Type="Int32" />
       <Parameter Name="definition" Mode="In" Type="Binary" />
     </FunctionImport>
+    <FunctionImport Name="SP_C_AuthorizeUser" ReturnType="Collection(Int32)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BItacoraPuesto" ReturnType="Collection(SICOAdminModel.SP_C_BItacoraPuesto_Result)">
+      <Parameter Name="IdPuesto" Mode="In" Type="Int32" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+    </FunctionImport>
     <FunctionImport Name="SP_C_BuscarConsecutivo" ReturnType="Collection(SICOAdminModel.SP_C_BuscarConsecutivo_Result)">
       <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_C_BuscarControlAsistencia" ReturnType="Collection(SICOAdminModel.SP_C_BuscarControlAsistencia_Result)">
+      <Parameter Name="idAsistencia" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="SP_C_BuscarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_BuscarPerfil_Result)">
       <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
@@ -1171,9 +1181,24 @@
     <FunctionImport Name="SP_C_BuscarUsuario" ReturnType="Collection(SICOAdminModel.SP_C_BuscarUsuario_Result)">
       <Parameter Name="Usuario" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_C_ConsecutivosActivos" ReturnType="Collection(SICOAdminModel.SP_C_ConsecutivosActivos_Result)" />
+    <FunctionImport Name="SP_C_MostarNominas" ReturnType="Collection(SICOAdminModel.SP_C_MostarNominas_Result)">
+      <Parameter Name="opcion" Mode="In" Type="String" />
+      <Parameter Name="nomina" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="SP_C_MostrarAcciones" ReturnType="Collection(SICOAdminModel.SP_C_MostrarAcciones_Result)" />
+    <FunctionImport Name="SP_C_MostrarColaboradores" ReturnType="Collection(SICOAdminModel.SP_C_MostrarColaboradores_Result)">
+      <Parameter Name="Identificacion" Mode="In" Type="String" />
+      <Parameter Name="Opcion" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_C_MostrarConsecutivos" ReturnType="Collection(SICOAdminModel.SP_C_MostrarConsecutivos_Result)" />
+    <FunctionImport Name="SP_C_MostrarControlAsistencia" ReturnType="Collection(SICOAdminModel.SP_C_MostrarControlAsistencia_Result)" />
+    <FunctionImport Name="SP_C_MostrarParametros" ReturnType="Collection(SICOAdminModel.SP_C_MostrarParametros_Result)">
+      <Parameter Name="opc" Mode="In" Type="String" />
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="SP_C_MostrarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPerfil_Result)" />
+    <FunctionImport Name="SP_C_MostrarPuestos" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPuestos_Result)" />
     <FunctionImport Name="SP_C_MostrarUsuarios" ReturnType="Collection(SICOAdminModel.SP_C_MostrarUsuarios_Result)">
       <Parameter Name="opcion" Mode="In" Type="String" />
       <Parameter Name="usuario" Mode="In" Type="String" />
@@ -1211,10 +1236,29 @@
       <Parameter Name="resultado" Mode="InOut" Type="Int16" />
       <Parameter Name="mensaje" Mode="InOut" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_ActualizarNomina">
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+      <Parameter Name="descripcion" Mode="In" Type="String" />
+      <Parameter Name="frecuencia" Mode="In" Type="String" />
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+      <Parameter Name="mensage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ActualizarParametro">
+      <Parameter Name="idParametro" Mode="In" Type="Int32" />
+      <Parameter Name="mensualidad" Mode="In" Type="Decimal" />
+      <Parameter Name="idConseRecibo" Mode="In" Type="Int32" />
+      <Parameter Name="InteresMora" Mode="In" Type="Decimal" />
+      <Parameter Name="tipoDocumentoCobro" Mode="In" Type="String" />
+      <Parameter Name="condicionPago" Mode="In" Type="Int32" />
+      <Parameter Name="estado" Mode="In" Type="String" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Byte" />
+      <Parameter Name="mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_ActualizarProximoValorConsecutivo">
       <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
-      <Parameter Name="valorActual" Mode="In" Type="String" />
-      <Parameter Name="accion" Mode="In" Type="Int16" />
     </FunctionImport>
     <FunctionImport Name="SP_P_AddUser">
       <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1235,6 +1279,11 @@
       <Parameter Name="Usuario" Mode="In" Type="String" />
       <Parameter Name="Mensaje" Mode="InOut" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_CambiarEstadoColaborador">
+      <Parameter Name="Identificacion" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_CambioContrasena">
       <Parameter Name="Usuario" Mode="In" Type="String" />
       <Parameter Name="ContrasenaActual" Mode="In" Type="String" />
@@ -1248,6 +1297,36 @@
       <Parameter Name="tipo" Mode="In" Type="String" />
       <Parameter Name="usuarioCreacionModificacion" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_CrearColaborador">
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="genero" Mode="In" Type="String" />
+      <Parameter Name="activo" Mode="In" Type="Boolean" />
+      <Parameter Name="estado" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="telefono1" Mode="In" Type="String" />
+      <Parameter Name="telefono2" Mode="In" Type="String" />
+      <Parameter Name="identificacion" Mode="In" Type="String" />
+      <Parameter Name="nacionalidad" Mode="In" Type="String" />
+      <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+      <Parameter Name="fechaIngreso" Mode="In" Type="DateTime" />
+      <Parameter Name="fechaSalida" Mode="In" Type="DateTime" />
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+      <Parameter Name="estadoCivil" Mode="In" Type="String" />
+      <Parameter Name="saldoVacaciones" Mode="In" Type="Decimal" />
+      <Parameter Name="ultCalculoVacaciones" Mode="In" Type="DateTime" />
+      <Parameter Name="idPuesto" Mode="In" Type="Int32" />
+      <Parameter Name="formaPago" Mode="In" Type="String" />
+      <Parameter Name="cuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="banco" Mode="In" Type="String" />
+      <Parameter Name="correoElectronico" Mode="In" Type="String" />
+      <Parameter Name="contactoEmergencia" Mode="In" Type="String" />
+      <Parameter Name="telefonoContacto" Mode="In" Type="String" />
+      <Parameter Name="salarioReferencia" Mode="In" Type="Decimal" />
+      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_CrearConsecutivo">
       <Parameter Name="alias" Mode="In" Type="String" />
       <Parameter Name="mascara" Mode="In" Type="String" />
@@ -1257,12 +1336,60 @@
       <Parameter Name="resultado" Mode="InOut" Type="Int16" />
       <Parameter Name="mensage" Mode="InOut" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_CrearControlAsistencia">
+      <Parameter Name="IdColaborador" Mode="In" Type="Int32" />
+      <Parameter Name="FechaHoraIngreso" Mode="In" Type="DateTime" />
+      <Parameter Name="FechaHoraSalida" Mode="In" Type="DateTime" />
+      <Parameter Name="TipoJornada" Mode="In" Type="String" />
+      <Parameter Name="HorasRegulares" Mode="In" Type="Decimal" />
+      <Parameter Name="HorasExtras" Mode="In" Type="Decimal" />
+      <Parameter Name="HoraDobles" Mode="In" Type="Decimal" />
+      <Parameter Name="HorasExtrasDobles" Mode="In" Type="Decimal" />
+      <Parameter Name="UsuarioCreaModif" Mode="In" Type="String" />
+      <Parameter Name="msj" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearNomina">
+      <Parameter Name="descripcion" Mode="In" Type="String" />
+      <Parameter Name="frecuencia" Mode="In" Type="String" />
+      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+      <Parameter Name="mensage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearParametro">
+      <Parameter Name="mensualidad" Mode="In" Type="Decimal" />
+      <Parameter Name="idConseRecibo" Mode="In" Type="Int32" />
+      <Parameter Name="InteresMora" Mode="In" Type="Decimal" />
+      <Parameter Name="tipoDocumentoCobro" Mode="In" Type="String" />
+      <Parameter Name="condicionPago" Mode="In" Type="Int32" />
+      <Parameter Name="estado" Mode="In" Type="String" />
+      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Byte" />
+      <Parameter Name="mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearParentesco">
+      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+      <Parameter Name="padre" Mode="In" Type="Int32" />
+      <Parameter Name="usuarioCreacionModf" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_CrearPerfil">
       <Parameter Name="Nombre" Mode="In" Type="String" />
       <Parameter Name="Descripcion" Mode="In" Type="String" />
       <Parameter Name="Activo" Mode="In" Type="Boolean" />
       <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
       <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_CrearPuesto">
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="SalarioMinimo" Mode="In" Type="Decimal" />
+      <Parameter Name="SalarioPromedio" Mode="In" Type="Decimal" />
+      <Parameter Name="SalarioMaximo" Mode="In" Type="Decimal" />
+      <Parameter Name="CodigoCCSS" Mode="In" Type="String" />
+      <Parameter Name="CodigoINS" Mode="In" Type="String" />
+      <Parameter Name="UsuarioCreacion" Mode="In" Type="String" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
     </FunctionImport>
     <FunctionImport Name="SP_P_CrearUsuarioPerfil">
       <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1277,6 +1404,9 @@
     </FunctionImport>
     <FunctionImport Name="SP_P_EliminarAll_AccionPerfil">
       <Parameter Name="idPerfil" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_EliminarNomina">
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="SP_P_EliminarUsuarioPerfil">
       <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1300,12 +1430,62 @@
       <Parameter Name="tipo" Mode="In" Type="String" />
       <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarColaborador">
+      <Parameter Name="Identificacion" Mode="In" Type="String" />
+      <Parameter Name="estado" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="telefono1" Mode="In" Type="String" />
+      <Parameter Name="telefono2" Mode="In" Type="String" />
+      <Parameter Name="nacionalidad" Mode="In" Type="String" />
+      <Parameter Name="fechaIngreso" Mode="In" Type="DateTime" />
+      <Parameter Name="fechaSalida" Mode="In" Type="DateTime" />
+      <Parameter Name="idNomina" Mode="In" Type="Int32" />
+      <Parameter Name="estadoCivil" Mode="In" Type="String" />
+      <Parameter Name="saldoVacaciones" Mode="In" Type="Decimal" />
+      <Parameter Name="ultCalculoVacaciones" Mode="In" Type="DateTime" />
+      <Parameter Name="idPuesto" Mode="In" Type="Int32" />
+      <Parameter Name="formaPago" Mode="In" Type="String" />
+      <Parameter Name="cuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="banco" Mode="In" Type="String" />
+      <Parameter Name="correoElectronico" Mode="In" Type="String" />
+      <Parameter Name="contactoEmergencia" Mode="In" Type="String" />
+      <Parameter Name="telefonoContacto" Mode="In" Type="String" />
+      <Parameter Name="salarioReferencia" Mode="In" Type="Decimal" />
+      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarControlAsistencia">
+      <Parameter Name="IdAsistencia" Mode="In" Type="Int32" />
+      <Parameter Name="IdColaborador" Mode="In" Type="Int32" />
+      <Parameter Name="FechaHoraIngreso" Mode="In" Type="DateTime" />
+      <Parameter Name="FechaHoraSalida" Mode="In" Type="DateTime" />
+      <Parameter Name="TipoJornada" Mode="In" Type="String" />
+      <Parameter Name="HorasRegulares" Mode="In" Type="Decimal" />
+      <Parameter Name="HorasExtras" Mode="In" Type="Decimal" />
+      <Parameter Name="HoraDobles" Mode="In" Type="Decimal" />
+      <Parameter Name="HorasExtrasDobles" Mode="In" Type="Decimal" />
+      <Parameter Name="UsuarioCreaModif" Mode="In" Type="String" />
+      <Parameter Name="msj" Mode="InOut" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_ModificarEstadoConsecutivo">
       <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
       <Parameter Name="resultado" Mode="InOut" Type="Int16" />
     </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarEstadoParametro">
+      <Parameter Name="idParametro" Mode="In" Type="Int32" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
     <FunctionImport Name="SP_P_ModificarEstadoPerfil">
       <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarEstadosUsuario">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="Opcion" Mode="In" Type="String" />
+      <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_P_ModificarPerfil">
       <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
@@ -1313,6 +1493,18 @@
       <Parameter Name="Descripcion" Mode="In" Type="String" />
       <Parameter Name="Activo" Mode="In" Type="Boolean" />
       <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="SP_P_ModificarPuesto">
+      <Parameter Name="IdPuesto" Mode="In" Type="Int32" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="SalarioMinimo" Mode="In" Type="Decimal" />
+      <Parameter Name="SalarioPromedio" Mode="In" Type="Decimal" />
+      <Parameter Name="SalarioMaximo" Mode="In" Type="Decimal" />
+      <Parameter Name="CodigoCCSS" Mode="In" Type="String" />
+      <Parameter Name="CodigoINS" Mode="In" Type="String" />
+      <Parameter Name="UsuarioModificacion" Mode="In" Type="String" />
+      <Parameter Name="resultado" Mode="InOut" Type="Int16" />
     </FunctionImport>
     <FunctionImport Name="SP_P_ModificarUsuario">
       <Parameter Name="Usuario" Mode="In" Type="String" />
@@ -1345,37 +1537,13 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
-    <FunctionImport Name="SP_C_AuthorizeUser" ReturnType="Collection(Int32)">
-      <Parameter Name="Usuario" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SP_C_BuscarNomina" ReturnType="Collection(SICOAdminModel.SP_C_BuscarNomina_Result)">
-      <Parameter Name="idNomina" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="SP_C_ConsecutivosActivos" ReturnType="Collection(SICOAdminModel.SP_C_ConsecutivosActivos_Result)" />
-    <FunctionImport Name="SP_C_MostarNominas" ReturnType="Collection(SICOAdminModel.SP_C_MostarNominas_Result)" />
-    <FunctionImport Name="SP_P_ActualizarNomina">
-      <Parameter Name="idNomina" Mode="In" Type="Int32" />
-      <Parameter Name="descripcion" Mode="In" Type="String" />
-      <Parameter Name="frecuencia" Mode="In" Type="String" />
-      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
-      <Parameter Name="usuarioModificacion" Mode="In" Type="String" />
-      <Parameter Name="fechaModificacion" Mode="In" Type="DateTime" />
-    </FunctionImport>
-    <FunctionImport Name="SP_P_CrearNomina">
-      <Parameter Name="descripcion" Mode="In" Type="String" />
-      <Parameter Name="frecuencia" Mode="In" Type="String" />
-      <Parameter Name="idConsecutivo" Mode="In" Type="Int32" />
-      <Parameter Name="usuarioCreacion" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SP_P_CrearParentesco">
-      <Parameter Name="idAccion" Mode="In" Type="Int32" />
-      <Parameter Name="padre" Mode="In" Type="Int32" />
-      <Parameter Name="usuarioCreacionModf" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SP_P_EliminarNomina">
-      <Parameter Name="idNomina" Mode="In" Type="Int32" />
-    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="SP_C_BItacoraPuesto_Result">
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
   <ComplexType Name="SP_C_BuscarConsecutivo_Result">
     <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
     <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
@@ -1386,6 +1554,22 @@
     <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
     <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_BuscarControlAsistencia_Result">
+    <Property Type="Int32" Name="IdAsistencia" Nullable="false" />
+    <Property Type="Int32" Name="IdColaborador" Nullable="false" />
+    <Property Type="DateTime" Name="FechaHoraIngreso" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="FechaHoraSalida" Nullable="false" Precision="23" />
+    <Property Type="String" Name="TipoJornada" Nullable="false" MaxLength="2" />
+    <Property Type="Decimal" Name="HorasRegulares" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HorasExtras" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HoraDobles" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HorasExtrasDobles" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="nomColaborador" Nullable="true" MaxLength="100" />
   </ComplexType>
   <ComplexType Name="SP_C_BuscarPerfil_Result">
     <Property Type="Int32" Name="IdPerfil" Nullable="false" />
@@ -1414,6 +1598,27 @@
     <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
   </ComplexType>
+  <ComplexType Name="SP_C_ConsecutivosActivos_Result">
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostarNominas_Result">
+    <Property Type="Int32" Name="IdNomina" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Frecuencia" Nullable="false" MaxLength="4" />
+    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="Fecha_Modificacion" Nullable="false" Precision="23" />
+  </ComplexType>
   <ComplexType Name="SP_C_MostrarAcciones_Result">
     <Property Type="Int32" Name="IdAccion" Nullable="false" />
     <Property Type="String" Name="Alias" Nullable="true" MaxLength="10" />
@@ -1424,12 +1629,72 @@
     <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
   </ComplexType>
+  <ComplexType Name="SP_C_MostrarColaboradores_Result">
+    <Property Type="Int32" Name="IdColaborador" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Genero" Nullable="false" MaxLength="1" />
+    <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="Estado" Nullable="false" MaxLength="4" />
+    <Property Type="String" Name="Direccion" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="Telefono1" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="Telefono2" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="Identificacion" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="30" />
+    <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
+    <Property Type="DateTime" Name="FechaIngreso" Nullable="false" />
+    <Property Type="DateTime" Name="FechaSalida" Nullable="false" />
+    <Property Type="Int32" Name="IdNomina" Nullable="false" />
+    <Property Type="String" Name="EstadoCivil" Nullable="false" MaxLength="2" />
+    <Property Type="Decimal" Name="SaldoVacaciones" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="DateTime" Name="UltCalculoVacaciones" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="IdPuesto" Nullable="false" />
+    <Property Type="String" Name="FormaPago" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CuentaBancaria" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Banco" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ContactoEmergencia" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="TelefonoContacto" Nullable="false" MaxLength="15" />
+    <Property Type="Decimal" Name="SalarioReferencia" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
   <ComplexType Name="SP_C_MostrarConsecutivos_Result">
     <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
     <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
     <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
     <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
     <Property Type="Boolean" Name="Activo" Nullable="false" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarControlAsistencia_Result">
+    <Property Type="Int32" Name="IdAsistencia" Nullable="false" />
+    <Property Type="Int32" Name="IdColaborador" Nullable="false" />
+    <Property Type="DateTime" Name="FechaHoraIngreso" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="FechaHoraSalida" Nullable="false" Precision="23" />
+    <Property Type="String" Name="TipoJornada" Nullable="false" MaxLength="2" />
+    <Property Type="Decimal" Name="HorasRegulares" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HorasExtras" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HoraDobles" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="Decimal" Name="HorasExtrasDobles" Nullable="false" Precision="6" Scale="4" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="NomColaborador" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarParametros_Result">
+    <Property Type="Int32" Name="IdParametro" Nullable="false" />
+    <Property Type="Decimal" Name="Mensualidad" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="Int32" Name="IdConsecRecibo" Nullable="false" />
+    <Property Type="Decimal" Name="InteresMora" Nullable="false" Precision="11" Scale="8" />
+    <Property Type="String" Name="TipoDocumentoCobro" Nullable="false" MaxLength="4" />
+    <Property Type="Int32" Name="CondicionPago" Nullable="false" />
+    <Property Type="String" Name="Estado" Nullable="false" MaxLength="1" />
     <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
     <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
     <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
@@ -1444,6 +1709,19 @@
     <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
     <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SP_C_MostrarPuestos_Result">
+    <Property Type="Int32" Name="IdPuesto" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="150" />
+    <Property Type="Decimal" Name="SalarioMinimo" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="Decimal" Name="SalarioPromedio" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="Decimal" Name="SalarioMaximo" Nullable="false" Precision="28" Scale="8" />
+    <Property Type="String" Name="CodigoCCSS" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="CodigoINS" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
+    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
   </ComplexType>
   <ComplexType Name="SP_C_MostrarUsuarios_Result">
     <Property Type="String" Name="Usuario" Nullable="false" MaxLength="70" />
@@ -1501,36 +1779,5 @@
     <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
     <Property Type="String" Name="UsuarioModificacion" Nullable="true" MaxLength="70" />
     <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="SP_C_BuscarNomina_Result">
-    <Property Type="Int32" Name="IdNomina" Nullable="false" />
-    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
-    <Property Type="String" Name="Frecuencia" Nullable="false" MaxLength="4" />
-    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
-    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
-    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="Fecha_Modificacion" Nullable="false" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="SP_C_ConsecutivosActivos_Result">
-    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
-    <Property Type="String" Name="Alias" Nullable="false" MaxLength="10" />
-    <Property Type="String" Name="Mascara" Nullable="false" MaxLength="30" />
-    <Property Type="String" Name="ProximoValor" Nullable="false" MaxLength="30" />
-    <Property Type="Boolean" Name="Activo" Nullable="false" />
-    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
-    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="FechaModificacion" Nullable="false" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="SP_C_MostarNominas_Result">
-    <Property Type="Int32" Name="IdNomina" Nullable="false" />
-    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
-    <Property Type="String" Name="Frecuencia" Nullable="false" MaxLength="4" />
-    <Property Type="Int32" Name="IdConsecutivo" Nullable="false" />
-    <Property Type="String" Name="UsuarioCreacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
-    <Property Type="String" Name="UsuarioModificacion" Nullable="false" MaxLength="70" />
-    <Property Type="DateTime" Name="Fecha_Modificacion" Nullable="false" Precision="23" />
   </ComplexType>
 </Schema>
