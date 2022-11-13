@@ -1,0 +1,13 @@
+﻿@model DateTime?
+
+@*@if (Model != null)
+{*@
+    <input type="datetime" id = "fecha"
+           name="@ViewData.TemplateInfo.GetFullHtmlFieldName("")" />
+@*}
+else
+{
+
+    <input type="datetime" value="@Model.ToString("yyyy-MM-dd")" id="@ViewData.TemplateInfo.GetFullHtmlFieldId("")"
+           name="@ViewData.TemplateInfo.GetFullHtmlFieldName("")" />
+}*@

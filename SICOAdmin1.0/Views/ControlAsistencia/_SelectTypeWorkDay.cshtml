@@ -1,0 +1,24 @@
+﻿@model String
+<label for="tipoJornada">Tipo jornada:</label>
+<select required class="custom-select" id="tipoJornada">
+    <option disabled value="">Seleccione una opción...</option>
+
+    @if (Model.Equals("Diurna"))
+    {
+        <option selected value="DR">Diurna</option>
+        <option value="NT">Nocturna</option>
+        <option value="MT">Mixto</option>
+    }
+    else if (Model.Equals("Nocturna"))
+    {
+        <option value="DR">Diurna</option>
+        <option selected value="NT">Nocturna</option>
+        <option value="MT">Mixto</option>
+    }
+    else
+    {
+        <option value="DR">Diurna</option>
+        <option value="NT">Nocturna</option>
+        <option selected value="MT">Mixto</option>
+    }
+</select>

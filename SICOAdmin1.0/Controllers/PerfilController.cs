@@ -16,7 +16,7 @@ namespace SICOAdmin1._0.Controllers
         // GET: Perfil
         /*Muestra la Tabla*/
         #region Mostrar
-        [AuthorizeUser(pAccion: 6)]// cambiar
+        //[AuthorizeUser(pAccion: 10)]// cambiar
         public ActionResult Index()
         {
             List<SP_C_MostrarPerfil_Result> lst = null;
@@ -68,7 +68,7 @@ namespace SICOAdmin1._0.Controllers
                 {
                     using (var db = new SICOAdminEntities())
                     {
-                        int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, model.UsuarioCreacion, model.UsuarioModificacion);
+                        //int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, model.UsuarioCreacion, model.UsuarioModificacion);
                     }
 
                     return Redirect(Url.Content("~/Perfil/Index"));
@@ -139,7 +139,7 @@ namespace SICOAdmin1._0.Controllers
             {
                 using (SICOAdminEntities db = new SICOAdminEntities())
                 {
-                    db.SP_P_ModificarEstadoPerfil(Id);
+                    //db.SP_P_ModificarEstadoPerfil(Id);
                     db.SaveChanges();
                 }
                 return Content("1");

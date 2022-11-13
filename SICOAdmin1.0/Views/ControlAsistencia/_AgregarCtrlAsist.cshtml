@@ -1,0 +1,105 @@
+﻿@model List<SelectListItem>
+
+
+<!-- Modal add -->
+<div class="modal fade" id="agregarCtrlAsistencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Control Asistencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row d-flex justify-content-center">
+
+                    <div class="col-6">
+
+                        <form id="formCrearCtrl">
+
+                            <div class="form-group">
+
+                                @Html.Partial("_SelectCollaborators", Model)
+                            </div>
+
+                            <div class="form-group" id="contentTipoJornada">
+
+                                <label for="tipoJornada">Tipo jornada:</label>
+                                <select required name="tipoJornada" class="custom-select" id="tipoJornada">
+                                    <option value="">Seleccione una jornada...</option>
+                                    <option value="DR">Diurna</option>
+                                    <option value="NT">Nocturna</option>
+                                    <option value="MT">Mixto</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-4">
+
+                                <label for="FechaHoraIngreso">Fecha y hora ingreso:</label>
+                                <input type="datetime-local" id="FechaHoraIngreso" required name="FechaHoraIngreso" class="form-control" />
+                            </div>
+
+                            <div class="form-group mt-4">
+
+                                <label for="FechaHoraSalida">Fecha y hora salida:</label>
+                                <input type="datetime-local" id="FechaHoraSalida" required name="FechaHoraSalida" class="form-control" />
+                            </div>
+
+                            <div class="form-group">horas calculadas: <span id="horaCalculada">0</span></div>
+
+                            <!---->
+                            <div class="form-group">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="horasRegulares">Horas regulares:</label>
+                                        <input type="time" name="horasRegulares" onchange="TimeInput(event)" required max="12:00:00" min="00:00:00" class="custom-control  imput-time" />
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="horasExtras">Horas extras:</label>
+                                        <input type="time" name="horasExtras" onchange="TimeInput(event)" required class="custom-control imput-time" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="horasDobles">Horas dobles:</label>
+                                        <input type="time" name="horasDobles" required onchange="TimeInput(event)" class="custom-control imput-time" />
+                                    </div>
+                                    <div class="col">
+                                        <label for="horasExtraDobles">Horas extras dobles:</label>
+                                        <input type="time" name="horasExtraDobles" required onchange="TimeInput(event)" class="custom-control imput-time" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <input type="submit" class="btn btn-primary" value="Agregar" />
+                                <!-- data-dismiss="modal"-->
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--<div class="modal-footer">
+
+                <input type="submit" class="btn btn-primary" value="Agregar" />-->
+            <!-- data-dismiss="modal"-->
+            <!--</div>-->
+        </div>
+
+    </div>
+</div>
