@@ -34,11 +34,15 @@
                             @user.Nombre
                         </td>
                         <td>
-                            <input onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.Usuario })'" type="button" value="Editar" class="btn btn-warning" />
+                            <button onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.Usuario })'" type="button" class="btn btn-warning">
+                                <i class="fa fa-pencil mr-1" aria-hidden="true"></i>
+                                Editar
+                            </button>
+
                             @*<input onclick="js(@user.Usuario);" type="button" value="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" id="eliminarU" />*@
-                            <button type="button" onclick="asignar('@user.Usuario')" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar">Eliminar</button>
+                            <button type="button" onclick="asignar('@user.Usuario')" class="btn btn-danger" >Eliminar</button>
                             @*<input onclick="document.location.href= '@Url.Content("~/Perfil/eliminarUsuarioPerfil/" + user)'" type="button" value="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" />*@
-                            
+
                         </td>
                     </tr>
                 }

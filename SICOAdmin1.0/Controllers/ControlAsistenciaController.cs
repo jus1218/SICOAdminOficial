@@ -217,8 +217,8 @@ namespace SICOAdmin1._0.Controllers
                 idAistencia = lstControlAsistBusc.IdAsistencia,
                 idColaborador = lstControlAsistBusc.IdColaborador,
                 nomColaborador = lstControlAsistBusc.nomColaborador,
-                fechaHoraIngreso = lstControlAsistBusc.FechaHoraIngreso.ToString("yyy-MM-dd.HH:mm"),//yyyy-MMMM-dd 
-                fechaHoraSalida = lstControlAsistBusc.FechaHoraSalida.ToString("yyy-MM-dd.HH:mm"),
+                fechaHoraIngreso = lstControlAsistBusc.FechaHoraIngreso.ToString("yyy-MM-dd HH:mm"),//yyyy-MMMM-dd 
+                fechaHoraSalida = lstControlAsistBusc.FechaHoraSalida.ToString("yyy-MM-dd HH:mm"),
                 tipoJornada = TipoJornadaConvert(lstControlAsistBusc.TipoJornada),
                 horasRegulares = convertToHora(lstControlAsistBusc.HorasRegulares),
                 horasExtras = convertToHora(lstControlAsistBusc.HorasExtras),
