@@ -19,8 +19,6 @@
 
 }
 
-
-
 <div class="container margin-container p-4 glass">
     <div class="row fila">
         <!--TEXTO-->
@@ -29,10 +27,11 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Editar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
 
                 Agregar
             </button>
+
         </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
@@ -54,8 +53,6 @@
     </div>
     <!--FILA TABLE-->
     <div class="row fila scrol-tablex">
-        @*<div id="table_refresh">*@
-
         <table id="tbConsecutivo" class="table table-bordered">
             <thead>
                 <tr>
@@ -89,35 +86,32 @@
                             </td>
                         }
                         <td>
-                            <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar" class="btn btn-warning"
+                            <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
+                                    class="btn btn-warning fa fa-pencil btn-sm"
                                     onclick="jsmostrarDatos(@e.IdConsecutivo);">
-                                Editar
+                                Editar</button>
 
-                            </button>
-                            <button id="Bitacora" data-toggle="modal" data-target="#ModalBitacora" type="button" value="Bitacora" class="btn btn-warning"
+                            <button id="Bitacora" data-toggle="modal" data-target="#ModalBitacora" type="button" value="Bitacora"
+                                    class="btn btn-info fa fa-book btn-sm" 
                                     onclick="jsmostrarBitacora(@e.IdConsecutivo);">
                                 Bitacora
-
                             </button>
                             @if (e.Activo == false)
                             {
-                                @*<button id="EstadoAc" type="button" value="ModificarEstado" class="btn btn-primary" onclick="jsModificar(@e.IdConsecutivo);">Activar</button>*@
-                                <a id="btnActivar" class="btn btn-primary" onclick="jsModificarEstado(@e.IdConsecutivo);">Activar</a>
+                                <button id="btnActivar" class="btn btn-primary fa fa-unlock btn-sm" 
+                                        style="width: 23%;" type="button" onclick="jsModificarEstado(@e.IdConsecutivo);"> Activar</button>
                             }
                             else
                             {
-                                @*<button type="button" class="btn btn-danger" onclick="jsModificar(@e.IdConsecutivo);">Inactivar</button>*@
-
-                                <a id="btnDesactivar" class="btn btn-danger" onclick="jsModificarEstado(@e.IdConsecutivo);">Desactivar</a>
+                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm"
+                                        style="width: 23%;" onclick="jsModificarEstado(@e.IdConsecutivo);"> Desactivar</button>
                             }
-
                         </td>
                     </tr>
                 }
 
             </tbody>
         </table>
-        @*</div>*@
 
     </div>
 
@@ -149,7 +143,7 @@
                         @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input id="btnAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" />
+                        <input id="btnModalAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" onclick="jsRecargarComponente();" />
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
                         @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
@@ -160,7 +154,7 @@
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
 
-                        <button style="margin-top: 10px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button style="margin-top: 10px" type="button" class="btn btn-danger" data-dismiss="modal" >Cerrar</button>
                     </div>
 
                 }
@@ -200,7 +194,7 @@
                         @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", id = "txtMascara", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" />
+                        <input id="btnModalUpdate" onclick="jsRecargarComponente();" style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" />
                     </div>
 
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
@@ -212,7 +206,7 @@
                         @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
-                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
 
                     <div class="col-xl-4 col-md-6 col-sm-12 me-5">
@@ -251,8 +245,8 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Usuario Creacion</th>
-                                <th scope="col">Usuario Modificacion</th>
                                 <th scope="col">Fecha Creacion</th>
+                                <th scope="col">Usuario Modificacion</th>
                                 <th scope="col">Fecha Modificacion</th>
                             </tr>
                         </thead>
@@ -269,7 +263,7 @@
 
                         </tbody>
                     </table>
-                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
 
 
@@ -288,71 +282,27 @@
     <script type="text/javascript">
         console.log('@TempData["Message"]');
         console.log('@TempData["Message"]');
-        @if (TempData["Resultado"] != null) {
-
-
+        @if (TempData["Resultado"] != null)
+        {
             if (TempData["Resultado"].ToString() == "1")
             {
                  <text>
                     $(document).ready(function () {
                         swal({
-                            title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 2000, showConfirmButton: false });
+                            title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 3000, showConfirmButton: false });
+                        })
+                </text>
+            }
+            else
+            {
+                <text>                
+                $(document).ready(function () {
+                        swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 3000, showConfirmButton: false});
                         })
 
                 </text>
             }
-            else {
-                         <text>
-                    $(document).ready(function () {
-                        swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 2000, showConfirmButton: false});
-                        })
 
-                </text>
-
-            }
-            @*if (TempData["Message"].ToString() == "1") {
-               <text>
-                    $(document).ready(function () {
-                    swal({ title: "Registro Exitoso", text: "Se agrego el Consecutivo.", type: "success" });
-                    })
-
-                </text>
-            }
-            else if (TempData["Message"].ToString() == "-1"){
-                <text>
-                    $(document).ready(function () {
-                        swal({ title: "Error", text: "No se pudo Agregar!!", type: "error" });
-                    })
-                </text>
-            }
-            else if (TempData["Message"].ToString() == "-2") {
-                <text>
-                    $(document).ready(function () {
-                        swal({ title: "Error", text: "La mascara no coincide con el proximo valor!!", type: "info", timer: 1500  });
-                    })
-                </text>
-            }
-            else if (TempData["Message"].ToString() == "0") {
-                <text>
-                    $(document).ready(function () {
-                        swal({ title: "Error", text: "Alias del Consecutivo ya existente.", type: "error", timer: 1500 });
-                    })
-                </text>
-            }
-            else if (TempData["Message"].ToString() == "2") {
-                <text>
-                    $(document).ready(function () {
-                        swal({ title: "Actualizado Exitoso", text: "Se modifico el Consecutivo!!", type: "success", timer: 1500  });
-                    })
-                </text>
-            }
-            else if (TempData["Message"].ToString() == "-3") {
-                <text>
-                    $(document).ready(function () {
-                        swal({ title: "Error", text: "No se pudo actualizar el Consecutivo!!", type: "error", timer: 1500 });
-                    })
-                </text>
-            }*@
         }
     </script>
 
@@ -369,6 +319,12 @@
 
         const tbFechaCreacion = document.getElementById("tbFechaCreacion");
         const tbFechaModificacion = document.getElementById("tbFechaModificacion");
+
+
+        function jsRecargarComponente() {
+
+            $("#tbConsecutivo").load(" #tbConsecutivo");
+        }
 
         function jsmostrarBitacora(pId) {
 
@@ -401,26 +357,25 @@
 
               .then(res => res.ok ? res.json() : null)
                 .then(res => {
-
-
                   console.log(res);
-                    if (res == 2) {
+                    if (res == 1) {
                         swal({
-                            title: "Cambio Exitoso", text: "Se modifico el Estado!!", type: "success", timer: 2000,
-
+                            title: "Correcto", text: "Se modifico el Estado!!", type: "success", timer: 3000,
                             showConfirmButton: false
                         }
-                            //,
-                            //function () {
-                            //    location.reload(true);
-                            //    tr.hide();
-                            //}
                         );
+                        $("#tbConsecutivo").load(" #tbConsecutivo");
+                    } else if (res == -1) {
+                        swal({
+                            title: "Ups... Ha ocurrido un error", text: "No se puede desactivar un Consecutivo ligado a una Nomina!!", type: "error",
+                            timer: 5000,
+                            showConfirmButton: false
+                        });
                         $("#tbConsecutivo").load(" #tbConsecutivo");
                     } else {
                         swal({
-                            title: "Cambio Fallido", text: "No se modifico el Estado!!", type: "error",
-                            timer: 2000,
+                            title: "Ups... Ha ocurrido un error", text: "No se modifico el estado!!", type: "error",
+                            timer: 3000,
                             showConfirmButton: false
                         });
                         $("#tbConsecutivo").load(" #tbConsecutivo");
