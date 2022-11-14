@@ -1,9 +1,10 @@
 ﻿using SICOAdmin1._0.Filters;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Perfil;
-using SICOAdmin1._0.Models.ViewModels;
+using SICOAdmin1._0.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,32 +21,29 @@ namespace SICOAdmin1._0.Controllers
         public ActionResult Index()
         {
             List<SP_C_MostrarPerfil_Result> lst = null;
-            List<PERFIL> lstModel = new List<PERFIL>();
-            PERFIL objM;
+            List<PerfilViewModel> lstModel = new List<PerfilViewModel>();
+            PerfilViewModel objM;
+
             /*---------------------------------------------------------------*/
             /*---------------Procedimiento SP_C_MostrarPerfil----------------*/
             /*---------------------------------------------------------------*/
             using (SICOAdminEntities db = new SICOAdminEntities())
             {
-                lst = db.SP_C_MostrarPerfil().ToList();
+                lst = db.SP_C_MostrarPerfil("tod", null).ToList();
 
             }
             foreach (var e in lst)
             {
-                objM = new PERFIL();
+                objM = new PerfilViewModel();
                 objM.IdPerfil = e.IdPerfil;
                 objM.Nombre = e.Nombre;
                 objM.Descripcion = e.Descripcion;
                 objM.Activo = e.Activo;
-                objM.FechaCreacion = e.FechaCreacion;
-                objM.UsuarioCreacion = e.UsuarioCreacion;
-                objM.FechaModificacion = e.FechaModificacion;
                 objM.UsuarioModificacion = e.UsuarioModificacion;
                 lstModel.Add(objM);
             }
-
-            return View(lstModel);
-
+            ViewBag.Perfil = lstModel;
+            return View();
         }
         #endregion
 
@@ -54,32 +52,42 @@ namespace SICOAdmin1._0.Controllers
         /*---------------------------------------------------------------*/
         /*-------------------Procedimiento SP_P_AgregarPerfil------------*/
         /*---------------------------------------------------------------*/
-        public ActionResult Nuevo()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult Nuevo(PERFIL model)
+        public ActionResult Nuevo(PerfilViewModel model)
         {
+           
+            int Response = -3;
+            ObjectParameter resultSP = new ObjectParameter("resultado", -3);
+            TempData.Clear();
+
             try
             {
                 if (!ModelState.IsValid)
                 {
+
                     using (var db = new SICOAdminEntities())
                     {
-                        //int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, model.UsuarioCreacion, model.UsuarioModificacion);
+                        int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, ((User)Session["User"]).userName, ((User)Session["User"]).userName, resultSP);
+                        Response = Convert.ToInt32(resultSP.Value);
+
                     }
 
+                    TempData["Resultado"] = Response;
+                    TempData.Keep("Resultado");
                     return Redirect(Url.Content("~/Perfil/Index"));
+
+
                 }
-                return View(model);
+                return Redirect(Url.Content("~/Perfil/Index"));
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+
+                TempData["Resultado"] = 0;
+                return Redirect(Url.Content("~/Perfil/Index"));
             }
         }
+
 
         #endregion
 
@@ -128,28 +136,60 @@ namespace SICOAdmin1._0.Controllers
 
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Editar(PerfilViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    int Response = -3;
+                    ObjectParameter resultSP = new ObjectParameter("resultado", -3);
+                    TempData.Clear();
+                    using (SICOAdminEntities db = new SICOAdminEntities())
+                    {
+                        var oPerfil = db.PERFIL.Find(model.IdPerfil);
+                        db.SP_P_ModificarPerfil(model.IdPerfil, model.Nombre, model.Descripcion, model.Activo, ((User)Session["User"]).userName, resultSP);
+                        db.SaveChanges();
+
+                    }
+                    TempData["Resultado"] = Response;
+                    TempData.Keep("Resultado");
+                    return Redirect("~/Perfil/Index");
+                }
+                else
+                    return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Resultado"] = 0;
+                return Redirect(Url.Content("~/Perfil/Index"));
+            }
+        }
+
         #endregion
 
         /*Activa o inactiva el estado del perfil*/
         #region EstadoPerfil
-        [HttpPost]
         public ActionResult ModificarEstadoPerfil(int Id)
         {
-            try
+
+            int Response = -3;
+            ObjectParameter resultadoSP = new ObjectParameter("resultado", 0);
+
             {
                 using (SICOAdminEntities db = new SICOAdminEntities())
                 {
-                    //db.SP_P_ModificarEstadoPerfil(Id);
-                    db.SaveChanges();
+                    db.SP_P_ModificarEstadoPerfil(Id, resultadoSP);
+                    Response = Convert.ToInt32(resultadoSP.Value);
+
                 }
-                return Content("1");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                return Json(Response, JsonRequestBehavior.AllowGet);
             }
 
+
         }
+
         #endregion
 
         /*Agrega los Usuarios a los Perfiles, y muestra que Usuarios que pertenece a cada Perfil*/
@@ -281,6 +321,34 @@ namespace SICOAdmin1._0.Controllers
 
         /*Muestra la Tabla de Perfil con todos los atributos*/
         #region Bitacora
-        #endregion
+        public JsonResult DatosBitacora(int? IdPer)
+        {
+            PERFIL model = new PERFIL();
+            SP_C_MostrarPerfil_Result perf = new SP_C_MostrarPerfil_Result();
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                perf = db.SP_C_MostrarPerfil("BIT", IdPer).FirstOrDefault();
+
+                model.UsuarioCreacion = perf.UsuarioCreacion;
+                model.FechaCreacion = perf.FechaCreacion;
+                model.UsuarioModificacion = perf.UsuarioModificacion;
+                model.FechaModificacion = (DateTime)perf.FechaModificacion;
+
+                
+            }
+            var objP = new
+            {
+               model.UsuarioCreacion,
+               FechaCreacion = model.FechaCreacion.ToString("dd / MM / yyyy H: mm:ss"),
+               model.UsuarioModificacion,
+               FechaModificacion = model.FechaModificacion.ToString("dd / MM / yyyy H: mm:ss"),
+
+             };
+
+                return Json(objP, JsonRequestBehavior.AllowGet);
+        }
+
     }
+
+        #endregion
 }
