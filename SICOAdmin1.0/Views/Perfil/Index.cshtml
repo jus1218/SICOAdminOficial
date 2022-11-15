@@ -1,6 +1,6 @@
 ﻿@model List<SICOAdmin1._0.Models.PERFIL>
 @{
-    ViewBag.Title = "Mis Datos";
+    ViewBag.Title = "Perfiles";
 }
 
 <div class="container margin-container p-4 glass">
@@ -14,7 +14,7 @@
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
             <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
-                Agregar
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
             </button>
         </div>
         <!--Barra busqueda-->
@@ -68,15 +68,15 @@
                             </td>
                         }
                         <td>
-                            <a class="btn btn-warning" onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil})'">Editar</a>
+                            <a class="btn btn-warning" onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil})'"><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Editar</a>
                             @if (@perfil.Activo == false)
                             {
-                                <a class="btn btn-primary" onclick="jsModificarPefil(@perfil.IdPerfil);">Activar</a>
+                                <a class="btn btn-primary" onclick="jsModificarPefil(@perfil.IdPerfil);"><i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar</a>
                             }
                             else
                             {
 
-                                <a class="btn btn-danger" onclick="jsModificarPefil(@perfil.IdPerfil);">Inactivar</a>
+                                <a class="btn btn-danger" onclick="jsModificarPefil(@perfil.IdPerfil);"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Inactivar</a>
                             }
 
                         </td>

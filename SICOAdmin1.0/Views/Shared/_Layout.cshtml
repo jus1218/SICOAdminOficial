@@ -28,7 +28,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title - SICOAdmin</title>
-    <link rel="website icon" type="png" href="~/Content/images/Logo.png" style="border-radius:100px;" />
+    <link rel="website icon" type="png" href="~/Content/images/Logo.png" style="border-radius:50px;" />
 
 
     @Styles.Render("~/Vendors/css")
@@ -79,11 +79,7 @@
                                 <li>
                                     <a><i class="fa fa-pencil-square-o"></i> Control Operativo <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-
-                                        @*@if (@lstActions.Contains(6))*@
-                                        @* {*@
                                         <li><a href="@Url.Action("Index", "User")">Admin. Usuarios</a></li>
-                                        @* } *@
                                         <li><a href="@Url.Action("Index", "Perfil")">Admin. Pefiles</a></li>
                                         <li><a href="@Url.Action("Index", "Segunda")">Admin. E/S</a></li>
                                         <li><a href="@Url.Action("Index", "Segunda")">Admin. Filial</a></li>
@@ -244,6 +240,27 @@
             <!--/FOOTER-->
         </div>
     </div>
+
+    <script>
+        function launchFullScreen(element) {
+            if (element.requestFullScreen) {
+                element.requestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            }
+        }
+        function cancelFullScreen() {
+            if (document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }
+    </script>
 
     @Scripts.Render("~/Vendors/js")
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>

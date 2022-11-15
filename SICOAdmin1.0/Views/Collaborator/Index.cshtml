@@ -22,7 +22,9 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button type="button" class="btn btn-primary col-12 fa fa-plus-circle" onclick="document.location.href = '@Url.Action("AddCollaborator","Collaborator")'"> Agregar</button>
+            <button type="button" class="btn btn-primary col-12" onclick="document.location.href = '@Url.Action("AddCollaborator","Collaborator")'">
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
+            </button>
         </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
@@ -33,10 +35,11 @@
                        aria-label="Buscar..."
                        aria-describedby="button-search"
                        id="buscar" />
-                <button class="btn btn-outline-secondary fa fa-search"
+                <button class="btn btn-outline-secondary"
                         type="button"
                         disabled="disabled"
                         id="button-search">
+                    <i class="fa fa-search mr-1" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -53,7 +56,6 @@
                     <th scope="col">Activo</th>
                     <th scope="col">Dirección</th>
                     <th scope="col">Teléfono 1</th>
-                    <th scope="col">Nacionalidad</th>
                     <th scope="col">Fecha de nacimiento</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -69,21 +71,20 @@
                         <td><input type="checkbox" checked="@collaborator.Active" disabled="disabled" /></td>
                         <td>@collaborator.Address</td>
                         <td>@collaborator.Telephone1</td>
-                        <td>@collaborator.Nationality</td>
                         <td>@collaborator.DateBirth.ToString("dd MMMM, yyyy")</td>
 
-                        <td width="400px">
-                            <button id="btnEdit" onclick="document.location.href = '@Url.Action("Update","Collaborator",new { id = collaborator.Identification })'" class="btn btn-warning fa fa-pencil btn-sm"> Editar</button>
-                            <button id="btnBitacora" onclick="jsmostrarBitacora('@collaborator.Identification')" class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#modalBitacora"> Bitácora</button>
-                            <button id="btnDetails" onclick="jsViewDetails('@collaborator.Identification')" class="btn btn-primary fa fa-info-circle btn-sm" data-toggle="modal" data-target="#detailsModal"> Detalles</button>
+                        <td>
+                            <button id="btnEdit" onclick="document.location.href = '@Url.Action("Update","Collaborator",new { id = collaborator.Identification })'" class="btn btn-warning"><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Editar</button>
+                            <button id="btnBitacora" onclick="jsmostrarBitacora('@collaborator.Identification')" class="btn btn-info" data-toggle="modal" data-target="#modalBitacora"><i class="fa fa-book mr-1" aria-hidden="true"></i> Bitácora</button>
+                            <button id="btnDetails" onclick="jsViewDetails('@collaborator.Identification')" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal"><i class="fa fa-info-circle mr-1" aria-hidden="true"></i> Detalles</button>
 
                             @if (collaborator.Active)
                             {
-                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm" style="width: 23%;" onclick="jsModificarEstado('@collaborator.Identification')"> Desactivar</button>
+                                <button id="btnDesactivar" class="btn btn-danger" onclick="jsModificarEstado('@collaborator.Identification')"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Desactivar</button>
                             }
                             else
                             {
-                                <button id="btnActivar" class="btn btn-success fa fa-unlock btn-sm" style="width: 23%;" onclick="jsModificarEstado('@collaborator.Identification')"> Activar</button>
+                                <button id="btnActivar" class="btn btn-success" onclick="jsModificarEstado('@collaborator.Identification')"><i class="fa fa-unlock mr-1" aria-hidden="true"></i> Activar</button>
                             }
                         </td>
                     </tr>
