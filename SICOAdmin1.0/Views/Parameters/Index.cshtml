@@ -2,14 +2,19 @@
 
 @using SICOAdmin1._0.Models.Parameter
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Parametro";
     List<Parameter> lstParameters = (List<Parameter>)ViewBag.Parameters;
 }
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
+@section styles{
+
+
+}
 <style>
 
     input[type=number]::-webkit-inner-spin-button,
@@ -31,7 +36,8 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
+            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>
                 Agregar
             </button>
 
@@ -93,26 +99,20 @@
 
                             <td>
                                 <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
-                                        class="btn btn-warning fa fa-pencil btn-sm"
-                                        onclick="showData(@e.IdParameter);">
-                                    Editar
-                                </button>
+                                        class="btn btn-warning"
+                                        onclick="showData(@e.IdParameter);"><i class="fa fa-pencil mr-1" aria-hidden="true"></i>Editar</button>
 
-                                <button class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#ModalBitacora" type="button" onclick="jsShowLog(@e.IdParameter);"> Bitacora</button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#ModalBitacora" type="button" onclick="jsShowLog(@e.IdParameter);"><i class="fa fa-book mr-1" aria-hidden="true"></i>Bitacora</button>
 
                                 @if (e.Status == "0")
                                 {
-                                    <button id="btnActivar" class="btn btn-primary fa fa-unlock btn-sm"
-                                            style="width: 32%;" type="button" onclick="jsChangeStatus(@e.IdParameter);">
-                                        Activar
-                                    </button>
+                                    <button id="btnActivar" class="btn btn-success"
+                                           style="width: 35%;"  type="button" onclick="jsChangeStatus(@e.IdParameter);"><i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar</button>
                                 }
                                 else
                                 {
-                                    <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm"
-                                            style="width: 32%;" onclick="jsChangeStatus(@e.IdParameter);">
-                                        Desactivar
-                                    </button>
+                                    <button id="btnDes" class="btn btn-danger"
+                                               style="width: 35%;" onclick="jsChangeStatus(@e.IdParameter);"><i class="fa fa-lock mr-1" aria-hidden="true"></i>Desactivar</button>
                                 }
                             </td>
                         </tr>
@@ -146,7 +146,7 @@
                             <label class="mt-4 h6">Mensualidad</label>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="border-radius: 0px;">₡</span>
-                                <input required dile-input-number-mask  mask="000-00 00 00"  type="number" step=".001" class="outScroll form-control " name="MonthlyPayment" />
+                                <input required dile-input-number-mask mask="000-00 00 00" type="number" step=".001" class="outScroll form-control " name="MonthlyPayment" />
                             </div>
 
                             <label class="mt-4 h6">Condición Pago</label>
@@ -164,7 +164,7 @@
 
                         <div class="col-xl-6 col-md-6 col-sm-10 me-5 form-group">
 
-                            <label class="mt-4 h6">Tipo Documento Cobro</label> 
+                            <label class="mt-4 h6">Tipo Documento Cobro</label>
                             <input type="text" class="form-control" required name="DocumentTypePayment" pattern=".{1,4}" />
 
                             <label class="mt-4 h6">Consec Recibo</label>
@@ -215,7 +215,7 @@
                             <label class="mt-4 h6">Mensualidad</label>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="border-radius: 0px;">₡</span>
-                                <input required dile-input-number-mask  mask="000-00 00 00" type="number" step=".001" class="outScroll form-control " name="MonthlyPayment" id="upMensualidad" />
+                                <input required dile-input-number-mask mask="000-00 00 00" type="number" step=".001" class="outScroll form-control " name="MonthlyPayment" id="upMensualidad" />
                             </div>
 
                             <label class="mt-4 h6">Condición Pago</label>
@@ -441,7 +441,7 @@
                 Recibo.textContent = res.IdConsecRecibo;
                 Recibo.value = res.IdConsecRecibo;
 
-                
+
 
                 Documento.textContent = res.TipoDocumentoCobro;
                 Documento.value = res.TipoDocumentoCobro;

@@ -2,7 +2,7 @@
 @using SICOAdmin1._0.Models.Payroll
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Nomina";
 
     List<Payroll> lstPayrolls = (List<Payroll>)ViewBag.Payrolls;
     List<SelectListItem> lstConsecutivos = (List<SelectListItem>)ViewBag.lstConsecutivos;
@@ -32,9 +32,8 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
-                Agregar
-            </button>
+            <button id="Crear" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar</button>
 
         </div>
         <!--Barra busqueda-->
@@ -78,12 +77,10 @@
                             <td>
 
                                 <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
-                                        class="btn btn-warning fa fa-pencil btn-sm"
-                                        onclick="jsmostrarDatos(@e.IdNomina);">
-                                    Editar
-                                </button>
+                                        class="btn btn-warning"
+                                        onclick="jsmostrarDatos(@e.IdNomina);"><i class="fa fa-pencil mr-1" aria-hidden="true"></i>Editar</button>
 
-                                <button class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#ModalBitacora" type="button" onclick="jsBitacora(@e.IdNomina);"> Bitacora</button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#ModalBitacora" type="button" onclick="jsBitacora(@e.IdNomina);"><i class="fa fa-book mr-1" aria-hidden="true"></i>Bitacora</button>
                             </td>
                         </tr>
                     }

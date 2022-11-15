@@ -4,7 +4,7 @@
 @using SICOAdmin1._0.Models.Consecutivo
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Consecutivo";
     List<Consecutivo> lstConsecutivo = (List<Consecutivo>)ViewBag.Consecutivos;
     var objConsecutivo = new Consecutivo();
 }
@@ -12,6 +12,8 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
 </head>
 
 @section styles{
@@ -27,8 +29,8 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3 ">
-            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="fa fa-plus-circle btn btn-primary col-12">
-
+            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>
                 Agregar
             </button>
 
@@ -87,24 +89,28 @@
                         }
                         <td>
                             <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
-                                    class="btn btn-warning fa fa-pencil btn-sm"
-                                    onclick="jsmostrarDatos(@e.IdConsecutivo);">
-                                Editar</button>
+                                    class="btn btn-warning" onclick="jsmostrarDatos(@e.IdConsecutivo);">
+                                <i class="fa fa-pencil mr-1" aria-hidden="true"></i>Editar
+                            </button>
 
                             <button id="Bitacora" data-toggle="modal" data-target="#ModalBitacora" type="button" value="Bitacora"
-                                    class="btn btn-info fa fa-book btn-sm" 
-                                    onclick="jsmostrarBitacora(@e.IdConsecutivo);">
-                                Bitacora
+                                    class="btn btn-info" onclick="jsmostrarBitacora(@e.IdConsecutivo);">
+                                <i class="fa fa-book mr-1" aria-hidden="true"></i>Bitacora
                             </button>
+
                             @if (e.Activo == false)
                             {
-                                <button id="btnActivar" class="btn btn-primary fa fa-unlock btn-sm" 
-                                        style="width: 23%;" type="button" onclick="jsModificarEstado(@e.IdConsecutivo);"> Activar</button>
+                                <button id="btnActivar" class="btn btn-success"
+                                        style="width: 23%;" type="button" onclick="jsModificarEstado(@e.IdConsecutivo);">
+                                    <i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar
+                                </button>
                             }
                             else
                             {
-                                <button id="btnDesactivar" class="btn btn-danger fa fa-lock btn-sm"
-                                        style="width: 23%;" onclick="jsModificarEstado(@e.IdConsecutivo);"> Desactivar</button>
+                                <button id="btnDesactivar" class="btn btn-danger "
+                                        style="width: 23%;" onclick="jsModificarEstado(@e.IdConsecutivo);">
+                                    <i class="fa fa-lock mr-1" aria-hidden="true"></i>Desactivar
+                                </button>
                             }
                         </td>
                     </tr>
@@ -143,9 +149,9 @@
                         @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input id="btnModalAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" onclick="jsRecargarComponente();" />
+                       
                     </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+                    <div class="col-xl-6 col-md-6 col-sm-12 me-5">
                         @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
                         @Html.CheckBoxFor(c => c.Activo, new { @class = "form-control", })
                         @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
@@ -154,9 +160,14 @@
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", placeHolder = "Valor según la Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
 
-                        <button style="margin-top: 10px" type="button" class="btn btn-danger" data-dismiss="modal" >Cerrar</button>
+                       
                     </div>
 
+                    <div class="col mt-4 d-flex justify-content-center mb-2" style="margin-top:auto">
+                        <button id="btnModalAgregar" style="margin-top: 10px" type="submit" class="btn btn-success" value="Guardar" onclick="jsRecargarComponente();">Guardar</button>
+                        <button style="margin-top: 10px" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+                    </div>
                 }
 
 
@@ -194,10 +205,10 @@
                         @Html.TextBoxFor(c => c.Mascara, new { @class = "form-control", id = "txtMascara", placeHolder = "NNNN9999", required = "required", pattern = @"(([N]+[9]+[^\s]){1,30})|([9]){1,30}", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Mascara", null, new { @class = "text-danger" })
 
-                        <input id="btnModalUpdate" onclick="jsRecargarComponente();" style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" />
+                       
                     </div>
 
-                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
+                    <div class="col-xl-6 col-md-6 col-sm-12 me-5">
 
                         @Html.LabelFor(c => c.Activo, new { @class = "mt-4" })
                         @Html.CheckBoxFor(c => c.Activo, new { @class = "form-control", id = "txtActivo" })
@@ -206,12 +217,12 @@
                         @Html.LabelFor(c => c.ProximoValor, new { @class = "mt-4" })
                         @Html.TextBoxFor(c => c.ProximoValor, new { @class = "form-control", id = "txtProximoValor", placeHolder = "Valor Mascara", required = "required", pattern = @"(([a-zA-Z0-9]){1,30})|(([9]){1,30})", HtmlAttributes = new { Type = "text" } })
                         @Html.ValidationMessage("Proximo Valor", null, new { @class = "text-danger" })
-                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                       
                     </div>
 
-                    <div class="col-xl-4 col-md-6 col-sm-12 me-5">
-
-
+                    <div class="col mt-4 d-flex justify-content-center mb-2" style="margin-top:auto">
+                        <button id="btnModalUpdate" onclick="jsRecargarComponente();" style="margin-top: 15px" type="submit" class="btn btn-success" value="Guardar" >Guardar</button>
+                        <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
                     </div>
                 }
@@ -295,7 +306,7 @@
             }
             else
             {
-                <text>                
+                <text>
                 $(document).ready(function () {
                         swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 3000, showConfirmButton: false});
                         })
