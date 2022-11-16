@@ -11,15 +11,21 @@ namespace SICOAdmin1._0.Models
 {
     using System;
     
-    public partial class SP_C_BuscarNomina_Result
+    public partial class SP_C_BuscarControlAsistencia_Result
     {
-        public int IdNomina { get; set; }
-        public string Descripcion { get; set; }
-        public string Frecuencia { get; set; }
-        public int IdConsecutivo { get; set; }
+        public int IdAsistencia { get; set; }
+        public int IdColaborador { get; set; }
+        public System.DateTime FechaHoraIngreso { get; set; }
+        public System.DateTime FechaHoraSalida { get; set; }
+        public string TipoJornada { get; set; }
+        public decimal HorasRegulares { get; set; }
+        public decimal HorasExtras { get; set; }
+        public decimal HoraDobles { get; set; }
+        public decimal HorasExtrasDobles { get; set; }
         public string UsuarioCreacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public string UsuarioModificacion { get; set; }
-        public System.DateTime Fecha_Modificacion { get; set; }
+        public System.DateTime FechaModificacion { get; set; }
+        public string nomColaborador { get; set; }
     }
 }

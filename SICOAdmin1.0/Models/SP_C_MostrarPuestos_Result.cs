@@ -10,17 +10,16 @@
 namespace SICOAdmin1._0.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PARAMETRO
+    public partial class SP_C_MostrarPuestos_Result
     {
-        public int IdParametro { get; set; }
-        public decimal Mensualidad { get; set; }
-        public int IdConsecRecibo { get; set; }
-        public decimal InteresMora { get; set; }
-        public string TipoDocumentoCobro { get; set; }
-        public int CondicionPago { get; set; }
-        public string Estado { get; set; }
+        public int IdPuesto { get; set; }
+        public string Descripcion { get; set; }
+        public decimal SalarioMinimo { get; set; }
+        public decimal SalarioPromedio { get; set; }
+        public decimal SalarioMaximo { get; set; }
+        public string CodigoCCSS { get; set; }
+        public string CodigoINS { get; set; }
         public string UsuarioCreacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public string UsuarioModificacion { get; set; }

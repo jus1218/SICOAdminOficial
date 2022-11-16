@@ -1,7 +1,8 @@
-﻿@{ ViewBag.Title = "Login - SICOAdmin";
-                Layout = null; }
+﻿@{
+    Layout = null;
+}
 <head>
-    <title>Inicio de sesión</title>
+    <title>Inicio de sesión - SICOAdmin</title>
     <link href="~/Content/css/login.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -9,16 +10,10 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!--LOGO EN LA PESTAÑA-->
+    <link rel="website icon" type="png" href="~/Content/images/Logo.png" style="border-radius:100px;" />
 </head>
-
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    </head>
-
-<link href="~/Content/css/login.css" rel="stylesheet" />
-@*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
 
 <body>
     <div class="main">
@@ -37,10 +32,11 @@
                                 <div>
                                     <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Iniciar sesión"></span>
                                 </div>
-                                <div>
+                                <!--PENDIENTE DE CONTINUAR DESARROLLO-->
+                                @*<div>
                                     <br />
                                     <span style="width:48%; text-align:left;  display: inline-block;"><a data-toggle="modal" data-target="#modalChangePass" class="small" href="" style="color:white; text-align:center;">Cambiar contraseña</a></span>
-                                </div>
+                                </div>*@
 
 
                             </fieldset>
@@ -50,7 +46,7 @@
                         <div class="clearfix"></div>
 
                     </div> <!-- end login -->
-                    <div style="position:relative; border-radius:50%; background-color:white; padding:5px; border-color: black; border: 10px solid;">
+                    <div style="position:relative; border-radius:50%; background-color:white; padding:5px; border-color: black; border: 10px solid; margin-left:20px;">
                         <img id="imagenD" src="~/Content/Images/logo  1.png"
                              style="width: 8cm; height:1.5cm; position:inherit; top:50%; transform: translate(0, -50%); padding-left:8px;" />
 
@@ -104,10 +100,6 @@
 
 @section scripts{
     var msg;
-
-
-
-
 }
 
 <script>
@@ -197,7 +189,7 @@
                 //setTimeout(function () {form.submit()}, 2001);
 
             })
-
+    3
 
         })
         //Swal.fire({

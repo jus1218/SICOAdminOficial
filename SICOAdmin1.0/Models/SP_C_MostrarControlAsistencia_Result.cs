@@ -10,20 +10,22 @@
 namespace SICOAdmin1._0.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PARAMETRO
+    public partial class SP_C_MostrarControlAsistencia_Result
     {
-        public int IdParametro { get; set; }
-        public decimal Mensualidad { get; set; }
-        public int IdConsecRecibo { get; set; }
-        public decimal InteresMora { get; set; }
-        public string TipoDocumentoCobro { get; set; }
-        public int CondicionPago { get; set; }
-        public string Estado { get; set; }
+        public int IdAsistencia { get; set; }
+        public int IdColaborador { get; set; }
+        public System.DateTime FechaHoraIngreso { get; set; }
+        public System.DateTime FechaHoraSalida { get; set; }
+        public string TipoJornada { get; set; }
+        public decimal HorasRegulares { get; set; }
+        public decimal HorasExtras { get; set; }
+        public decimal HoraDobles { get; set; }
+        public decimal HorasExtrasDobles { get; set; }
         public string UsuarioCreacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public string UsuarioModificacion { get; set; }
         public System.DateTime FechaModificacion { get; set; }
+        public string NomColaborador { get; set; }
     }
 }
