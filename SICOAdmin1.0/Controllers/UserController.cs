@@ -23,7 +23,7 @@ namespace SICOAdmin.Controllers
         int PagActual = 0;
 
         // GET: User
-        [AuthorizeUser(pAccion: 6)]
+        [AuthorizeUser(pAccion: 10)]
         public ActionResult Index()
         {
             List<SP_C_MostrarUsuarios_Result> lst = null;
@@ -75,13 +75,14 @@ namespace SICOAdmin.Controllers
 
             return View(lstModel);
         }
-        [AuthorizeUser(pAccion: 3)]
+      
         [HttpGet]
         public ActionResult addUser()
         {
             return View();
         }
 
+        [AuthorizeUser(pAccion: 8)]
         [HttpPost]
         public ActionResult addUser(User model)
         {
@@ -121,7 +122,7 @@ namespace SICOAdmin.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
+        [AuthorizeUser(pAccion: 9)]
         public ActionResult Edit(string userName)
         {
             List<SP_C_BuscarUsuario_Result> lst = null;
@@ -193,6 +194,7 @@ namespace SICOAdmin.Controllers
             return View(objM);
         }
 
+        [AuthorizeUser(pAccion: 9)]
         [HttpPost]
         public ActionResult updateUser(User user)
         {
@@ -236,7 +238,7 @@ namespace SICOAdmin.Controllers
         }
 
         // ############################################## ASOCIACIONES USUARIO CON PERFIL ##############################################
-       // [AuthorizeUser(pAccion: 63)]
+        [AuthorizeUser(pAccion: 34)]
         [HttpPost]
         public JsonResult agregarUsuarioPerfil(UsuarioPerfil obj)//
         {
@@ -249,7 +251,7 @@ namespace SICOAdmin.Controllers
             return Json(resp, JsonRequestBehavior.AllowGet);
         }
 
-
+        [AuthorizeUser(pAccion: 35)]
         [HttpPost]
         public JsonResult EliminarUsuarioPerfil(UsuarioPerfil obj)//
         {

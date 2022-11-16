@@ -18,6 +18,7 @@ namespace SICOAdmin1._0.Controllers
         /*Muestra la Tabla*/
         #region Mostrar
         //[AuthorizeUser(pAccion: 10)]// cambiar
+        [AuthorizeUser(pAccion: 13)]
         public ActionResult Index()
         {
             List<SP_C_MostrarPerfil_Result> lst = null;
@@ -89,6 +90,7 @@ namespace SICOAdmin1._0.Controllers
         /*---------------------------------------------------------------*/
         /*------------------Procedimiento SP_P_Editar--------------------*/
         /*---------------------------------------------------------------*/
+        [AuthorizeUser(pAccion: 12)]
         public ActionResult Editar(int Id)
         {
             List<SP_P_UsuariosDelPerfil_Result> lstUsuariosPerfil = new List<SP_P_UsuariosDelPerfil_Result>();
@@ -253,6 +255,7 @@ namespace SICOAdmin1._0.Controllers
                 }).ToList();
         }
 
+        [AuthorizeUser(pAccion: 31)]
         public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil)         /*guardo aqui*/
         {
 
