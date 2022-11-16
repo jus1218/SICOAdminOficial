@@ -3,6 +3,12 @@
 @{
     List<SelectListItem> lstUser = (List<SelectListItem>)ViewBag.lstUser;
     ViewBag.Title = "Editar Perfil";
+
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
 }
 @*@section Styles {
         <meta charset="utf-8" />
@@ -98,14 +104,14 @@
                     <div class="row mt-4 d-flex justify-content-center">
                         <div class="col-xl-6 col-md-6   col-sm-4 mb-3 mt-2">
                             @*<input type="button"
-                                   id="btnAgregarPerfil"
-                                   value="Agregar"
-                                   class="btn btn-success col-12" />*@
+                                id="btnAgregarPerfil"
+                                value="Agregar"
+                                class="btn btn-success col-12" />*@
 
-                            <button  id="btnAgregarPerfil" type="button" class="btn btn-primary col-12">
-                                    <i class="fa fa-plus mr-1" aria-hidden="true"></i>
-                                    Agregar
-                                </button>
+                            <button id="btnAgregarPerfil" type="button" class="btn btn-primary col-12">
+                                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                                Agregar
+                            </button>
 
 
                         </div>
@@ -119,21 +125,26 @@
 
             </div>
             <!--VISTA 2-->
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="row">
-                    <h3>Lista de acciones</h3>
-                </div>
-                <!--Va el arbol-->
-                @Html.Partial("_ArbolView")
-                <div class="col d-flex justify-content-center mt-3">
+            @if (@lstActions.Contains(32))
+            {
 
-                    <input type="submit"
-                           value="Guardar cambios"
-                           class="btn btn-success col-xl-2 col-md-3 col-12"
-                           id="btnSave" />
-                </div>
 
-            </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <h3>Lista de acciones</h3>
+                    </div>
+                    <!--Va el arbol-->
+                    @Html.Partial("_ArbolView")
+                    <div class="col d-flex justify-content-center mt-3">
+
+                        <input type="submit"
+                               value="Guardar cambios"
+                               class="btn btn-success col-xl-2 col-md-3 col-12"
+                               id="btnSave" />
+                    </div>
+
+                </div>
+            }
         </div>
     </div>
 

@@ -1,5 +1,7 @@
 ﻿
 @{
+
+    ViewBag.Title = "Control Aistencia";
     var lstControlAsist = (List<SICOAdmin1._0.Models.ControlAsistencia>)TempData["lstControlAsist"];
     var lstColaboradores = (List<SelectListItem>)TempData["lstColaboradores"];
 }
@@ -25,8 +27,8 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#agregarCtrlAsistencia">
-                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#agregarCtrlAsistencia" >
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>
                 Agregar
             </button>
         </div>
