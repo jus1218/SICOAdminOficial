@@ -30,7 +30,7 @@
     {//Primero nombreMetho, nombreController, tipoMetho,
 
         @Html.HiddenFor(d => d.userName)//Se va en la peticion
-        @Html.AntiForgeryToken()// seguridad
+        @*@Html.AntiForgeryToken()// seguridad*@
         <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
             <!--Usuario-->
             <div class="col-xl-3 col-md-6 col-sm-12 me-5">
@@ -81,7 +81,14 @@
 
         <!--BOTONES-->
         <div class="col mt-4 d-flex justify-content-center">
-            <input class="btn btn-primary me-2" type="submit" value="Guardar" />
+
+            <button id="btnAgregar" class="btn btn-primary mr-2 ">
+                <i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>
+                Guardar
+            </button>
+
+
+
             <a class="btn btn-danger" href="@Url.Action("Index", "User")">Cerrar</a>
         </div>
     }
@@ -97,10 +104,16 @@
 
                 <div class="row mt-4 d-flex justify-content-center">
                     <div class="col-xl-6 col-md-6 col-sm-4 mb-3 mt-2">
-                        <input type="button"
-                               id="addPerfil"
-                               value="Agregar"
-                               class="btn btn-primary col-12" />
+                        @*<input type="button"
+                            id="addPerfil"
+                            value="Agregar"
+                            class="btn btn-primary col-12" />*@
+
+
+                        <button id="addPerfil" type="button" class="btn btn-primary col-12">
+                            <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                            Agregar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -145,7 +158,7 @@
 
         </div>
     }
-    </div>
+</div>
 
 <!-- Modal ELIMINAR PERFIL -->
 <div class="modal fade" id="modalEliminar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -206,11 +219,12 @@
 
 @section   scripts{
     <script>
-        const userLog = document.getElementById("usuarioLog").textContent;
+        //const userLog = document.getElementById("usuarioLog").textContent;
         const idUser = document.getElementById("idUsuario").value;
         const numPagePerfUser = document.getElementById("numPagePerfUser").textContent;
-        
+        let btnAsociar = document.getElementById("addPerfil");
         //numPagePerfUser
+   
 
         function cargarComponent() {
             //recarga tabla usuarios
@@ -259,7 +273,7 @@
 
         }
 
-        
+
         //Pasar a la pagina anterior
         function jsRetroceder(ant, totalPage) {
 
@@ -278,7 +292,7 @@
 
         }
 
-       
+
 
         // Cambio de tamaño de paginacion
         function cambTam(totalPage) {
@@ -299,10 +313,10 @@
         }
 
 
-        let btnAsociar = document.getElementById("addPerfil");
+        
         let selectValue = document.getElementById("perfilSelect");
         let userName = document.getElementById("userName");
-       
+
 
         // AGREGAR USUARIO AL PERFIL
         var urlPerfilUsuario = "@Url.Content("~/User/agregarUsuarioPerfil")";
@@ -331,18 +345,19 @@
 
                 //}
 
-               
+
             })
 
             //AGREGAR PERFIL
 
+          
             $("#addPerfil").click(() => {
                 fetch(urlPerfilUsuario, {
                     method: "POST",
                     body: JSON.stringify({
                         Usuario: idUser,
                         IdPerfil: document.getElementById("perfilSelect").value,
-                        UsuarioCreacion: userLog,
+                        //UsuarioCreacion: userLog,
                     }),
                     headers: {
                         "Accept": "application/json",
@@ -386,7 +401,7 @@
                 body: JSON.stringify({
                     Usuario: document.getElementById("idUsuario").value,
                     IdPerfil: idPerfil.value,
-                    UsuarioCreacion: userLog,
+                    //UsuarioCreacion: userLog,
                     FechaCreacion: ""
                 }),
                 headers: {

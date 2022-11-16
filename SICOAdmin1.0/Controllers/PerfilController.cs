@@ -1,6 +1,7 @@
 ﻿using SICOAdmin1._0.Filters;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Perfil;
+using SICOAdmin1._0.Models.User;
 using SICOAdmin1._0.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -192,7 +193,7 @@ namespace SICOAdmin1._0.Controllers
         {
             int resp = 0;
             using (var db = new SICOAdminEntities()){
-                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, obj.UsuarioCreacion);
+                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, ((User)Session["User"]).userName);
             }
 
             return Json(resp, JsonRequestBehavior.AllowGet);
@@ -252,8 +253,10 @@ namespace SICOAdmin1._0.Controllers
                 }).ToList();
         }
 
-        public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil, string UsuCreacion)         /*guardo aqui*/
+        public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil)         /*guardo aqui*/
         {
+
+            string UsuCreacion = ((User)Session["User"]).userName;
             if (checkedIds == null)
             {
                 checkedIds = new List<int>();

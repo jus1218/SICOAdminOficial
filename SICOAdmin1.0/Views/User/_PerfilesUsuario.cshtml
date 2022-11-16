@@ -27,7 +27,14 @@
                         @perfil.Nombre
                     </td>
                     <td>
-                        <input type="button" id="btnAlert" value="Editar" class="btn btn-warning" />
+
+                        <button onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil })'" type="button" class="btn btn-warning">
+                            <i class="fa fa-pencil mr-1" aria-hidden="true"></i>
+                            Editar
+                        </button>
+
+
+
                         <input onclick="jsDeletePerf('@perfil.IdPerfil');" type="button" value="Eliminar" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalEliminar" />
                     </td>
                 </tr>
