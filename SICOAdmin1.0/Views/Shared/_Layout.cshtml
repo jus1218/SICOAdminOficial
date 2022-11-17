@@ -136,14 +136,15 @@
 
                         <div class=" d-flex justify-content-center">
 
-                            <a href="@Url.Action("Index","Parameters")" data-toggle="tooltip" data-placement="top" title="Parametros">
+                            <a href="@Url.Action("Index","Parameters")" data-toggle="tooltip" data-placement="top" title="Parámetros">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </a>
-                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+
+                            <a data-toggle="tooltip" data-placement="top" title="Pantalla completa">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="launchFullScreen(document.documentElement);cancelFullScreen();"></span>
                             </a>
 
-                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="@Url.Action("Logout","Home")">
+                            <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="@Url.Action("Logout","Home")">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                             </a>
 
