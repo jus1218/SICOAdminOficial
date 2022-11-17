@@ -7,12 +7,14 @@ using System.Data.Entity.Core.Objects;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Consecutivo;
 using SICOAdmin1._0.Models.User;
+using SICOAdmin1._0.Filters;
 
 namespace SICOAdmin1._0.Controllers
 {
     public class ConsecutivoController : Controller
     {
         // GET: Consecutivo
+        [AuthorizeUser(pAccion: 19)]
         public ActionResult Index()
         {
             List<SP_C_MostrarConsecutivos_Result> lst = null;
@@ -47,6 +49,7 @@ namespace SICOAdmin1._0.Controllers
         }
 
 
+        [AuthorizeUser(pAccion: 17)]
         [HttpPost]
         public ActionResult Add(Consecutivo model)
         {
@@ -115,7 +118,7 @@ namespace SICOAdmin1._0.Controllers
         }
 
 
-
+        [AuthorizeUser(pAccion: 18)]
         [HttpPost]
         public ActionResult Update(Consecutivo pModel)
         {

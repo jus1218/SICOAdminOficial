@@ -107,15 +107,15 @@
                                         {
                                             <li><a href="@Url.Action("Index", "ControlAsistencia")">Admin. Control Asistencia</a></li>
                                         }
-                                        @if (@lstActions.Contains(10))
+                                        @if (@lstActions.Contains(29))
                                         {
-                                            <li><a href="@Url.Action("Index", "Payrroll")">Admin. Nomina</a></li>
+                                            <li><a href="@Url.Action("Index", "Payroll")">Admin. Nomina</a></li>
                                         }
-                                        @if (@lstActions.Contains(10))
+                                        @if (@lstActions.Contains(19))
                                         {
                                             <li><a href="@Url.Action("Index", "Consecutivo")">Admin. Consecutivo</a></li>
                                         }
-                                        </ul>
+                                    </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-clone"></i>Reporte Consulta<span class="fa fa-chevron-down"></span></a>
@@ -135,6 +135,7 @@
                     <div class="sidebar-footer hidden-small">
 
                         <div class=" d-flex justify-content-center">
+<<<<<<< HEAD
 
                             <a href="@Url.Action("Index","Parameters")" data-toggle="tooltip" data-placement="top" title="Parámetros">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -142,6 +143,16 @@
 
                             <a data-toggle="tooltip" data-placement="top" title="Pantalla completa">
                                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="launchFullScreen(document.documentElement);cancelFullScreen();"></span>
+=======
+                            @if (@lstActions.Contains(22))
+                            {
+                                <a href="@Url.Action("Index", "Parameters")" data-toggle="tooltip" data-placement="top" title="Parametros">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                </a>
+                            }
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+>>>>>>> 6ebd7703fc242f6da9a0a3da139bab22fe2c13cf
                             </a>
 
                             <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="@Url.Action("Logout","Home")">

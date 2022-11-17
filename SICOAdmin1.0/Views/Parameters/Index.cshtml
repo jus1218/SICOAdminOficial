@@ -84,7 +84,7 @@
                             <td>@e.IdParameter</td>
                             <td>@Convert.ToDecimal(@e.MonthlyPayment).ToString("C")</td>
                             <td>@e.IdConsecRecibo</td>
-                            <td>% @Convert.ToDecimal(@e.InterestBlackberry).ToString(".00")</td>
+                            <td>@Convert.ToDecimal(@e.InterestBlackberry).ToString(".00") %</td>
                             <td>@e.DocumentTypePayment</td>
                             <td>@e.PaymentCondition.ToString("C")</td>
                             @if (e.Status == "1")
@@ -206,7 +206,7 @@
 
             <div class="modal-body">
 
-                <form action="@Url.Action("Update", "Parameters")" method="post" id="frm">
+                <form action="@Url.Action("Update", "Parameters")" method="post" id="frm" class="was-validated">
                     @Html.HiddenFor(p => p.IdParameter, new { @class = "form-control", id = "upIdParam" })
                     <div class="col-12 d-xl-flex d-md-flex justify-content-md-between justify-content-xl-center">
 
@@ -234,7 +234,7 @@
                         <div class="col-xl-6 col-md-6 col-sm-10 me-5 form-group">
 
                             <label class="mt-4 h6">Tipo Documento Cobro</label>
-                            <input type="text" class="form-control" required name="DocumentTypePayment" id="upDocumento" />
+                            <input type="text" class="form-control" required name="DocumentTypePayment" id="upDocumento" pattern=".{1,4}" />
 
                             <label class="mt-4 h6">Consec Recibo</label>
                             <input required type="number" class="form-control" name="IdConsecRecibo" id="upRecibo" />

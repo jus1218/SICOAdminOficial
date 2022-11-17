@@ -7,13 +7,14 @@ using System.Data.Entity.Core.Objects;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Payroll;
 using SICOAdmin1._0.Models.User;
-
+using SICOAdmin1._0.Filters;
 
 namespace SICOAdmin1._0.Controllers
 {
     public class PayrollController : Controller
     {
         // GET: Payroll
+        [AuthorizeUser(pAccion: 29)]
         public ActionResult Index()
         {
             Payroll payroll;
@@ -71,6 +72,7 @@ namespace SICOAdmin1._0.Controllers
             return View();
         }
 
+        [AuthorizeUser(pAccion: 27)]
         [HttpPost]
         public ActionResult Add(Payroll pModel)
         {
@@ -107,6 +109,7 @@ namespace SICOAdmin1._0.Controllers
             }
         }
 
+        [AuthorizeUser(pAccion: 28)]
         [HttpPost]
         public ActionResult Update(Payroll pModel)
         {
