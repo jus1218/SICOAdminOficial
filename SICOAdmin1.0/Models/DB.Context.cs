@@ -887,11 +887,11 @@ namespace SICOAdmin1._0.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_P_EliminarUsuarioPerfil", usuarioParameter, idPerfilParameter);
         }
     
-        public virtual int SP_P_GuardarCheck(Nullable<int> idAccion, Nullable<int> idPerfil, string usuCreacion)
+        public virtual int SP_P_GuardarCheck(string idAccion, Nullable<int> idPerfil, string usuCreacion)
         {
-            var idAccionParameter = idAccion.HasValue ?
+            var idAccionParameter = idAccion != null ?
                 new ObjectParameter("idAccion", idAccion) :
-                new ObjectParameter("idAccion", typeof(int));
+                new ObjectParameter("idAccion", typeof(string));
     
             var idPerfilParameter = idPerfil.HasValue ?
                 new ObjectParameter("idPerfil", idPerfil) :

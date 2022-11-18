@@ -1236,7 +1236,7 @@
     <Parameter Name="idPerfil" Type="int" Mode="In" />
   </Function>
   <Function Name="SP_P_GuardarCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="idAccion" Type="int" Mode="In" />
+    <Parameter Name="idAccion" Type="varchar" Mode="In" />
     <Parameter Name="idPerfil" Type="int" Mode="In" />
     <Parameter Name="usuCreacion" Type="varchar" Mode="In" />
   </Function>
