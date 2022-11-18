@@ -23,7 +23,7 @@ namespace SICOAdmin.Controllers
         int PagActual = 0;
 
         // GET: User
-        [AuthorizeUser(pAccion: 6)]
+        [AuthorizeUser(pAccion: 10)]
         public ActionResult Index()
         {
             List<SP_C_MostrarUsuarios_Result> lst = null;
@@ -69,21 +69,20 @@ namespace SICOAdmin.Controllers
                 objM.dateModification = (DateTime)e.FechaModificacion;
 
                 lstModel.Add(objM);
-
-                ViewBag.bitacora = objM;
             }
 
 
 
             return View(lstModel);
         }
-        [AuthorizeUser(pAccion: 3)]
+      
         [HttpGet]
         public ActionResult addUser()
         {
             return View();
         }
 
+        [AuthorizeUser(pAccion: 8)]
         [HttpPost]
         public ActionResult addUser(User model)
         {
@@ -123,7 +122,7 @@ namespace SICOAdmin.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
+        [AuthorizeUser(pAccion: 9)]
         public ActionResult Edit(string userName)
         {
             List<SP_C_BuscarUsuario_Result> lst = null;
@@ -195,6 +194,7 @@ namespace SICOAdmin.Controllers
             return View(objM);
         }
 
+        [AuthorizeUser(pAccion: 9)]
         [HttpPost]
         public ActionResult updateUser(User user)
         {
@@ -238,20 +238,20 @@ namespace SICOAdmin.Controllers
         }
 
         // ############################################## ASOCIACIONES USUARIO CON PERFIL ##############################################
-       // [AuthorizeUser(pAccion: 63)]
+        [AuthorizeUser(pAccion: 34)]
         [HttpPost]
         public JsonResult agregarUsuarioPerfil(UsuarioPerfil obj)//
         {
             int resp = 0;
             using (var db = new SICOAdminEntities())
             {
-                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, obj.UsuarioCreacion);
+                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, ((User)Session["User"]).userName);
             }
 
             return Json(resp, JsonRequestBehavior.AllowGet);
         }
 
-
+        [AuthorizeUser(pAccion: 35)]
         [HttpPost]
         public JsonResult EliminarUsuarioPerfil(UsuarioPerfil obj)//
         {
@@ -327,12 +327,6 @@ namespace SICOAdmin.Controllers
         }
 
 
-
-
-
-
-
-
         public JsonResult GetBitacora(string userName)//NO SE USA AÚN
         {
             User oUser = new User();
@@ -395,6 +389,54 @@ namespace SICOAdmin.Controllers
                 return Content("Ocurrio un error :( \n" + ex.Message);
             }
 
+        }
+
+        public JsonResult LockUser(string userName)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+
+            string message = "";
+            bool result = false;
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                db.SP_P_ModificarEstadosUsuario( userName, ((User)Session["User"]).userName, "lock", resultado, mensaje);
+                result = Convert.ToBoolean(resultado.Value);
+            }
+            if (result)
+            {
+                message = "1";
+            }
+            else
+            {
+                message = "2";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ActivUser(string userName)
+        {
+            ObjectParameter resultado = new ObjectParameter("resultado", false);
+            ObjectParameter mensaje = new ObjectParameter("mensaje", "");
+
+            string message = "";
+            bool result = false;
+
+            using (SICOAdminEntities db = new SICOAdminEntities())
+            {
+                db.SP_P_ModificarEstadosUsuario(userName, ((User)Session["User"]).userName, "Activ", resultado, mensaje);
+                result = Convert.ToBoolean(resultado.Value);
+            }
+            if (result)
+            {
+                message = "1";
+            }
+            else
+            {
+                message = "2";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -3,6 +3,12 @@
 @{
     List<SelectListItem> lstUser = (List<SelectListItem>)ViewBag.lstUser;
     ViewBag.Title = "Editar Perfil";
+
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
 }
 @*@section Styles {
         <meta charset="utf-8" />
@@ -57,7 +63,13 @@
             </div>
             <!--BOTONES-->
             <div class="col mt-4 d-flex justify-content-center mb-2">
-                <input class="btn btn-success me-2" type="submit" value="Guardar" />
+                @*<input class="btn btn-primary me-2" type="submit" value="Guardar" />*@
+
+                <button id="btnAgregar" class="btn btn-primary mr-2 ">
+                    <i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>
+                    Guardar
+                </button>
+
                 <a class="btn btn-danger" href="@Url.Action("Index","Perfil")">Cerrar</a>
             </div>
 
@@ -91,10 +103,17 @@
 
                     <div class="row mt-4 d-flex justify-content-center">
                         <div class="col-xl-6 col-md-6   col-sm-4 mb-3 mt-2">
-                            <input type="button"
-                                   id="btnAgregar"
-                                   value="Agregar"
-                                   class="btn btn-success col-12" />
+                            @*<input type="button"
+                                id="btnAgregarPerfil"
+                                value="Agregar"
+                                class="btn btn-success col-12" />*@
+
+                            <button id="btnAgregarPerfil" type="button" class="btn btn-primary col-12">
+                                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                                Agregar
+                            </button>
+
+
                         </div>
                     </div>
                 </div>
@@ -106,21 +125,26 @@
 
             </div>
             <!--VISTA 2-->
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="row">
-                    <h3>Lista de acciones</h3>
-                </div>
-                <!--Va el arbol-->
-                @Html.Partial("_ArbolView")
-                <div class="col d-flex justify-content-center mt-3">
+            @if (@lstActions.Contains(32))
+            {
 
-                    <input type="submit"
-                           value="Guardar cambios"
-                           class="btn btn-success col-xl-2 col-md-3 col-12"
-                           id="btnSave"/>
-                </div>
 
-            </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <h3>Lista de acciones</h3>
+                    </div>
+                    <!--Va el arbol-->
+                    @Html.Partial("_ArbolView")
+                    <div class="col d-flex justify-content-center mt-3">
+
+                        <input type="submit"
+                               value="Guardar cambios"
+                               class="btn btn-success col-xl-2 col-md-3 col-12"
+                               id="btnSave" />
+                    </div>
+
+                </div>
+            }
         </div>
     </div>
 
@@ -135,7 +159,7 @@
 
             </div>
             <div class="modal-body">
-                Estas seguro que deseas eliminar el perfil? <br />
+                Estas seguro que deseas eliminar el usuario del perfil? <br />
                 <label>Numero de usuario: </label>
                 <label id="idUsuario"></label>
             </div>
@@ -152,23 +176,30 @@
     <script>
         //Trae la vista parcial y la dibuja en el div tableUser
         const idPerfil = document.getElementById("idPerfil").value;
-        const userLog = document.getElementById("usuarioLog").textContent;
+        //const userLog = document.getElementById("usuarioLog").textContent;
         var url = "@Url.Content("~/Perfil/agregarUsuarioPerfil")";
-         var urlDeleteUserProfile = "@Url.Content("~/Perfil/eliminarUsuarioPerfil")";
+        var urlDeleteUserProfile = "@Url.Content("~/Perfil/eliminarUsuarioPerfil")";
+        let btnAgregarPerfil = document.getElementById("btnAgregarPerfil");
 
+
+        //btnAgregarPerfil.addEventListener("click", (e) => {
+
+        //    console.log("papasito");
+        //})
 
         $(document).ready(function () {
             //BUSCAR USUARIOS DEL PERFIL RELACIONADO
             $("#userss").dataTable();
 
-            $("#btnAgregar").click(() => {
+            $("#btnAgregarPerfil").click(() => {
+                console.log("Entro");
                 fetch(url, {
                     method: "POST",
                     body: JSON.stringify({
                         Usuario: document.getElementById("userSelect").value,
-                        IdPerfil: idPerfil,
-                        UsuarioCreacion: userLog,
-                        FechaCreacion:""
+                        IdPerfil: idPerfil
+                        //UsuarioCreacion: userLog,
+                        //FechaCreacion:""
                     }),
                     headers: {
                         "Accept": "application/json",
@@ -214,6 +245,7 @@
             //console.log(l);
             idUser.textContent = usuario;
             idUser.value = usuario;
+           $("#modalEliminar").modal("show");
         }
         const btnEliminar = document.getElementById("btnEliminar");
         btnEliminar.addEventListener("click", function () {
@@ -221,9 +253,9 @@
                 method: "POST",
                 body: JSON.stringify({
                     Usuario: idUser.value,
-                    IdPerfil: idPerfil,
-                    UsuarioCreacion: userLog,
-                    FechaCreacion: ""
+                    IdPerfil: idPerfil
+                    //UsuarioCreacion: userLog,
+                    //FechaCreacion: ""
                 }),
                 headers: {
                     "Accept": "application/json",
@@ -249,7 +281,7 @@
         })
 
 
-        
+
 
     </script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
@@ -264,7 +296,7 @@
             });
             $('#btnSave').on('click', function () {
                 var checkedIds = tree.getCheckedNodes();
-                $.ajax({ url: '/Perfil/SaveCheckedNodes', data: { checkedIds: checkedIds, idPerfil: idPerfil, UsuCreacion: userLog }, method: 'POST' })
+                $.ajax({ url: '/Perfil/SaveCheckedNodes', data: { checkedIds: checkedIds, idPerfil: idPerfil }, method: 'POST' })
                     .then(res => {
                         if (res == 1) {
                             cargarComponent();

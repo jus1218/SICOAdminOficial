@@ -10,9 +10,8 @@
 namespace SICOAdmin1._0.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PARAMETRO
+    public partial class SP_C_MostrarParametros_Result
     {
         public int IdParametro { get; set; }
         public decimal Mensualidad { get; set; }

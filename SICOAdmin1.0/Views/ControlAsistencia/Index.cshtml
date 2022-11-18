@@ -1,0 +1,528 @@
+﻿
+@{
+
+    ViewBag.Title = "Control Aistencia";
+    var lstControlAsist = (List<SICOAdmin1._0.Models.ControlAsistencia>)TempData["lstControlAsist"];
+    var lstColaboradores = (List<SelectListItem>)TempData["lstColaboradores"];
+}
+
+@section styles{
+
+    <style>
+
+        .th {
+            text-align: center;
+        }
+    </style>
+
+}
+@**@
+<div class="container margin-container p-4 glass">
+
+
+    <div class="row fila">
+        <!--TEXTO-->
+        <div class="col-xl-3 col-md-3 d-flex justify-content-center">
+            <h3 class="mt-0">Control Asistencia</h3>
+        </div>
+        <!--BOTON-->
+        <div class="col-xl-2 col-md-2 mb-3">
+            <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#agregarCtrlAsistencia" >
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>
+                Agregar
+            </button>
+        </div>
+        <!--Barra busqueda-->
+        @*<div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
+                <div class="input-group mb-2">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Buscar..."
+                           aria-label="Buscar..."
+                           aria-describedby="button-search"
+                           id="buscar" />
+
+                </div>
+            </div>*@
+    </div>
+    <!--FILA TABLE   row       tableAttendanceControl -->
+    <div class=" fila   scrol-tablex" id="tableAttendanceControl">
+        @Html.Partial("_TableAttendanceControl", lstControlAsist);
+    </div>
+</div>
+
+@* Moddal de agregar *@
+
+@Html.Partial("_AgregarCtrlAsist", lstColaboradores)
+@Html.Partial("_EditCtrlAsist", lstColaboradores)
+@Html.Partial("_ViewMore", lstColaboradores)
+
+
+@section scripts{
+
+    <script>
+        //================================ OBTENCION DE ELEMENTOS DEL DOM ================================
+        //--------------------- ELEMENTOS DE FORMULARIOS --------------------------------------
+        let formCrearCtrl = document.getElementById("formCrearCtrl");
+        let formEditarCtrl = document.getElementById("formEditarCtrl");
+        //--------------------- ELEMENTOS DE AGREGAR --------------------------------------
+        let IdAsistencia = document.getElementById("IdAsistencia");
+        let IdColaborador = document.getElementById("IdColaborador");
+        let FechaHoraIngreso = document.getElementById("FechaHoraIngreso");
+        let FechaHoraSalida = document.getElementById("FechaHoraSalida");
+        let TipoJornada = document.getElementById("tipoJornada");
+        let HorasRegulares = document.getElementById("horasRegulares");//?.value || ''
+        let HorasExtras = document.getElementById("horasExtras");
+        let HoraDobles = document.getElementById("horasDobles");
+        let HorasExtrasDobles = document.getElementById("horasExtraDobles");
+        //---------------------- ELEMENTOS DE EDITAR -------------------------------------
+        let EditFechaHoraIngreso = document.getElementById("EditFechaHoraIngreso");
+        let EditFechaHoraSalida = document.getElementById("EditFechaHoraSalida");
+        let EdithoraCalculada = document.getElementById("EdithoraCalculada");
+        let EditColaborador = document.getElementById("EditColaborador");
+        let EditipoJornada = document.getElementById("EditipoJornada");
+        // VARIABLES NUMERICAS
+        var horaR;// hora regular
+        var horaE;// hora extra
+        var horaD;// Hora doble
+        var horaED;// hora extra doble
+        var resultadoHorasTotal;
+        let respuesta;
+        // ---------------------- OBEJETOS DE VALIDACION ----------------------
+        const formIsValid = {
+            //IdColaborador: false,
+            FechaHoraIngreso: false,
+            FechaHoraSalida: false,
+            TipoJornada: false,
+            HorasRegulares: false,
+            HorasExtras: false,
+            HoraDobles: false,
+            HorasExtrasDobles: false,
+        };
+
+
+        //================================ FUNCIONES ================================
+        function cargarComponentAsist() {
+            $("#tableAttendanceControl").load("_TableAttendanceControl", function (res) {
+                $("#tableAttendanceControl").html(res);
+            })
+        }
+
+        function extraerHoras(input) {
+
+            let diferenciaHoras;
+
+            //const tiempoTranscurrido = Date.now();
+            //const hoy = new Date(tiempoTranscurrido);
+
+            let fecha1 = null;
+            let fecha2 = null;
+
+            console.log("Input: " + input.name);
+            switch (input.name) {
+
+                case 'FechaHoraIngreso':
+                    fecha1 = new Date(input.value);
+                    fecha2 = new Date(FechaHoraSalida.value);
+                    break;
+
+                case 'FechaHoraSalida':
+                    fecha1 = new Date(FechaHoraIngreso.value);
+                    fecha2 = new Date(input.value);
+                    break;
+
+                case 'EditFechaHoraIngreso':
+                    fecha1 = new Date(input.value);
+                    fecha2 = new Date(EditFechaHoraSalida.value);
+                    break;
+
+                case 'EditFechaHoraSalida':
+                    fecha1 = new Date(EditFechaHoraIngreso.value);
+                    fecha2 = new Date(input.value);
+                    break;
+
+            }
+            diferenciaHoras = calcularDiferenciaHoras(fecha1, fecha2);
+
+            return diferenciaHoras;
+        }
+
+        function TimeInput(e) {// Asignar el valor del horas a cada variable
+            let values = String(e.target.value).split(":");
+
+            //console.log(typeof (e.target.value));
+
+
+            console.log(e.target.value);
+            if (e.target.value.trim().length != null) formIsValid.FechaHoraSalida = true;
+            else formIsValid.FechaHoraSalida = false;
+
+            values[1] = values[1] / 60;
+
+            //console.log("Datos a sumar:");
+            //console.log("Dato 1: "+values[0]);
+            //console.log("Dato 2: "+values[1]);
+
+
+            var result = parseInt(values[0]) + values[1];
+
+
+            switch (e.target.name) {
+                case "horasRegulares":
+                    //console.log(e.target.name + " -> resultado: " + result);
+                    horaR = result;
+                    formIsValid.HorasRegulares = true;
+                    //console.log(e.target.name + " -> " + horaR);
+                    break;
+                case "horasExtras":
+                    horaE = result;
+                    formIsValid.HorasExtras = true;
+                    break;
+                case "horasDobles":
+                    horaD = result;
+                    formIsValid.HoraDobles = true;
+                    break;
+                case "horasExtraDobles":
+                    horaED = result;
+                    formIsValid.HorasExtrasDobles = true;
+                    break;
+            }
+
+        }
+
+        //CALCULA LAS DIFERENCIA DE HORAS
+        function calcularDiferenciaHoras(fecha1, fecha2) {
+
+            if (!(fecha1 instanceof Date) || !(fecha2 instanceof Date)) {
+                throw TypeError('Ambos obj debens er tipo fecha');
+            }
+
+            if (fecha1.getTime() < fecha2.getTime()) {
+                let diferencia = (fecha1.getTime() - fecha2.getTime()) / 1000;
+                diferencia /= (60 * 60);
+
+                return Math.abs(diferencia);
+            }
+
+            return 0;
+        }
+
+
+        //Metodo que pertenece a editar
+        function seleccionarItem(input, select) {
+
+            for (var i = 0; i < input.length; i++) {
+
+                if (input.options[i].value == select)
+                    input.options[i].setAttribute('selected', '');
+            }
+        }
+
+        function vistaCalcularHoras(diferenciaHoras) {
+            let min = diferenciaHoras.toString().split('.');
+
+            min[1] = "0." + min[1];
+
+            return Math.abs(min[0]).toFixed(0) + " h:" + Math.abs((min[1] == "0.undefined" ? 0 : min[1]) * 60).toFixed(0) + " min";
+        }
+
+        //Se utiliza en editar
+        function sacarValorHora(input) {
+            let values = String(input.value).split(":");
+            values[1] = values[1] / 60;
+
+            return (parseInt(values[0]) + values[1]);
+
+        }
+
+        //================================ FUNCIONES FECTH ================================
+        // CREAR CTRL ASISTENCIA
+        function crearCtrlAsist() {
+            console.log("[HorasRegulares] : " + horaR);
+            fetch("@Url.Content("~/ControlAsistencia/AgregarAttendanceControl")" , {
+                method: "POST",
+                body: JSON.stringify({
+                    IdColaborador:IdColaborador.value,
+                    FechaHoraIngreso: FechaHoraIngreso.value,
+                    FechaHoraSalida: FechaHoraSalida.value,
+                    TipoJornada: TipoJornada.value,
+                    HorasRegulares: parseFloat(horaR),//horaR
+                    HorasExtras: parseFloat(horaE),
+                    HoraDobles: parseFloat(horaD),
+                    HorasExtrasDobles: parseFloat(horaED),
+                    //---------------------
+                    /*UsuarioCreacion: document.getElementById("usuarioLog").textContent*/
+                }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.ok ? res.json() : null)
+                .then(res => {
+
+                    if (res.resp == 1) {
+
+                        cargarComponentAsist();
+                        swal('Bien!',
+                            res.mensaje,
+                            'success')
+                    } else {
+                        swal('Opps!',
+                            res.mensaje,
+                            'error'
+                        )
+                    }
+                }).catch(res => console.log("Algo paso"))
+            //console.log(IdColaborador.value);
+            //console.log(FechaHoraIngreso.value);
+            //console.log(FechaHoraSalida.value);
+            //console.log(TipoJornada.value);
+
+        }
+
+        //EDITAR CTRL ASISTENCIA
+        function editarCtrlAsist(idAsistencia,idColaborador,fHoraIngreso,fHoraSalida,tipoJornada,horaReg,horaEntr,horaDob,horaEDoble) {
+            console.log("[HorasRegulares] : " + horaR);
+            fetch("@Url.Content("~/ControlAsistencia/EditarAttendanceControl")" , {
+                method: "POST",
+                body: JSON.stringify({
+                    IdAsistencia: idAsistencia,
+                    IdColaborador: idColaborador,
+                    FechaHoraIngreso: fHoraIngreso,
+                    FechaHoraSalida: fHoraSalida,
+                    TipoJornada: tipoJornada,
+                    HorasRegulares: parseFloat(horaReg),//horaR
+                    HorasExtras: parseFloat(horaEntr),
+                    HoraDobles: parseFloat(horaDob),
+                    HorasExtrasDobles: parseFloat(horaEDoble),
+                    //---------------------
+                    //UsuarioModificacion: document.getElementById("usuarioLog").textContent
+                }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.ok ? res.json() : null)
+                .then(res => {
+
+                    if (res.resp == 1) {
+
+                        cargarComponentAsist();
+
+                        swal('Bien!',
+                            res.mensaje,
+                            'success')
+                    } else {
+                        swal('Opps!',
+                            res.mensaje,
+                            'error'
+                        )
+                    }
+                }).catch(res => console.log("Algo paso"))
+            //console.log(IdColaborador.value);
+            //console.log(FechaHoraIngreso.value);
+            //console.log(FechaHoraSalida.value);
+            //console.log(TipoJornada.value);
+
+        }
+
+
+        //================================ LAMADAS A LOS MODALES FECTH ================================
+        // NOTA: trae los datos y levanta el modal
+        function llamarModalModCtrlAsist(idCtrlAist){
+
+            fetch("@Url.Content("~/ControlAsistencia/EditAttendanceControl")" , {
+                method: "POST",
+                body: JSON.stringify({
+                    IdAsistencia: idCtrlAist,
+                }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    IdAsistencia.value = res.idAistencia;
+
+                    //Se agrega cero porque la vista lo necesita
+                    HorasRegulares.value = res.horasRegulares;
+                    HoraDobles.value = res.horaDobles;
+                    HorasExtras.value = res.horasExtras;
+                    HorasExtrasDobles.value = res.horasExtrasDobles;
+
+                    const fechaHoraIngreso = new Date(res.fechaHoraIngreso);
+                    const fechaHoraSalida = new Date(res.fechaHoraSalida);
+                    let diferenciaHoras = calcularDiferenciaHoras(fechaHoraIngreso, fechaHoraSalida);
+
+                    EdithoraCalculada.innerHTML = vistaCalcularHoras(diferenciaHoras);
+                    EdithoraCalculada.value = diferenciaHoras;
+
+                   
+
+                    seleccionarItem(EditColaborador, res.idColaborador);
+                    seleccionarItem(EditipoJornada, res.tipoJornada);
+
+
+                    EditFechaHoraIngreso.value = res.fechaHoraIngreso.replace('.', ' ');
+                    EditFechaHoraSalida.value = res.fechaHoraSalida.replace('.', ' ');
+
+                    //recargarInputEdit(res.idColaborador, res.fechaHoraIngreso, res.fechaHoraSalida, res.tipoJornada);
+                    $("#editCtrlAsistencia").modal("show");// OCULTA EL MODAL
+
+                }).catch(res => console.log(res))
+            //TipoJornada.options.item(2).selected = 'selected';
+            //console.log(TipoJornada.options.item(2));
+
+        }
+
+        function recargarInputEdit(idColaborador, fechaHoraIngreso, fechaHoraSalida, tipoJornada) {
+            $("#selectCollaborators").load("_SelectCollaborators?idColaborador=" + idColaborador, function (res) {
+                $("#selectCollaborators").html(res);
+            })
+            // cargar tipo 1 -> Input Hora Ingreso, tipo 2 -> Carga fecha Salida
+            $("#contentFechaHoraIngreso").load("_DateTimeFecha?fecha=" + fechaHoraIngreso +"&"+ "tipo=1", function (res) {
+                $("#contentFechaHoraIngreso").html(res);
+            })
+            $("#contentFechaHoraSalida").load("_DateTimeFecha?fecha=" + fechaHoraSalida + "&" + "tipo=2", function (res) {
+                $("#contentFechaHoraSalida").html(res);
+            })
+
+            $("#contentTipoJornada").load("_SelectTypeWorkDay?tipoJornada=" + tipoJornada, function (res) {
+                $("#contentTipoJornada").html(res);
+            })
+            ////contentTipoJornada
+            //$("#contentTipoJornada").load("_SelectTypeWorkDay?tipoJornada=" + tipoJornada, function (res) {
+            //    $("#contentTipoJornada").html(res);
+            //})
+
+
+        }
+
+        function viewMore(id) {
+
+            fetch("@Url.Content("~/ControlAsistencia/viewMore")"+"?id="+id)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    console.log(res);
+
+                    document.getElementById("tdIdAsistencia").textContent = res.idAistencia;
+                    document.getElementById("tdIdColaborador").textContent = res.idColaborador;
+                    document.getElementById("tdFechaHoraIngreso").textContent = res.fechaHoraIngreso;
+                    document.getElementById("tdFechaHoraSalida").textContent = res.fechaHoraSalida;
+                    document.getElementById("tdTipoJornada").textContent = res.tipoJornada;
+                    document.getElementById("tdHorasRegulares").textContent = res.horasRegulares;
+                    document.getElementById("tdHorasExtras").textContent = res.horasExtras;
+                    document.getElementById("tdHoraDoble").textContent = res.horaDobles;
+                    document.getElementById("tdHorasExtrasDobles").textContent = res.horasExtrasDobles;
+                    document.getElementById("tdUsuarioCreacion").textContent = res.UsuarioCreacion;
+                    document.getElementById("tdUsuarioModificacion").textContent = res.UsuarioModificacion;
+                    document.getElementById("tdNomColaborador").textContent = res.nomColaborador;
+
+                    $("#viewMore").modal("show");// LEVANTAMOS EL MODAL
+                }).catch(res => console.log("Algo paso"))
+
+
+        }
+
+        //================================ INPUTS EVENT_LISTENER ================================
+        var primerVez = true;
+        FechaHoraIngreso.addEventListener("change", (e) => {
+            //VALIDAMOS EL CAMBIO
+            if (e.target.value.trim().length != null) formIsValid.FechaHoraIngreso = true;
+            else formIsValid.FechaHoraIngreso = false;
+
+            let diferenciaHoras = extraerHoras(e.target);// diferencia de horas y asigna valor al elemento horas calculadas
+            horaCalculada.innerHTML = vistaCalcularHoras(diferenciaHoras);
+            horaCalculada.value = diferenciaHoras.toString();
+
+        })
+        FechaHoraSalida.addEventListener("change", (e) => {
+            if (e.target.value.trim().length != null) formIsValid.FechaHoraSalida = true;
+            else formIsValid.FechaHoraSalida = false;
+
+            let diferenciaHoras = extraerHoras(e.target);// diferencia de horas y asigna valor al elemento horas calculadas
+            horaCalculada.innerHTML = vistaCalcularHoras(diferenciaHoras);
+            horaCalculada.value = diferenciaHoras.toString();
+
+        })
+        TipoJornada.addEventListener("change", (e) => {
+            if (e.target.value.trim().length > 0) formIsValid.TipoJornada = true;
+            else formIsValid.FechaHoraSalida = false;
+            console.log("Valor jornada: " + e.target.value);
+
+        })
+
+
+        EditFechaHoraIngreso.addEventListener("change", (e) => {
+            let diferenciaHoras = extraerHoras(e.target);// diferencia de horas y asigna valor al elemento horas calculadas
+            EdithoraCalculada.innerHTML = vistaCalcularHoras(diferenciaHoras);
+            EdithoraCalculada.value = diferenciaHoras.toString();
+        })
+
+        EditFechaHoraSalida.addEventListener("change", (e) => {
+            let diferenciaHoras = extraerHoras(e.target);// diferencia de horas y asigna valor al elemento horas calculadas
+            EdithoraCalculada.innerHTML = vistaCalcularHoras(diferenciaHoras);
+            EdithoraCalculada.value = diferenciaHoras.toString();
+        })
+
+        //================== VALIDACION DE INPUTS EN EL FORMULARIO ============================
+        formCrearCtrl.addEventListener("submit", (e) => {
+            e.preventDefault();
+            resultadoHorasTotal = parseFloat(horaR) + parseFloat(horaE) + parseFloat(horaD) + parseFloat(horaED);// - 0.0001
+
+            console.log("resultadoHorasTotal: " + resultadoHorasTotal.toFixed(2));
+            console.log("horaCalculada: " + parseFloat(horaCalculada.value).toFixed(2));
+
+            if (resultadoHorasTotal.toFixed(2) == parseFloat(horaCalculada.value).toFixed(2)) {//|| (resultadoHorasTotal - 0.0001) == horaCalculada.value
+
+                crearCtrlAsist();
+                formCrearCtrl.reset();
+                $("#agregarCtrlAsistencia").modal("hide");// OCULTA EL MODAL
+            } else {
+                swal('Opps!',
+                    "Horas calculadas deben ser igual a la suma de las horas regulares,extras,dobles y extra dobles",
+                    'warning'
+                )
+
+            }
+        })
+
+        formEditarCtrl.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            horaR = sacarValorHora(document.getElementById("horasRegulares"));
+            horaE = sacarValorHora(document.getElementById("horasExtras"));
+            horaD = sacarValorHora(document.getElementById("horasDobles"));
+            horaED = sacarValorHora(document.getElementById("horasExtraDobles"));
+
+
+            resultadoHorasTotal = parseFloat(horaR) + parseFloat(horaE) + parseFloat(horaD) + parseFloat(horaED);// - 0.0001
+
+            console.log("resultadoHorasTotal: " + resultadoHorasTotal.toFixed(2));
+            console.log("EdithoraCalculada: " + parseFloat(EdithoraCalculada.value).toFixed(2));
+
+            if (resultadoHorasTotal.toFixed(2) == parseFloat(EdithoraCalculada.value).toFixed(2)) {//|| (resultadoHorasTotal - 0.0001) == horaCalculada.value
+
+                editarCtrlAsist(IdAsistencia.value, EditColaborador.value, EditFechaHoraIngreso.value, EditFechaHoraSalida.value, EditipoJornada.value, horaR, horaE, horaD, horaED);
+                formEditarCtrl.reset();
+                $("#editCtrlAsistencia").modal("hide");// OCULTA EL MODAL
+            } else {
+                swal('Opps!',
+                    "Horas calculadas deben ser igual a la suma de las horas regulares,extras,dobles y extra dobles",
+                    'warning'
+                )
+
+            }
+
+        })
+
+
+        //================== OTROS(data_table JQuery) ============================
+        $(document).ready(function () {
+            $('#tColaboradores').DataTable();
+        });
+
+       
+    </script>
+
+}

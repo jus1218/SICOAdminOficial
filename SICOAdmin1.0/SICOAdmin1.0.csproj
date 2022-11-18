@@ -129,8 +129,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessController.cs" />
+    <Compile Include="Controllers\CollaboratorController.cs" />
     <Compile Include="Controllers\ConsecutivoController.cs" />
+    <Compile Include="Controllers\ControlAsistenciaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ParametersController.cs" />
+    <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
@@ -159,6 +163,7 @@
     <Compile Include="Models\COLABORADOR_ACCION_PERSONAL.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Collaborator\Collaborator.cs" />
     <Compile Include="Models\CONCEPTO.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -172,6 +177,7 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Consecutivo\Consecutivo.cs" />
+    <Compile Include="Models\ControlAsistencia\ControlAsistencia.cs" />
     <Compile Include="Models\CONTROL_ASISTENCIA.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -212,6 +218,7 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pagina.cs" />
+    <Compile Include="Models\Parameter\Parameter.cs" />
     <Compile Include="Models\PARAMETRO.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -221,6 +228,7 @@
     <Compile Include="Models\PARTIDA.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Payroll\Payroll.cs" />
     <Compile Include="Models\PERFIL.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -241,10 +249,13 @@
     <Compile Include="Models\PUESTO.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_C_BItacoraPuesto_Result.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_C_BuscarConsecutivo_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SP_C_BuscarNomina_Result.cs">
+    <Compile Include="Models\SP_C_BuscarControlAsistencia_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_C_BuscarPerfil_Result.cs">
@@ -262,10 +273,22 @@
     <Compile Include="Models\SP_C_MostrarAcciones_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_C_MostrarColaboradores_Result.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_C_MostrarConsecutivos_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_C_MostrarControlAsistencia_Result.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_C_MostrarParametros_Result.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_C_MostrarPerfil_Result.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_C_MostrarPuestos_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_C_MostrarUsuarios_Result.cs">

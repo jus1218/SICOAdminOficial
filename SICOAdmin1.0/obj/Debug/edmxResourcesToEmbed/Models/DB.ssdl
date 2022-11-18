@@ -322,7 +322,7 @@
     <Key>
       <PropertyRef Name="IdParametro" />
     </Key>
-    <Property Name="IdParametro" Type="int" Nullable="false" />
+    <Property Name="IdParametro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Mensualidad" Type="decimal" Precision="28" Scale="8" Nullable="false" />
     <Property Name="IdConsecRecibo" Type="int" Nullable="false" />
     <Property Name="InteresMora" Type="decimal" Precision="11" Scale="8" Nullable="false" />
@@ -331,8 +331,8 @@
     <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
     <Property Name="UsuarioCreacion" Type="varchar" MaxLength="70" Nullable="false" />
     <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
-    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" />
-    <Property Name="FechaModificacion" Type="datetime" />
+    <Property Name="UsuarioModificacion" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="PARENTESCO">
     <Key>
@@ -922,6 +922,12 @@
     <Parameter Name="idAccion" Type="int" Mode="In" />
     <Parameter Name="idPerfil" Type="int" Mode="In" />
   </Function>
+  <Function Name="f_convertHoraDecimal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+    <Parameter Name="cantHoras" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="f_convertHoraNormal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="time">
+    <Parameter Name="horaDB" Type="decimal" Mode="In" />
+  </Function>
   <Function Name="F_Decryptpass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
     <Parameter Name="password" Type="varchar" Mode="In" />
   </Function>
@@ -938,9 +944,6 @@
   </Function>
   <Function Name="F_LoginTMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
     <Parameter Name="UserName" Type="varchar" Mode="In" />
-  </Function>
-  <Function Name="F_MensajesConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-    <Parameter Name="numeroMessage" Type="smallint" Mode="In" />
   </Function>
   <Function Name="f_opcionesPerfilesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="usuario" Type="varchar" Mode="In" />
@@ -985,11 +988,15 @@
   <Function Name="SP_C_AuthorizeUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="SP_C_BItacoraPuesto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPuesto" Type="int" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+  </Function>
   <Function Name="SP_C_BuscarConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
   </Function>
-  <Function Name="SP_C_BuscarNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="idNomina" Type="int" Mode="In" />
+  <Function Name="SP_C_BuscarControlAsistencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idAsistencia" Type="int" Mode="In" />
   </Function>
   <Function Name="SP_C_BuscarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdPerfil" Type="int" Mode="In" />
@@ -998,10 +1005,23 @@
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
   </Function>
   <Function Name="SP_C_ConsecutivosActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="SP_C_MostarNominas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostarNominas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="nomina" Type="int" Mode="In" />
+  </Function>
   <Function Name="SP_C_MostrarAcciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarColaboradores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Opcion" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="SP_C_MostrarConsecutivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarControlAsistencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarParametros" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opc" Type="varchar" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarPuestos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_C_MostrarUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="opcion" Type="varchar" Mode="In" />
     <Parameter Name="usuario" Type="varchar" Mode="In" />
@@ -1045,12 +1065,23 @@
     <Parameter Name="frecuencia" Type="varchar" Mode="In" />
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
     <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
-    <Parameter Name="fechaModificacion" Type="datetime" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+    <Parameter Name="mensage" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ActualizarParametro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idParametro" Type="int" Mode="In" />
+    <Parameter Name="mensualidad" Type="decimal" Mode="In" />
+    <Parameter Name="idConseRecibo" Type="int" Mode="In" />
+    <Parameter Name="InteresMora" Type="decimal" Mode="In" />
+    <Parameter Name="tipoDocumentoCobro" Type="varchar" Mode="In" />
+    <Parameter Name="condicionPago" Type="int" Mode="In" />
+    <Parameter Name="estado" Type="varchar" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="tinyint" Mode="InOut" />
+    <Parameter Name="mensaje" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="SP_P_ActualizarProximoValorConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
-    <Parameter Name="valorActual" Type="varchar" Mode="In" />
-    <Parameter Name="accion" Type="smallint" Mode="In" />
   </Function>
   <Function Name="SP_P_AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
@@ -1071,6 +1102,11 @@
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
     <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="SP_P_CambiarEstadoColaborador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="SP_P_CambioContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
     <Parameter Name="ContrasenaActual" Type="varchar" Mode="In" />
@@ -1084,6 +1120,36 @@
     <Parameter Name="tipo" Type="varchar" Mode="In" />
     <Parameter Name="usuarioCreacionModificacion" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="SP_P_CrearColaborador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="genero" Type="varchar" Mode="In" />
+    <Parameter Name="activo" Type="bit" Mode="In" />
+    <Parameter Name="estado" Type="varchar" Mode="In" />
+    <Parameter Name="direccion" Type="text" Mode="In" />
+    <Parameter Name="telefono1" Type="varchar" Mode="In" />
+    <Parameter Name="telefono2" Type="varchar" Mode="In" />
+    <Parameter Name="identificacion" Type="varchar" Mode="In" />
+    <Parameter Name="nacionalidad" Type="varchar" Mode="In" />
+    <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+    <Parameter Name="fechaIngreso" Type="date" Mode="In" />
+    <Parameter Name="fechaSalida" Type="date" Mode="In" />
+    <Parameter Name="idNomina" Type="int" Mode="In" />
+    <Parameter Name="estadoCivil" Type="varchar" Mode="In" />
+    <Parameter Name="saldoVacaciones" Type="decimal" Mode="In" />
+    <Parameter Name="ultCalculoVacaciones" Type="datetime" Mode="In" />
+    <Parameter Name="idPuesto" Type="int" Mode="In" />
+    <Parameter Name="formaPago" Type="varchar" Mode="In" />
+    <Parameter Name="cuentaBancaria" Type="varchar" Mode="In" />
+    <Parameter Name="banco" Type="varchar" Mode="In" />
+    <Parameter Name="correoElectronico" Type="varchar" Mode="In" />
+    <Parameter Name="contactoEmergencia" Type="varchar" Mode="In" />
+    <Parameter Name="telefonoContacto" Type="varchar" Mode="In" />
+    <Parameter Name="salarioReferencia" Type="decimal" Mode="In" />
+    <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="SP_P_CrearConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="alias" Type="varchar" Mode="In" />
     <Parameter Name="mascara" Type="varchar" Mode="In" />
@@ -1093,11 +1159,36 @@
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
     <Parameter Name="mensage" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="SP_P_CrearControlAsistencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdColaborador" Type="int" Mode="In" />
+    <Parameter Name="FechaHoraIngreso" Type="datetime" Mode="In" />
+    <Parameter Name="FechaHoraSalida" Type="datetime" Mode="In" />
+    <Parameter Name="TipoJornada" Type="varchar" Mode="In" />
+    <Parameter Name="HorasRegulares" Type="decimal" Mode="In" />
+    <Parameter Name="HorasExtras" Type="decimal" Mode="In" />
+    <Parameter Name="HoraDobles" Type="decimal" Mode="In" />
+    <Parameter Name="HorasExtrasDobles" Type="decimal" Mode="In" />
+    <Parameter Name="UsuarioCreaModif" Type="varchar" Mode="In" />
+    <Parameter Name="msj" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="SP_P_CrearNomina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="descripcion" Type="varchar" Mode="In" />
     <Parameter Name="frecuencia" Type="varchar" Mode="In" />
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
     <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+    <Parameter Name="mensage" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_CrearParametro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mensualidad" Type="decimal" Mode="In" />
+    <Parameter Name="idConseRecibo" Type="int" Mode="In" />
+    <Parameter Name="InteresMora" Type="decimal" Mode="In" />
+    <Parameter Name="tipoDocumentoCobro" Type="varchar" Mode="In" />
+    <Parameter Name="condicionPago" Type="int" Mode="In" />
+    <Parameter Name="estado" Type="varchar" Mode="In" />
+    <Parameter Name="usuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="tinyint" Mode="InOut" />
+    <Parameter Name="mensaje" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="SP_P_CrearParentesco" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idAccion" Type="int" Mode="In" />
@@ -1110,6 +1201,18 @@
     <Parameter Name="Activo" Type="bit" Mode="In" />
     <Parameter Name="UsuarioCreacion" Type="varchar" Mode="In" />
     <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_CrearPuesto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="SalarioMinimo" Type="decimal" Mode="In" />
+    <Parameter Name="SalarioPromedio" Type="decimal" Mode="In" />
+    <Parameter Name="SalarioMaximo" Type="decimal" Mode="In" />
+    <Parameter Name="CodigoCCSS" Type="varchar" Mode="In" />
+    <Parameter Name="CodigoINS" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioCreacion" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
   </Function>
   <Function Name="SP_P_CrearUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
@@ -1150,12 +1253,62 @@
     <Parameter Name="tipo" Type="varchar" Mode="In" />
     <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="SP_P_ModificarColaborador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+    <Parameter Name="estado" Type="varchar" Mode="In" />
+    <Parameter Name="direccion" Type="text" Mode="In" />
+    <Parameter Name="telefono1" Type="varchar" Mode="In" />
+    <Parameter Name="telefono2" Type="varchar" Mode="In" />
+    <Parameter Name="nacionalidad" Type="varchar" Mode="In" />
+    <Parameter Name="fechaIngreso" Type="date" Mode="In" />
+    <Parameter Name="fechaSalida" Type="date" Mode="In" />
+    <Parameter Name="idNomina" Type="int" Mode="In" />
+    <Parameter Name="estadoCivil" Type="varchar" Mode="In" />
+    <Parameter Name="saldoVacaciones" Type="decimal" Mode="In" />
+    <Parameter Name="ultCalculoVacaciones" Type="datetime" Mode="In" />
+    <Parameter Name="idPuesto" Type="int" Mode="In" />
+    <Parameter Name="formaPago" Type="varchar" Mode="In" />
+    <Parameter Name="cuentaBancaria" Type="varchar" Mode="In" />
+    <Parameter Name="banco" Type="varchar" Mode="In" />
+    <Parameter Name="correoElectronico" Type="varchar" Mode="In" />
+    <Parameter Name="contactoEmergencia" Type="varchar" Mode="In" />
+    <Parameter Name="telefonoContacto" Type="varchar" Mode="In" />
+    <Parameter Name="salarioReferencia" Type="decimal" Mode="In" />
+    <Parameter Name="usuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ModificarControlAsistencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdAsistencia" Type="int" Mode="In" />
+    <Parameter Name="IdColaborador" Type="int" Mode="In" />
+    <Parameter Name="FechaHoraIngreso" Type="datetime" Mode="In" />
+    <Parameter Name="FechaHoraSalida" Type="datetime" Mode="In" />
+    <Parameter Name="TipoJornada" Type="varchar" Mode="In" />
+    <Parameter Name="HorasRegulares" Type="decimal" Mode="In" />
+    <Parameter Name="HorasExtras" Type="decimal" Mode="In" />
+    <Parameter Name="HoraDobles" Type="decimal" Mode="In" />
+    <Parameter Name="HorasExtrasDobles" Type="decimal" Mode="In" />
+    <Parameter Name="UsuarioCreaModif" Type="varchar" Mode="In" />
+    <Parameter Name="msj" Type="varchar" Mode="InOut" />
+  </Function>
   <Function Name="SP_P_ModificarEstadoConsecutivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idConsecutivo" Type="int" Mode="In" />
     <Parameter Name="resultado" Type="smallint" Mode="InOut" />
   </Function>
+  <Function Name="SP_P_ModificarEstadoParametro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idParametro" Type="int" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
   <Function Name="SP_P_ModificarEstadoPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdPerfil" Type="int" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ModificarEstadosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Opcion" Type="varchar" Mode="In" />
+    <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+    <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="SP_P_ModificarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdPerfil" Type="int" Mode="In" />
@@ -1163,6 +1316,18 @@
     <Parameter Name="Descripcion" Type="varchar" Mode="In" />
     <Parameter Name="Activo" Type="bit" Mode="In" />
     <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
+  </Function>
+  <Function Name="SP_P_ModificarPuesto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPuesto" Type="int" Mode="In" />
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="SalarioMinimo" Type="decimal" Mode="In" />
+    <Parameter Name="SalarioPromedio" Type="decimal" Mode="In" />
+    <Parameter Name="SalarioMaximo" Type="decimal" Mode="In" />
+    <Parameter Name="CodigoCCSS" Type="varchar" Mode="In" />
+    <Parameter Name="CodigoINS" Type="varchar" Mode="In" />
+    <Parameter Name="UsuarioModificacion" Type="varchar" Mode="In" />
+    <Parameter Name="resultado" Type="smallint" Mode="InOut" />
   </Function>
   <Function Name="SP_P_ModificarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />

@@ -1,0 +1,125 @@
+﻿@model List<SelectListItem>
+
+
+<!-- Modal edit -->
+<div class="modal fade" id="editCtrlAsistencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Editar Control Asistencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row d-flex justify-content-center">
+
+                    <div class="col-6">
+
+                        <form id="formEditarCtrl"  class="was-validated">
+
+                            <div class="form-group mt-2">
+
+                                <label for="IdAsistencia">Id Asistencia:</label>
+                                <input type="text" id="IdAsistencia" name="IdAsistencia" disabled class="form-control" />
+                            </div>
+
+                          
+                            <div class="form-group mt-4" id="selectCollaborators">
+
+
+                                <label for="tipoJornada"># Colaborador:</label>
+                                <select required name="EditColaborador" class="custom-select" id="EditColaborador">
+                                    <option disabled value="-1">Seleccione un colaborador...</option>
+                                    @foreach(var col in Model)
+                                    {
+                                        <option value="@col.Value">@col.Text</option>
+
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="form-group" id="contentTipoJornada">
+
+                                <label for="EditipoJornada">Tipo jornada:</label>
+                                <select required name="EditipoJornada" class="custom-select" id="EditipoJornada">
+                                    <option disabled value="">Seleccione una jornada...</option>
+                                    <option value="DR">Diurna</option>
+                                    <option value="NT">Nocturna</option>
+                                    <option value="MT">Mixto</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-4" id="contentFechaHoraIngreso">
+
+                                <label for="EditFechaHoraIngreso">Fecha y hora ingreso:</label>
+                                <input type="datetime-local" required id="EditFechaHoraIngreso" name="EditFechaHoraIngreso" class="form-control" />
+
+                            </div>
+
+                            <div class="form-group mt-4" id="contentFechaHoraSalida">
+
+                                <label for="EditFechaHoraSalida">Fecha y hora salida:</label>
+                                <input type="datetime-local" required id="EditFechaHoraSalida" name="EditFechaHoraSalida" class="form-control" />
+                            </div>
+
+                            <div class="form-group">horas calculadas: <span id="EdithoraCalculada">0</span></div>
+                            @*@Html.Partial("_inputs")*@
+
+                            <!---->
+                            <div class="form-group">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="horasRegulares">Horas regulares:</label>
+                                        <input type="time" required id="horasRegulares" name="horasRegulares" value="" onchange="TimeInput(event)" max="12:00:00" min="00:00:00" class="custom-control imput-time" />
+
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="horasExtras">Horas extras:</label>
+                                        <input type="time" required name="horasExtras" id="horasExtras" onchange="TimeInput(event)" class="custom-control imput-time" />
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="horasDobles">Horas dobles:</label>
+                                        <input type="time" required name="horasDobles" id="horasDobles" onchange="TimeInput(event)" class="custom-control imput-time" />
+                                    </div>
+                                    <div class="col">
+                                        <label for="horasExtraDobles">Horas extras dobles:</label>
+                                        <input type="time" required name="horasExtraDobles" id="horasExtraDobles" onchange="TimeInput(event)" class="custom-control imput-time" />
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <input type="submit" class="btn btn-success" value="Editar" />
+                                <!-- data-dismiss="modal"-->
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

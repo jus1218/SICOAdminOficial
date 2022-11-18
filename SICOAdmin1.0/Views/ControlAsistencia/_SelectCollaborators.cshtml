@@ -1,0 +1,14 @@
+﻿@model List<SelectListItem>
+
+<label for="IdColaborador"># Colaborador:</label>
+@Html.DropDownList("Colaboradores", Model, "Seleccione un colaborador", new
+{
+    id = "IdColaborador",
+    @class = "custom-select ",
+    AutoPostBack = "true",
+    OnSelectedIndexChanged = "Selection_Change",
+    required = true
+
+})
+
+<!--select-item border-light-->

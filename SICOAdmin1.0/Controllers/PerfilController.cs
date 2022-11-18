@@ -1,6 +1,7 @@
 ﻿using SICOAdmin1._0.Filters;
 using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Perfil;
+using SICOAdmin1._0.Models.User;
 using SICOAdmin1._0.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace SICOAdmin1._0.Controllers
         // GET: Perfil
         /*Muestra la Tabla*/
         #region Mostrar
-        [AuthorizeUser(pAccion: 6)]// cambiar
+        //[AuthorizeUser(pAccion: 10)]// cambiar
+        [AuthorizeUser(pAccion: 13)]
         public ActionResult Index()
         {
             List<SP_C_MostrarPerfil_Result> lst = null;
@@ -68,7 +70,7 @@ namespace SICOAdmin1._0.Controllers
                 {
                     using (var db = new SICOAdminEntities())
                     {
-                        int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, model.UsuarioCreacion, model.UsuarioModificacion);
+                        //int num = db.SP_P_CrearPerfil(model.Nombre, model.Descripcion, model.Activo, model.UsuarioCreacion, model.UsuarioModificacion);
                     }
 
                     return Redirect(Url.Content("~/Perfil/Index"));
@@ -88,6 +90,7 @@ namespace SICOAdmin1._0.Controllers
         /*---------------------------------------------------------------*/
         /*------------------Procedimiento SP_P_Editar--------------------*/
         /*---------------------------------------------------------------*/
+        [AuthorizeUser(pAccion: 12)]
         public ActionResult Editar(int Id)
         {
             List<SP_P_UsuariosDelPerfil_Result> lstUsuariosPerfil = new List<SP_P_UsuariosDelPerfil_Result>();
@@ -139,7 +142,7 @@ namespace SICOAdmin1._0.Controllers
             {
                 using (SICOAdminEntities db = new SICOAdminEntities())
                 {
-                    db.SP_P_ModificarEstadoPerfil(Id);
+                    //db.SP_P_ModificarEstadoPerfil(Id);
                     db.SaveChanges();
                 }
                 return Content("1");
@@ -192,7 +195,7 @@ namespace SICOAdmin1._0.Controllers
         {
             int resp = 0;
             using (var db = new SICOAdminEntities()){
-                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, obj.UsuarioCreacion);
+                resp = db.SP_P_CrearUsuarioPerfil(obj.Usuario, obj.IdPerfil, ((User)Session["User"]).userName);
             }
 
             return Json(resp, JsonRequestBehavior.AllowGet);
@@ -252,8 +255,11 @@ namespace SICOAdmin1._0.Controllers
                 }).ToList();
         }
 
-        public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil, string UsuCreacion)         /*guardo aqui*/
+        [AuthorizeUser(pAccion: 31)]
+        public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil)         /*guardo aqui*/
         {
+
+            string UsuCreacion = ((User)Session["User"]).userName;
             if (checkedIds == null)
             {
                 checkedIds = new List<int>();
