@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace SICOAdmin1._0.Models.ViewModels
+namespace SICOAdmin1._0.Models.Perfil
 {
     public class PerfilViewModel
     {
@@ -25,11 +25,11 @@ namespace SICOAdmin1._0.Models.ViewModels
             [Display(Name = "Activo")]
             public bool Activo { get; set; }
 
-            [Required]
-            [Display(Name = "Usuario Modificacion")]
-            [StringLength(70)]
+            public string UsuarioCreacion { get; set; }
+            public DateTime FechaCreacion { get; set; }
             public string UsuarioModificacion { get; set; }
+            public DateTime FechaModificacion { get; set; }
 
-        
+
     }
 }

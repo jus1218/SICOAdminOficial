@@ -1,0 +1,85 @@
+﻿@model List<SICOAdmin1._0.Models.Perfil.PerfilViewModel>
+@using SICOAdmin1._0.Models.Perfil
+@{
+    List<PerfilViewModel> lstMode = (List<PerfilViewModel>)ViewBag.Perfil;
+    var objPerfil = new PerfilViewModel();
+}
+
+<table id="tbPerfiles" class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        @foreach (var perfil in lstMode)
+        {
+            <tr>
+                <td>@perfil.IdPerfil</td>
+                <td>@perfil.Nombre</td>
+                <td>@perfil.Descripcion</td>
+                @if (@perfil.Activo == false)
+                {
+                    <td>
+                        Inactivo
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Activo
+                    </td>
+                }
+            <td>
+
+                <button id="Editar"
+                        type="button"
+                        value="Editar"
+                        class="btn btn-warning fa fa-pencil btn-sm"
+                        onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil})'">
+                    Editar
+                </button>
+
+
+
+                <button id="btnBitacora" onclick="jsmostrarBitacora(@perfil.IdPerfil)" class="btn btn-info fa fa-book btn-sm" data-toggle="modal" data-target="#ModalBitacora"> Bitácora </button>
+                
+
+
+                @if (@perfil.Activo == false)
+                {
+                    <button id="btnActivar"
+                            class="btn btn-primary fa fa-unlock btn-sm"
+                            style="width: 23%;"
+                            type="button"
+                            onclick="jsModificarEstado(@perfil.IdPerfil)">
+                        Activar
+                    </button>
+
+                }
+                else
+                {
+
+                    <button id="btnDesactivar"
+                            class="btn btn-danger fa fa-lock btn-sm"
+                            style="width: 23%;"
+                            onclick="jsModificarEstado(@perfil.IdPerfil)">
+                        Desactivar
+                    </button>
+
+                }
+
+
+
+            </td>
+           </tr>
+
+         }
+
+    </tbody>
+</table>
