@@ -8,12 +8,14 @@ using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Parameter;
 using SICOAdmin1._0.Models.User;
 using System.Globalization;
+using SICOAdmin1._0.Filters;
 
 namespace SICOAdmin1._0.Controllers
 {
     public class ParametersController : Controller
     {
         // GET: Parameters
+        [AuthorizeUser(pAccion: 22)]
         public ActionResult Index()
         {
 
@@ -42,7 +44,9 @@ namespace SICOAdmin1._0.Controllers
             ViewBag.Parameters = lstParameters;
             return View();
         }
+        [AuthorizeUser(pAccion: 20)]
         [HttpPost]
+
         public ActionResult Add(Parameter pModel)
         {
             int Response = 0;
@@ -84,6 +88,8 @@ namespace SICOAdmin1._0.Controllers
                 return RedirectToAction(Url.Content("/Index"));
             }
         }
+        [AuthorizeUser(pAccion: 21)]
+        [HttpPost]
         public ActionResult Update(Parameter pModel) {
             int Response = 0;
             string Message = "";
