@@ -17,7 +17,7 @@ namespace SICOAdmin1._0.Controllers
         // GET: Perfil
         /*Muestra la Tabla*/
         #region Mostrar
-        //[AuthorizeUser(pAccion: 10)]// cambiar
+        
         [AuthorizeUser(pAccion: 13)]
         public ActionResult Index()
         {
@@ -258,29 +258,49 @@ namespace SICOAdmin1._0.Controllers
         [AuthorizeUser(pAccion: 31)]
         public JsonResult SaveCheckedNodes(List<int> checkedIds, int idPerfil)         /*guardo aqui*/
         {
+            bool seLogro = false;
+            string idCheck = "";
 
             string UsuCreacion = ((User)Session["User"]).userName;
             if (checkedIds == null)
             {
                 checkedIds = new List<int>();
             }
-            using (var context = new SICOAdminEntities())
-            {
-                var Arbols = context.SP_P_DibujarArbol(idPerfil).ToList();
-                context.SP_P_EliminarAll_AccionPerfil(idPerfil);
-                foreach (var arbol in Arbols)
-                {
-                    arbol.check = checkedIds.Contains(arbol.IdAccion);
-                    if (arbol.check == true)
-                    {
-                        context.SP_P_GuardarCheck(arbol.IdAccion, idPerfil, UsuCreacion);
 
+            try
+            {
+                using (var context = new SICOAdminEntities())
+                {
+                    var Arbols = context.SP_P_DibujarArbol(idPerfil).ToList();
+                    context.SP_P_EliminarAll_AccionPerfil(idPerfil);
+                    foreach (var arbol in Arbols)
+                    {
+                        arbol.check = checkedIds.Contains(arbol.IdAccion);
+                        if (arbol.check == true)
+                        {
+                            idCheck += arbol.IdAccion.ToString()+",";
+                            //context.SP_P_GuardarCheck(arbol.IdAccion, idPerfil, UsuCreacion);
+
+                        }
                     }
+
+
+                    idCheck = idCheck.Remove(idCheck.Length - 1);//Quitamos el ultimo caracter  ","
+                    context.SP_P_GuardarCheck(idCheck, idPerfil, UsuCreacion);
+
+
                 }
+                seLogro = true;
 
             }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
 
-            return this.Json(true);
+
+
+
+            return this.Json(seLogro);
         }
 
         #endregion

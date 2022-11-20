@@ -1413,7 +1413,7 @@
       <Parameter Name="idPerfil" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="SP_P_GuardarCheck">
-      <Parameter Name="idAccion" Mode="In" Type="Int32" />
+      <Parameter Name="idAccion" Mode="In" Type="String" />
       <Parameter Name="idPerfil" Mode="In" Type="Int32" />
       <Parameter Name="usuCreacion" Mode="In" Type="String" />
     </FunctionImport>

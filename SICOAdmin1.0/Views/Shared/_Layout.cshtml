@@ -1,4 +1,4 @@
-﻿
+
 @using SICOAdmin1._0.Models.User
 @{
     User UserLog = (User)Session["User"];
@@ -105,15 +105,16 @@
 
                                         @if (@lstActions.Contains(25))
                                         {
-                                            <li><a href="@Url.Action("Index", "ControlAsistencia")">Admin. Control Asistencia</a></li>
+                                            <li><a href="@Url.Action("Index", "ControlAsistencia")">Admin. Control Asistencias</a></li>
                                         }
                                         @if (@lstActions.Contains(29))
                                         {
-                                            <li><a href="@Url.Action("Index", "Payroll")">Admin. Nomina</a></li>
+
+                                            <li><a href="@Url.Action("Index", "Payroll")">Admin. Nominas</a></li>
                                         }
                                         @if (@lstActions.Contains(19))
                                         {
-                                            <li><a href="@Url.Action("Index", "Consecutivo")">Admin. Consecutivo</a></li>
+                                            <li><a href="@Url.Action("Index", "Consecutivo")">Admin. Consecutivos</a></li>
                                         }
                                     </ul>
                                 </li>
@@ -136,12 +137,14 @@
 
                         <div class=" d-flex justify-content-center">
 
+
                             @if (@lstActions.Contains(22))
                             {
                                 <a href="@Url.Action("Index", "Parameters")" data-toggle="tooltip" data-placement="top" title="Parámetros">
                                     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 </a>
                             }
+
 
                             <a data-toggle="tooltip" data-placement="top" title="Pantalla completa">
                                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="launchFullScreen(document.documentElement);cancelFullScreen();"></span>
