@@ -32,7 +32,7 @@
                     <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
                 </button>
             }
-            </div>
+        </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
             <div class="input-group mb-2">
@@ -61,7 +61,7 @@
                     <th scope="col">Correo electrónico</th>
                     <th scope="col">Tipo</th>
                     @*<th scope="col">Activo</th>
-                    <th scope="col">Bloqueado</th>*@
+                        <th scope="col">Bloqueado</th>*@
                     <th scope="col">Dias cambio contraseña</th>
                     <th scope="col">Intentos fallidos permitidos</th>
                     <th scope="col">Acciones</th>
@@ -76,30 +76,42 @@
                         <td>@user.email</td>
                         <td>@user.type</td>
                         @*<td><input type="checkbox" checked="@user.active" disabled="disabled" /></td>
-                        <td><input type="checkbox" checked="@user.locked" disabled="disabled" /></td>*@
+                            <td><input type="checkbox" checked="@user.locked" disabled="disabled" /></td>*@
                         <td>@user.daysChangePassword</td>
                         <td>@user.failesAttempts</td>
                         <td>
-                            <button onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.userName })'" class="btn btn-warning"><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Editar</button>
-                            <button id="btnBitacora" onclick="jsmostrarBitacora('@user.userName')" class="btn btn-info" data-toggle="modal" data-target="#modalBitacora"><i class="fa fa-book mr-1" aria-hidden="true"></i> Bitácora</button>
 
-                            @if (user.active)
-                            {
-                                <button id="btnDesactivar" class="btn btn-danger" onclick="jsModificarEstado('@user.userName', 'Activ')"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Desactivar</button>
-                            }
-                            else
-                            {
-                                <button id="btnActivar" class="btn btn-success" onclick="jsModificarEstado('@user.userName', 'Activ')"><i class="fa fa-unlock mr-1" aria-hidden="true"></i> Activar</button>
-                            }
+                            <div class="row ml-2 mr-2">
+                                @if (@lstActions.Contains(9))
+                                {
+                                    <button onclick="document.location.href = '@Url.Action("Edit","User",new { userName = user.userName })'" class="btn btn-warning col"><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Editar</button>
+                                }
+                                <button id="btnBitacora" onclick="jsmostrarBitacora('@user.userName')" class="btn btn-info col" data-toggle="modal" data-target="#modalBitacora"><i class="fa fa-book mr-1" aria-hidden="true"></i> Bitácora</button>
 
-                            @if (user.locked)
-                            {
-                                <button id="btnDesbloquear" class="btn btn-success" onclick="jsModificarEstado('@user.userName', 'lock')"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Desbloquear</button>
-                            }
-                            else
-                            {
-                                <button id="btnBloquear" class="btn btn-danger" onclick="jsModificarEstado('@user.userName', 'lock')"><i class="fa fa-unlock mr-1" aria-hidden="true"></i> Bloquear</button>
-                            }
+                            
+                            </div>
+
+                            <div class="row ml-2 mr-2">
+
+                                @if (user.active)
+                                {
+                                    <button id="btnDesactivar" class="btn btn-danger col" onclick="jsModificarEstado('@user.userName', 'Activ')"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Desactivar</button>
+                                }
+                                else
+                                {
+                                    <button id="btnActivar" class="btn btn-success col" onclick="jsModificarEstado('@user.userName', 'Activ')"><i class="fa fa-unlock mr-1" aria-hidden="true"></i> Activar</button>
+                                }
+                                @if (user.locked)
+                                {
+                                    <button id="btnDesbloquear" class="btn btn-success col" onclick="jsModificarEstado('@user.userName', 'lock')"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Desbloquear</button>
+                                }
+                                else
+                                {
+                                    <button id="btnBloquear" class="btn btn-danger col" onclick="jsModificarEstado('@user.userName', 'lock')"><i class="fa fa-unlock mr-1" aria-hidden="true"></i> Bloquear</button>
+                                }
+                            </div>
+
+ 
                         </td>
                     </tr>
                 }
