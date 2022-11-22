@@ -21,10 +21,5 @@ namespace SICOAdmin1._0.Models
         public System.DateTime FechaCreacion { get; set; }
         public string UsuarioModificacion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
-
-        public static implicit operator SP_C_MostrarPerfil_Result(SP_C_MostrarPuestos_Result v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

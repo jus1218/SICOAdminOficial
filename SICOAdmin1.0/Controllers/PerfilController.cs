@@ -3,7 +3,6 @@ using SICOAdmin1._0.Models;
 using SICOAdmin1._0.Models.Perfil;
 using SICOAdmin1._0.Models.User;
 
-using SICOAdmin1._0.Models.ViewModels;
 
 using System;
 using System.Collections.Generic;
@@ -363,12 +362,15 @@ namespace SICOAdmin1._0.Controllers
 
                 
             }
+
+            DateTime a = (DateTime)model.FechaModificacion;
+
             var objP = new
             {
                model.UsuarioCreacion,
                FechaCreacion = model.FechaCreacion.ToString("dd / MM / yyyy H: mm:ss"),
                model.UsuarioModificacion,
-               FechaModificacion = model.FechaModificacion.ToString("dd / MM / yyyy H: mm:ss"),
+               FechaModificacion = a.ToString("dd / MM / yyyy H: mm:ss"),
 
              };
 

@@ -212,9 +212,17 @@ namespace SICOAdmin1._0.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_C_MostrarParametros_Result>("SP_C_MostrarParametros", opcParameter, idParameter);
         }
     
-        public virtual ObjectResult<SP_C_MostrarPerfil_Result> SP_C_MostrarPerfil()
+        public virtual ObjectResult<SP_C_MostrarPerfil_Result> SP_C_MostrarPerfil(string opcion, Nullable<int> id)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_C_MostrarPerfil_Result>("SP_C_MostrarPerfil");
+            var opcionParameter = opcion != null ?
+                new ObjectParameter("opcion", opcion) :
+                new ObjectParameter("opcion", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_C_MostrarPerfil_Result>("SP_C_MostrarPerfil", opcionParameter, idParameter);
         }
     
         public virtual ObjectResult<SP_C_MostrarPuestos_Result> SP_C_MostrarPuestos()

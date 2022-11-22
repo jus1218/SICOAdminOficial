@@ -1020,7 +1020,10 @@
     <Parameter Name="opc" Type="varchar" Mode="In" />
     <Parameter Name="id" Type="int" Mode="In" />
   </Function>
-  <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <Function Name="SP_C_MostrarPuestos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_C_MostrarUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="opcion" Type="varchar" Mode="In" />
