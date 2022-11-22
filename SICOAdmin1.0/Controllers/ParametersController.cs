@@ -21,7 +21,8 @@ namespace SICOAdmin1._0.Controllers
 
             List<SP_C_MostrarParametros_Result> lst = null;
             List<Parameter> lstParameters = new List<Parameter>();
-            Parameter parameter;
+            List<Parameter> lstParametersBit = new List<Parameter>();
+            Parameter parameter = new Parameter();
             using (var db = new SICOAdminEntities())
             {
                 lst = db.SP_C_MostrarParametros("tod", 0).ToList();
@@ -41,6 +42,9 @@ namespace SICOAdmin1._0.Controllers
 
                 lstParameters.Add(parameter);
             }
+            //lstParametersBit.Add(parameter);
+            //ViewBag.LogParameters = lstParameters;
+            ViewBag.LogParameters = lstParametersBit;
             ViewBag.Parameters = lstParameters;
             return View();
         }
@@ -123,6 +127,50 @@ namespace SICOAdmin1._0.Controllers
                             
         }
 
+
+        public JsonResult showLog(int idParam)
+        {
+            CultureInfo culture = new CultureInfo("en-US");
+            Parameter param = GetParameter(idParam);
+            List<TableModelParameter> lstParameters = new List<TableModelParameter>();
+            lstParameters = GetParameters(idParam);
+           
+            ViewBag.LogParameters = lstParameters;
+                
+            var obj = new { IdParametro = param.IdParameter, UsuarioCreacion = param.UserCreacion };
+            
+            return Json(lstParameters, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        public List<TableModelParameter> GetParameters(int idParam)
+        {
+            //pAction solo recibe tod, BIT o BITA(Bitacora)
+            List<SP_C_MostrarAuditParametro_Result> lst = null;
+            List<TableModelParameter> lstParameters = new List<TableModelParameter>();
+            TableModelParameter parameter;
+            using (var db = new SICOAdminEntities())
+            {
+                lst = db.SP_C_MostrarAuditParametro(idParam).ToList();
+            }         
+            foreach (var e in lst)
+            {
+
+                parameter = new TableModelParameter();
+                parameter.AccionRealizada = e.AccionRealizada;
+                parameter.IdParameter = e.IdParametro;
+                parameter.UserCreacion = e.UsuarioCreacion;
+                parameter.DateCreacion = e.FechaCreacion.ToString("dd/MM/yyyy H:mm:ss");
+                parameter.DateModification =e.FechaModificacion.ToString("dd/MM/yyyy H:mm:ss");
+                parameter.UserModification = e.UsuarioModificacion;
+
+                lstParameters.Add(parameter);
+            }
+            //ViewBag.LogParameters;
+
+            return lstParameters;
+        }
         public JsonResult showData(int idParam)
         {
             CultureInfo culture = new CultureInfo("en-US");
