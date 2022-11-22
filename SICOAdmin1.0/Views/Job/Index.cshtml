@@ -1,0 +1,131 @@
+﻿
+@{
+    var lstJobs = (List<SICOAdmin1._0.Models.Job>)TempData["lstJobs"];
+}
+@section styles{
+
+    <style>
+
+        .th {
+            text-align: center;
+        }
+    </style>
+
+}
+<div class="container margin-container p-4 glass">
+    <div class="row fila">
+        <!--TEXTO-->
+        <div class="col-xl-2 col-md-3 d-flex justify-content-center">
+            <h3 class="mt-0">Puesto</h3>
+        </div>
+        <!--BOTON-->
+        <div class="col-xl-2 col-md-2 mb-3">
+            <button type="button" class="fa fa-plus-circle btn btn-primary col-12" data-toggle="modal" data-target="#Modal">
+                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                Agregar
+            </button>
+        </div>
+        <!--Barra busqueda-->
+        <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
+            <div class="input-group mb-2">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Buscar..."
+                       aria-label="Buscar..."
+                       aria-describedby="button-search"
+                       id="buscar" />
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        disabled="disabled"
+                        id="button-search">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class=" fila   scrol-tablex" id="tableAttendanceControl">
+        @Html.Partial("_TableJob", lstJobs)
+    </div>
+</div>
+
+@Html.Partial("_Nuevo")
+@*@Html.Partial("_Editar")*@
+
+@*@section scripts{
+    <script type="text/javascript">
+        console.log('@TempData["Message"]');
+        console.log('@TempData["Message"]');
+        @if (TempData["Resultado"] != null) {
+
+
+            if (TempData["Resultado"].ToString() == "2")
+            {
+                 <text>
+                    $(document).ready(function () {
+                        swal({
+                            title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 2000, showConfirmButton: false });
+                        })
+
+                </text>
+            }
+            else {
+                         <text>
+                    $(document).ready(function () {
+                        swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 2000, showConfirmButton: false});
+                        })
+
+                </text>
+
+            }
+
+
+
+         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#buscar").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tbPuesto tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        /*Verificacion del campo promedio*/
+        $(document).ready(function () {
+            $("#Guardar").click(function () {
+                var salMin = $("#SalrioMinimo").val();
+                var salPro = $("#SalarioPromedio").val();
+                var salMax = $("#SalarioMaximo").val();
+                if (salPro <= salMin) {
+                    $("#mesaje1").fadeIn();
+                    return false;
+                } else {
+                    $("#mensaje1").fadeOut();
+                    if (salPro >= salMax) {
+                        $("#mesaje1").fadeIn();
+                        return false;
+                    } else {
+                        $("#mensaje1").fadeOut();
+                    }
+                }
+            })
+        })
+
+
+
+        //================================ FUNCIONES ================================
+        function cargarComponentAsist() {
+            $("#tableAttendanceControl").load("_TableAttendanceControl", function (res) {
+                $("#tableAttendanceControl").html(res);
+            })
+        }
+
+
+
+
+    </script>*@
+}

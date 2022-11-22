@@ -1025,7 +1025,10 @@
           <Parameter Name="opc" Type="varchar" Mode="In" />
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_C_MostrarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="opcion" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_C_MostrarPuestos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_C_MostrarUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="opcion" Type="varchar" Mode="In" />
@@ -2722,7 +2725,10 @@
             <Parameter Name="opc" Mode="In" Type="String" />
             <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_C_MostrarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPerfil_Result)" />
+          <FunctionImport Name="SP_C_MostrarPerfil" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPerfil_Result)" >
+            <Parameter Name="opcion" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_C_MostrarPuestos" ReturnType="Collection(SICOAdminModel.SP_C_MostrarPuestos_Result)" />
           <FunctionImport Name="SP_C_MostrarUsuarios" ReturnType="Collection(SICOAdminModel.SP_C_MostrarUsuarios_Result)">
             <Parameter Name="opcion" Mode="In" Type="String" />

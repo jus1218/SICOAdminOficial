@@ -1,5 +1,7 @@
-﻿@model List<SICOAdmin1._0.Models.PERFIL>
+﻿@model SICOAdmin1._0.Models.PERFIL
+@using SICOAdmin1._0.Models.Perfil
 @{
+
     ViewBag.Title = "Perfiles";
 
     List<int?> lstActions = (List<int?>)Session["lstActions"];
@@ -7,11 +9,17 @@
     {
         lstActions = new List<int?>();
     }
+    List<PerfilViewModel> lstMode = (List<PerfilViewModel>)ViewBag.Perfil;
+    var objPerfil = new PerfilViewModel();
+
 }
 
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+
 <div class="container margin-container p-4 glass">
-
-
     <div class="row fila">
         <!--TEXTO-->
         <div class="col-xl-2 col-md-3 d-flex justify-content-center">
@@ -19,13 +27,13 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            @if (@lstActions.Contains(11))
+         @if (@lstActions.Contains(11))
             {
-                <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
-                    <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
-                </button>
+            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
+                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
+            </button>
             }
-            </div>
+        </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
             <div class="input-group mb-2">
@@ -44,84 +52,104 @@
             </div>
         </div>
     </div>
-    <!--FILA TABLE-->
     <div class="row fila scrol-tablex">
-        <table id="users" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Accion</th>
+        @Html.Partial("_MostrarPerfil", lstMode)
 
-                </tr>
-            </thead>
-            <tbody style="text-align:center;">
-                @foreach (var perfil in Model)
-                {
-                    <tr>
-                        <td>@perfil.IdPerfil</td>
-                        <td>@perfil.Nombre</td>
-                        <td>@perfil.Descripcion</td>
-                        @if (@perfil.Activo == false)
-                        {
-                            <td>
-                                Inactivo
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                Activo
-                            </td>
-                        }
-                        <td>
-                            <a class="btn btn-warning" onclick="document.location.href = '@Url.Action("Editar","Perfil",new { Id = perfil.IdPerfil})'"><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Editar</a>
-                            @if (@perfil.Activo == false)
-                            {
-                                <a class="btn btn-primary" onclick="jsModificarPefil(@perfil.IdPerfil);"><i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar</a>
-                            }
-                            else
-                            {
-
-                                <a class="btn btn-danger" onclick="jsModificarPefil(@perfil.IdPerfil);"><i class="fa fa-lock mr-1" aria-hidden="true"></i> Inactivar</a>
-                            }
-
-                        </td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
     </div>
 </div>
+
+@Html.Partial("_Nuevo")
+@Html.Partial("_Bitacora")
+
 @section scripts{
-}
-<!--Función JS de búsqueda-->
-<script>
-    //$(document).ready(function () {
-    //    $("#users").dataTable();
-    //});
+
+    <script type="text/javascript">
+//________________________________________________________________________________________________________________
+//MJS sistema
+    console.log('@TempData["Message"]');
+    console.log('@TempData["Message"]');
+    @if (TempData["Resultado"] != null) {
 
 
-    function jsModificarPefil(pId) {
-       if (confirm('Estas seguro de Inactivar')) {
-            url = "@Url.Content("~/Perfil/ModificarEstadoPerfil")"+"?Id="+pId;
-            $.post(url, function (data){
-                if (data == "1") {
-                    document.location.href = "@Url.Content("~/Perfil/Index")";
-                } else if (data == "0") {
-                    document.location.href = "@Url.Content("~/Perfil/Index")";
+            if (TempData["Resultado"].ToString() == "1")
+            {
+                 <text>
+                    $(document).ready(function () {
+                        swal({
+                            title: "¡¡Exitoso!!", text: ('@TempData["Message"]'), type: "success", timer: 2000, showConfirmButton: false });
+                        })
+
+                </text>
+            }
+            else {
+                         <text>
+                    $(document).ready(function () {
+                        swal({ title: "¡¡Error!!", text: ('@TempData["Message"]'), type: "error",timer: 2000, showConfirmButton: false});
+                        })
+
+                </text>
+
+            }
+
+
+
+         }
+//_______________________________________________________________________________________________________________
+    //Funcion de Buscar
+    $(document).ready(function () {
+        $("#buscar").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbPerfiles tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+//_______________________________________________________________________________________________________________
+    //Modificar Estado al perfil
+    function jsModificarEstado(pId) {
+        console.log(pId);
+        fetch("@Url.Content("~/Perfil/ModificarEstadoPerfil")" + "?Id=" + pId)
+
+            .then(res => res.ok ? res.json() : null)
+            .then(res => {
+
+
+                console.log(res);
+                if (res == 2) {
+                    swal({
+                        title: "Cambio Exitoso", text: "Se modifico el Estado!!", type: "success", timer: 2000,
+
+                        showConfirmButton: false
+                    }
+                    );
+                    $("#tbPerfiles").load(" #tbPerfiles");
                 } else {
-                    alert("Error de Cambiar Usuario")
+                    swal({
+                        title: "Cambio Fallido", text: "No se modifico el Estado!!", type: "error",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    $("#tbPerfiles").load(" #tbPerfiles");
                 }
 
             })
-        }
-
-
     }
+//_______________________________________________________________________________________________________________
+    //MostrarBitacora
+    function jsmostrarBitacora(IdPer) {
+        console.log(IdPer);
+            fetch("@Url.Content("~/Perfil/DatosBitacora")" + "?IdPerfil=" + IdPer)
+                .then(res => res.ok ? res.json() : null)
+                .then(res => {
+                    console.log(res);
 
-</script>
+                    tbUsuarioCreacion.textContent = res.UsuarioCreacion;
+                    tbFechaCreacion.textContent = res.FechaCreacion;
+                    tbUsuarioModificacion.textContent = res.UsuarioModificacion;
+                    tbFechaModificacion.textContent = res.FechaModificacion;
+                })
+        }
+//_______________________________________________________________________________________________________________
+    </script>
+}
 
