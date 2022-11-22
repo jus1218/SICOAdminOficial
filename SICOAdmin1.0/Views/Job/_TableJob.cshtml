@@ -1,0 +1,70 @@
+﻿@model List<SICOAdmin1._0.Models.Job>
+@{
+}
+<header>
+    <style>
+        .precio:before {
+            content: '₡ ';
+            font-size: 0.9em;
+            vertical-align: top;
+        }
+
+        .precio:after {
+            content: ".00";
+            /*font-size: 0.7em;*/
+            vertical-align: top;
+            color: black;
+        }
+    </style>
+</header>
+<table id="tbJob" class="table table-bordered">
+    <thead class="">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Sal. Minimo</th>
+            <th scope="col">Sal. Promedio</th>
+            <th scope="col">Sal. Maximo</th>
+            <th scope="col">Cod. CCSS</th>
+            <th scope="col">COd. INS</th>
+            <th scope="col">Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+
+        @if (Model != null)
+        {
+            foreach (var p in Model)
+            {
+                <tr>
+                                   <td>@p.IdPuesto</td>
+                                   <td>@p.Descripcion</td>
+                    <td class="precio">@p.SalarioMinimo</td>
+                    <td class="precio">@p.SalarioPromedio</td>
+                    <td class="precio">@p.SalarioMaximo</td>
+                                   <td>@p.CodigoCCSS</td>
+                                   <td>@p.CodigoINS</td>
+                    <td>
+                        <button id="Editar"
+                                type="button"
+                                value="Editar"
+                                @*onclick="document.location.href = '@Url.Action("_Editar","Job",new { Id = p.IdPuesto})'"*@
+                                class="btn btn-warning fa fa-pencil btn-sm"
+                                data-toggle="modal"
+                                data-target="#ModalEditar">
+                            Editar
+                        </button>
+                        <input class="btn btn-light" type="button" value="Ver más" @*onclick="viewMore('@ctrlAsistencia.IdAsistencia');"*@ />
+
+                        
+                    </td>
+
+                </tr>
+
+            }
+
+         }
+      
+    </tbody>
+</table>

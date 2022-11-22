@@ -20,27 +20,37 @@
         @using (Html.BeginForm("Editar", "Perfil", FormMethod.Post, new { role = "form", @class = "row-12" }))
         {
             @Html.HiddenFor(d => d.IdPerfil)//Se va en la peticion
+            @Html.HiddenFor(d => d.Nombre)//S e va el nombre en la peticion
 
-            <div class="col-12 d-xl-flex d-md-flex justify-content-between">
-                <!--Nombre perfil-->
-                <div class="col-xl-3 col-md-3 col-sm-12 me-5">
-                    @Html.LabelFor(d => d.IdPerfil)
-                    @Html.TextBoxFor(d => d.IdPerfil, new { @class = "form-control", id = "idPerfil", @disabled = true })
-                </div>
-
-                <!--Decripcion perfil-->
-                <div class="col-xl-3 col-md-3 col-sm-12 me-5">
-
-                    @Html.LabelFor(d => d.Descripcion)
-                    @Html.TextBoxFor(d => d.Descripcion, new { @class = "form-control", id = "Descripccion" })
-                </div>
-                <!--Decripcion perfil-->
-                <div class="col-xl-3 col-md-3 col-sm-12 me-5">
-                    @Html.LabelFor(d => d.Activo)<br />
-                    @Html.CheckBoxFor(d => d.Activo, new { @class = "form-control ", id = "Activo" })
-                </div>
-
+        <div class="col-12 d-xl-flex d-md-flex justify-content-between">
+            <!--Nombre perfil-->
+            <div class="col-xl-3 col-md-3 col-sm-12 me-4">
+                @Html.LabelFor(d => d.IdPerfil)
+                @Html.TextBoxFor(d => d.IdPerfil, new { @class = "form-control", id = "idPerfil", @disabled = true })
+                @Html.ValidationMessage("Nombre", null, new { @class = "text-danger" })
             </div>
+            <!--Nombre perfil-->
+            <div class="col-xl-3 col-md-3 col-sm-12 me-4">
+                @Html.LabelFor(d => d.Nombre)
+                @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control", required = "required", HtmlAttributes = new { Type = "text" } })
+                @Html.ValidationMessage("Nombre", null, new { @class = "text-danger" })
+            </div>
+
+            <!--Decripcion perfil-->
+            <div class="col-xl-3 col-md-3 col-sm-12 me-4">
+
+                @Html.LabelFor(d => d.Descripcion)
+                @Html.TextBoxFor(d => d.Descripcion, new { @class = "form-control", id = "Descripccion" })
+                @Html.ValidationMessage("Descripcion", null, new { @class = "text-danger" })
+            </div>
+            <!--Decripcion perfil-->
+            <div class="col-xl-3 col-md-3 col-sm-12 me-4">
+                @Html.LabelFor(d => d.Activo)<br />
+                @Html.CheckBoxFor(d => d.Activo, new { @class = "form-control ", id = "Activo" })
+                @Html.ValidationMessage("Activo", null, new { @class = "text-danger" })
+            </div>
+
+        </div>
             <!--BOTONES-->
             <div class="col mt-4 d-flex justify-content-center mb-2">
                 <input class="btn btn-success me-2" type="submit" value="Guardar" />
