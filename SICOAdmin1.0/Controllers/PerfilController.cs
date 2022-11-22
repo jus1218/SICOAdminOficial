@@ -66,7 +66,7 @@ namespace SICOAdmin1._0.Controllers
 
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     using (var db = new SICOAdminEntities())
@@ -116,7 +116,6 @@ namespace SICOAdmin1._0.Controllers
                 model.Nombre = oPerfil.Nombre;
                 model.Descripcion = oPerfil.Descripcion;
                 model.Activo = oPerfil.Activo;
-                model.UsuarioModificacion = oPerfil.UsuarioModificacion;
 
                 lstUsuariosPerfil = db.SP_P_UsuariosDelPerfil(Id).ToList();
                 opcUsuario = db.f_opcionesUsuariosPerfil(Id).ToList();
@@ -148,13 +147,13 @@ namespace SICOAdmin1._0.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int Response = -3;
+                    int Response = 1;
                     ObjectParameter resultSP = new ObjectParameter("resultado", -3);
                     TempData.Clear();
                     using (SICOAdminEntities db = new SICOAdminEntities())
                     {
-                        var oPerfil = db.PERFIL.Find(model.IdPerfil);
-                        db.SP_P_ModificarPerfil(model.IdPerfil, model.Nombre, model.Descripcion, model.Activo, ((User)Session["User"]).userName, resultSP);
+
+                        int num = db.SP_P_ModificarPerfil(model.IdPerfil, model.Nombre, model.Descripcion, model.Activo, ((User)Session["User"]).userName, resultSP);
                         db.SaveChanges();
 
                     }
@@ -163,7 +162,7 @@ namespace SICOAdmin1._0.Controllers
                     return Redirect("~/Perfil/Index");
                 }
                 else
-                    return View(model);
+                    return Redirect(Url.Content("~/Perfil/Index"));
             }
             catch (Exception ex)
             {
