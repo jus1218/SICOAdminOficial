@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "Parametro";
     List<Parameter> lstParameters = (List<Parameter>)ViewBag.Parameters;
+    List<Parameter> lstLogParameters = (List<Parameter>)ViewBag.LogParameters;
+
 }
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -100,19 +102,28 @@
                             <td>
                                 <button id="Editar" data-toggle="modal" data-target="#ModalUpdate" type="button" value="Editar"
                                         class="btn btn-warning"
-                                        onclick="showData(@e.IdParameter);"><i class="fa fa-pencil mr-1" aria-hidden="true"></i>Editar</button>
+                                        onclick="showData(@e.IdParameter);">
+                                    <i class="fa fa-pencil mr-1" aria-hidden="true"></i>Editar
+                                </button>
 
-                                <button class="btn btn-info" data-toggle="modal" data-target="#ModalBitacora" type="button" onclick="jsShowLog(@e.IdParameter);"><i class="fa fa-book mr-1" aria-hidden="true"></i>Bitacora</button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#ModalBitacora"
+                                        type="button" onclick="jsShowLog(@e.IdParameter);">
+                                    <i class="fa fa-book mr-1" aria-hidden="true"></i>Bitacora
+                                </button>
 
                                 @if (e.Status == "0")
                                 {
                                     <button id="btnActivar" class="btn btn-success"
-                                           style="width: 35%;"  type="button" onclick="jsChangeStatus(@e.IdParameter);"><i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar</button>
+                                            style="width: 35%;" type="button" onclick="jsChangeStatus(@e.IdParameter);">
+                                        <i class="fa fa-unlock mr-1" aria-hidden="true"></i>Activar
+                                    </button>
                                 }
                                 else
                                 {
                                     <button id="btnDes" class="btn btn-danger"
-                                               style="width: 35%;" onclick="jsChangeStatus(@e.IdParameter);"><i class="fa fa-lock mr-1" aria-hidden="true"></i>Desactivar</button>
+                                            style="width: 35%;" onclick="jsChangeStatus(@e.IdParameter);">
+                                        <i class="fa fa-lock mr-1" aria-hidden="true"></i>Desactivar
+                                    </button>
                                 }
                             </td>
                         </tr>
@@ -266,7 +277,7 @@
 
 <!-- Modal Bitacora-->
 <div class="modal fade" id="ModalBitacora" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 style="text-align:center" class="modal-title" id="ModalTitle">Bitacora Parámetro</h5>
@@ -278,33 +289,34 @@
             <div class="modal-body">
 
 
+                <div style="text-align:center;">
 
+                    <label class="mr-1" style="text-align:center;">#</label>
+                    <input style="text-align:center; width:40px; height:28px; " type="text" disabled id="tbIdParam" />
+
+                    <label style="text-align:start" class="mr-1">Usuario Creación</label>
+                    <input style="text-align:center;" type="text" disabled id="tbUsuarioCreacion" />
+                    <label class="mr-1"> Fecha Creación</label>
+                    <input id="tbFechaCreacion"  style="text-align:center;" type="text" disabled />
+                </div>
+                <br />
                 <!--FILA TABLE-->
                 <div class="row fila scrol-tablex">
-                    <table id="tbBitacora" class="table table-bordered">
+                    <table id="tbBitacora" class="table table-bordered" style="text-align:center;">
                         <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Usuario Creacion</th>
-                                <th scope="col">Fecha Creacion</th>
+                            <tr>                     
+                                <th scope="col">Acción Realizada</th>                                
                                 <th scope="col">Usuario Modificacion</th>
                                 <th scope="col">Fecha Modificacion</th>
                             </tr>
                         </thead>
-                        <tbody style="text-align:center;">
-
-                            <tr id="tablaBitacora">
-                                <td id="tbIdParametro"> </td>
-                                <td id="tbUsuarioCreacion"> </td>
-                                <td id="tbFechaCreacion"> </td>
-                                <td id="tbUsuarioModificacion"> </td>
-                                <td id="tbFechaModificacion"> </td>
-                            </tr>
-
+                        <tbody style="text-align:center;" id="tbCuerpo">
+                            
 
                         </tbody>
                     </table>
-                    <button style="margin-top: 15px" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            
+
                 </div>
 
                 <!-- -->
@@ -349,33 +361,52 @@
 <script>
     //Bitacora
 
-    const tbId = document.getElementById("tbIdParametro");
+    const tbId = document.getElementById("tbIdParam");
     const tbUsuarioCreacion = document.getElementById("tbUsuarioCreacion");
-    const tbUsuarioModificacion = document.getElementById("tbUsuarioModificacion")
+
+    //const tbUsuarioModificacion = document.getElementById("tbUsuarioModificacion")
 
     const tbFechaCreacion = document.getElementById("tbFechaCreacion");
-    const tbFechaModificacion = document.getElementById("tbFechaModificacion");
+    //const tbFechaModificacion = document.getElementById("tbFechaModificacion");
     //Bitacora
     function jsShowLog(pId) {
-        fetch("@Url.Content("~/Parameters/showData")" + "?idParam=" + pId)
+        $("#tbCuerpo").html("");
+        fetch("@Url.Content("~/Parameters/showLog")" + "?idParam=" + pId)
                 .then(res => res.ok ? res.json() : null)
                 .then(res => {
+                    console.log(res);
+                    for (var i = 0; i < res.length; i++) {
+                        var date = new Date(res[i].DateCreacion.toString());
+                        var date2 = new Date(res[i].DateModification);
+                        console.log(date);
+                        var tr = `<tr>
+
+                           <td>`+ res[i].AccionRealizada+`</td>                         
+                           <td>`+ res[i].UserModification +`</td>                         
+                           <td>`+ res[i].DateModification +`</td>
+
+                        </tr>`;
+                        $("#tbCuerpo").append(tr)
+                    }
+                    //<td>`+ res[i].DateCreacion+`</td>
+                    //<td>`+ res[i].DateModification+`</td>
+                           //<td>`+ res[i].IdParameter+`</td>
+                    tbUsuarioCreacion.textContent = res[0].UserCreacion;
+                    tbUsuarioCreacion.value = res[0].UserCreacion;
 
 
-                    tbId.textContent = res.IdParametro;
-                    tbId.value = res.IdParametro;
+                    tbId.textContent = res[0].IdParameter;
+                    tbId.value = res[0].IdParameter;
+                    tbFechaCreacion.textContent = res[0].DateCreacion;
+                    tbFechaCreacion.value = res[0].DateCreacion;
 
-                    tbUsuarioCreacion.textContent = res.UsuarioCreacion;
-                    tbUsuarioCreacion.value = res.UsuarioCreacion;
 
-                    tbUsuarioModificacion.textContent = res.UsuarioModificacion;
-                    tbUsuarioModificacion.value = res.UsuarioModificacion;
+                    //tbUsuarioModificacion.textContent = res.UsuarioModificacion;
+                    //tbUsuarioModificacion.value = res.UsuarioModificacion;
 
-                    tbFechaCreacion.textContent = res.FechaCreacion;
-                    tbFechaCreacion.value = res.FechaCreacion;
-
-                    tbFechaModificacion.textContent = res.FechaModificacion;
-                    tbFechaModificacion.value = res.FechaModificacion;
+                    
+                    //tbFechaModificacion.textContent = res.FechaModificacion;
+                    //tbFechaModificacion.value = res.FechaModificacion;
 
                 })
 
