@@ -4,9 +4,11 @@
 
     ViewBag.Title = "Perfiles";
 
-    List<PerfilViewModel> lstMode = (List<PerfilViewModel>)ViewBag.Perfil;
-    var objPerfil = new PerfilViewModel();
-
+    List<int?> lstActions = (List<int?>)Session["lstActions"];
+    if (lstActions == null)
+    {
+        lstActions = new List<int?>();
+    }
 }
 
 <head>
@@ -22,10 +24,13 @@
         </div>
         <!--BOTON-->
         <div class="col-xl-2 col-md-2 mb-3">
-            <button id="Agregar" data-toggle="modal" data-target="#Modal" type="button" class="btn btn-primary col-12">
-                <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
-            </button>
-        </div>
+            @if (@lstActions.Contains(11))
+            {
+                <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalLong">
+                    <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>Agregar
+                </button>
+            }
+            </div>
         <!--Barra busqueda-->
         <div class="col-xl-4 col-md-6 offset-xl-3 offset-md-1">
             <div class="input-group mb-2">
